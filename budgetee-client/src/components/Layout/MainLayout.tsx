@@ -7,7 +7,7 @@ import {
   TrendingUpIcon, // or ChartBarIcon, ChartPieIcon, ChartSquareBarIcon, DocumentReportIcon
 } from '@heroicons/react/outline';
 
-import { MobileCreateMenu, NotificationMenu, UserMenu } from './Menus';
+import { MobileCreateMenu, NewMenu, NotificationMenu, UserMenu } from './Menus';
 
 type NavigationItem = {
   name: string;
@@ -16,7 +16,7 @@ type NavigationItem = {
 }
 
 const navigation = [
-  { name: 'Dashboard', to: '.', icon: HomeIcon },
+  { name: 'Dashboard', to: './dashboard', icon: HomeIcon },
   { name: 'Budgets', to: './budgets', icon: ClipboardListIcon },
   { name: 'Records', to: './records', icon: CurrencyEuroIcon },
   { name: 'Analytics', to: './analytics', icon: TrendingUpIcon },
@@ -24,9 +24,9 @@ const navigation = [
 
 const MobileNavigation = () => {
   const navigation = [
-    { name: 'Dashboard', to: '.', icon: HomeIcon },
+    { name: 'Dashboard', to: './dashboard', icon: HomeIcon },
     { name: 'Budgets', to: './budgets', icon: ClipboardListIcon },
-    { },
+    {},
     { name: 'Records', to: './records', icon: CurrencyEuroIcon },
     { name: 'Analytics', to: './analytics', icon: TrendingUpIcon },
   ] as NavigationItem[];
@@ -43,7 +43,7 @@ const MobileNavigation = () => {
               end={index === 0}
               key={item.name}
               to={item.to}
-              className={isActive => "group flex flex-col items-center text-xs font-light w-full hover:text-gray-800" + (isActive.isActive ? ' text-gray-800' : ' text-gray-400')}
+              className={isActive => "group flex flex-col items-center text-xs font-light w-full hover:text-rose-600" + (isActive.isActive ? ' text-rose-600' : ' text-gray-400')}
             >
               <item.icon
                 className="h-6 w-6 transition-colors"
@@ -68,11 +68,11 @@ const MobileBottombar = () => {
 
 const Logo = () => {
   return (
-    <Link to='/' className='mr-2'>
+    <Link to='./dashboard' className='mr-2'>
       <img
         src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Slack_icon_2019.svg/2048px-Slack_icon_2019.svg.png"
         alt="logo"
-        className='h-10 w-10 m-2.5'
+        className='h-10 w-10 m-1 md:m-2.5'
       />
     </Link>
   );
@@ -86,10 +86,10 @@ const TopNavigation = () => {
           end={index === 0}
           key={item.name}
           to={item.to}
-          className={isActive => "flex items-center justify-center mx-3 hover:text-gray-800" + (isActive.isActive ? ' text-gray-800 font-medium' : ' text-gray-400')}
+          className={isActive => "flex items-center justify-center mx-2 md:mx-3 hover:text-rose-600" + (isActive.isActive ? ' text-rose-500 font-medium' : ' text-gray-400')}
         >
           <item.icon
-            className="h-6 w-6 mr-2 hidden md:block"
+            className="h-6 w-6 mr-2 hidden lg:block"
             aria-hidden="true"
           />
           {item.name}
@@ -101,7 +101,7 @@ const TopNavigation = () => {
 
 const Topbar = () => {
   return (
-    <div className='w-screen h-16 bg-white shadow flex justify-center'>
+    <div className='absolute top-0 w-screen h-16 bg-white shadow flex justify-center'>
       <div className='max-w-7xl h-full w-full px-3 flex items-center justify-between'>
         <div className='flex items-center'>
           <Logo />
@@ -110,6 +110,7 @@ const Topbar = () => {
           </div>
         </div>
         <div className='flex items-center gap-4'>
+          <NewMenu />
           <NotificationMenu />
           <UserMenu />
         </div>
@@ -124,14 +125,12 @@ type MainLayoutProps = {
 
 export const MainLayout = ({ children }: MainLayoutProps) => {
   return (
-    <div className='h-screen pb-14 sm:mb-0 flex overflow-hidden bg-gray-200'>
+    <div className='h-screen pt-16 pb-14 sm:pb-0 flex overflow-hidden bg-gray-200'>
       <MobileBottombar />
       <Topbar />
-      <div className=''>
-        <main className='flex-1 relative overflow-y-auto focus:outline-none'>
-          {children}
-        </main>
-      </div>
+      <main className='flex-1 relative overflow-y-auto focus:outline-none max-w-7xl mx-auto px-4 py-2 sm:px-6 md:px-8'>
+        {children}
+      </main>
     </div>
   );
 }

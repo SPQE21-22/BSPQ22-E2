@@ -14,13 +14,15 @@ import {
 } from '@heroicons/react/outline';
 import { Menu, Popover, Transition } from '@headlessui/react';
 
+import { Button } from '../Elements/Button';
+
 type NotificationProps = {
   type?: 'check' | 'warn' | 'info';
   title?: string;
   content?: string;
 };
 
-const Notification = ({ type='info', title='Title', content='Content' }: NotificationProps) => {
+const Notification = ({ type = 'info', title = 'Title', content = 'Content' }: NotificationProps) => {
   const icons = {
     check: <CheckCircleIcon className='h-11 w-11 text-green-400' />,
     warn: <ExclamationCircleIcon className='h-11 w-11 text-red-400' />,
@@ -48,6 +50,76 @@ const Notification = ({ type='info', title='Title', content='Content' }: Notific
   );
 };
 
+export const NewMenu = () => {
+  return (
+    <Menu as="div" className="relative inline-block text-left" >
+      <Menu.Button as={React.Fragment}>
+        <Button size='xs' className='hidden sm:block'>+ New</Button>
+      </Menu.Button>
+      <Transition
+        as={React.Fragment}
+        enter="transition ease-out duration-100"
+        enterFrom="transform opacity-0 scale-95"
+        enterTo="transform opacity-100 scale-100"
+        leave="transition ease-in duration-75"
+        leaveFrom="transform opacity-100 scale-100"
+        leaveTo="transform opacity-0 scale-95"
+      >
+        <Menu.Items className="z-10 absolute top-0 right-0 w-72 mt-14 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+          <Menu.Item>
+            {({ active }) => (
+              <div className='px-3 py-2 cursor-pointer'>
+                <span className='flex items-center justify-between font-semibold text-lg'>
+                  Create
+                  <button className={`rounded-full p-1 transition-colors ${active ? 'bg-gray-200' : ''}`}>
+                    <XIcon className='h-7 w-7' strokeWidth="1" />
+                  </button>
+                </span>
+              </div>
+            )}
+          </Menu.Item>
+          <div className="px-1 py-1">
+            <Menu.Item>
+              {({ active }) => (
+                <button
+                  className={`${active && 'bg-gray-100'} text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                >
+                  <div className={`p-2 mr-4 rounded-full ${active ? 'bg-gray-200' : 'bg-gray-100'}`}>
+                    <ClipboardListIcon
+                      className="w-8 h-8"
+                      strokeWidth="1.5"
+                      aria-hidden="true"
+                    />
+                  </div>
+                  Create new budget
+                </button>
+              )}
+            </Menu.Item>
+          </div>
+          <div className="px-1 py-1">
+            <Menu.Item>
+              {({ active }) => (
+                <button
+                  className={`${active && 'bg-gray-100'} text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                >
+                  <div className={`p-2 mr-4 rounded-full ${active ? 'bg-gray-200' : 'bg-gray-100'}`}>
+                    <CurrencyEuroIcon
+                      className="w-8 h-8"
+                      strokeWidth="1.5"
+                      aria-hidden="true"
+                    />
+                  </div>
+                  Create new record
+                </button>
+              )}
+            </Menu.Item>
+          </div>
+        </Menu.Items>
+      </Transition>
+    </Menu>
+  );
+};
+
 export const NotificationMenu = () => {
   const testNotifications = [
     { type: 'check', title: 'Notification number 1', content: 'This is the test content number 1. This is the test content number 1.' },
@@ -71,11 +143,11 @@ export const NotificationMenu = () => {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Popover.Panel className="absolute top-0 right-0 mt-14 -mr-16 sm:mr-0 max-h-[500px] overflow-y-auto no-scrollbar overflow-x-hidden origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <Popover.Panel className="z-10 absolute top-0 right-0 mt-14 -mr-16 sm:mr-0 max-h-[500px] overflow-y-auto no-scrollbar overflow-x-hidden origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className='text-xl font-medium py-2 px-2.5'>Notifications</div>
           <div className='flex flex-col gap-2 p-2'>
             {/* TODO add margin to scrollbar */}
-            {testNotifications.map((notification, i) => 
+            {testNotifications.map((notification, i) =>
               <Notification key={i} type={notification.type} title={notification.title} content={notification.content} />
             )}
           </div>
@@ -88,8 +160,8 @@ export const NotificationMenu = () => {
 export const UserMenu = () => {
   return (
     <Menu as="div" className="relative inline-block text-left" >
-      <Menu.Button className="flex items-center">
-        <img src="https://ikiam.edu.ec/perfil/img/user.png" alt="profile pic" className='h-14 w-14 rounded-full' />
+      <Menu.Button className="flex items-center border-2 border-gray-200 rounded-full">
+        <img src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="profile pic" className='h-12 w-12 rounded-full' />
       </Menu.Button>
       <Transition
         as={React.Fragment}
@@ -100,7 +172,7 @@ export const UserMenu = () => {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute top-0 right-0 w-56 mt-16 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <Menu.Items className="z-10 absolute top-0 right-0 w-56 mt-16 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="px-1 py-1">
             <Menu.Item>
               {({ active }) => (
@@ -158,7 +230,7 @@ export const MobileCreateMenu = () => {
         leaveFrom="transform translate-y-0"
         leaveTo="transform translate-y-full"
       >
-        <Menu.Items className="absolute bottom-0 w-screen origin-bottom bg-white divide-y divide-gray-100 rounded-t-xl shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <Menu.Items className="z-10 absolute bottom-0 w-screen origin-bottom bg-white divide-y divide-gray-100 rounded-t-xl shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <Menu.Item>
             {({ active }) => (
               <div className='px-3 py-2 cursor-pointer'>
