@@ -7,6 +7,7 @@ import {
   TrendingUpIcon, // or ChartBarIcon, ChartPieIcon, ChartSquareBarIcon, DocumentReportIcon
 } from '@heroicons/react/outline';
 
+import logo from '../../assets/logo.png';
 import { MobileCreateMenu, NewMenu, NotificationMenu, UserMenu } from './Menus';
 
 type NavigationItem = {
@@ -43,7 +44,7 @@ const MobileNavigation = () => {
               end={index === 0}
               key={item.name}
               to={item.to}
-              className={isActive => "group flex flex-col items-center text-xs font-light w-full hover:text-rose-600" + (isActive.isActive ? ' text-rose-600' : ' text-gray-400')}
+              className={isActive => "border-2 border-transparent group flex flex-col items-center justify-center text-xs font-light h-full w-full hover:text-violet-600" + (isActive.isActive ? ' text-violet-500 border-b-violet-500' : ' text-gray-400')}
             >
               <item.icon
                 className="h-6 w-6 transition-colors"
@@ -70,7 +71,7 @@ const Logo = () => {
   return (
     <Link to='./dashboard' className='mr-2'>
       <img
-        src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Slack_icon_2019.svg/2048px-Slack_icon_2019.svg.png"
+        src={logo}
         alt="logo"
         className='h-10 w-10 m-1 md:m-2.5'
       />
@@ -86,7 +87,7 @@ const TopNavigation = () => {
           end={index === 0}
           key={item.name}
           to={item.to}
-          className={isActive => "flex items-center justify-center mx-2 md:mx-3 hover:text-rose-600" + (isActive.isActive ? ' text-rose-500 font-medium' : ' text-gray-400')}
+          className={isActive => "border-2 border-transparent h-full flex items-center justify-center mx-1.5 md:mx-2 hover:text-violet-600" + (isActive.isActive ? ' text-violet-500 font-medium border-b-violet-500' : ' text-gray-400')}
         >
           <item.icon
             className="h-6 w-6 mr-2 hidden lg:block"
@@ -103,9 +104,9 @@ const Topbar = () => {
   return (
     <div className='absolute top-0 w-screen h-16 bg-white shadow flex justify-center'>
       <div className='max-w-7xl h-full w-full px-3 flex items-center justify-between'>
-        <div className='flex items-center'>
+        <div className='flex items-center h-full'>
           <Logo />
-          <div className='hidden sm:flex items-center'>
+          <div className='hidden sm:flex items-center h-full'>
             <TopNavigation />
           </div>
         </div>
@@ -125,7 +126,7 @@ type MainLayoutProps = {
 
 export const MainLayout = ({ children }: MainLayoutProps) => {
   return (
-    <div className='h-screen pt-16 pb-14 sm:pb-0 flex overflow-hidden bg-gray-200'>
+    <div className='h-screen pt-16 pb-14 sm:pb-0 flex overflow-hidden bg-slate-200'>
       <MobileBottombar />
       <Topbar />
       <main className='flex-1 relative overflow-y-auto focus:outline-none max-w-7xl mx-auto px-4 py-2 sm:px-6 md:px-8'>

@@ -1,8 +1,8 @@
 import React from 'react';
 
 const variants = {
-  primary: 'bg-rose-500 text-white border-transparent hover:bg-rose-600',
-  inverse: 'bg-transparent text-rose-500 border-rose-500 hover:bg-rose-500 hover:text-white',
+  primary: 'bg-violet-500 text-white border-transparent hover:bg-violet-600',
+  inverse: 'bg-transparent text-violet-500 border-violet-500 hover:bg-violet-500 hover:text-white',
 }
 
 const sizes = {

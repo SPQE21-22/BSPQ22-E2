@@ -14,6 +14,7 @@ import {
 } from '@heroicons/react/outline';
 import { Menu, Popover, Transition } from '@headlessui/react';
 
+import user from '../../assets/user.png';
 import { Button } from '../Elements/Button';
 
 type NotificationProps = {
@@ -161,7 +162,7 @@ export const UserMenu = () => {
   return (
     <Menu as="div" className="relative inline-block text-left" >
       <Menu.Button className="flex items-center border-2 border-gray-200 rounded-full">
-        <img src="http://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png" alt="profile pic" className='h-12 w-12 rounded-full' />
+        <img src={user} alt="user" className='h-12 w-12 rounded-full' />
       </Menu.Button>
       <Transition
         as={React.Fragment}
