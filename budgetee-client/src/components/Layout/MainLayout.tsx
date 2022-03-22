@@ -44,7 +44,7 @@ const MobileNavigation = () => {
               end={index === 0}
               key={item.name}
               to={item.to}
-              className={isActive => "border-2 border-transparent group flex flex-col items-center justify-center text-xs font-light h-full w-full hover:text-violet-600" + (isActive.isActive ? ' text-violet-500 border-b-violet-500' : ' text-gray-400')}
+              className={isActive => "border-2 border-transparent group flex flex-col items-center justify-center text-xs font-light h-full w-full hover:text-violet-600" + (isActive.isActive ? ' text-violet-500 font-medium border-b-violet-500' : ' text-gray-400')}
             >
               <item.icon
                 className="h-6 w-6 transition-colors"
@@ -93,7 +93,7 @@ const TopNavigation = () => {
             className="h-6 w-6 mr-2 hidden lg:block"
             aria-hidden="true"
           />
-          {item.name}
+          <span className='transition-colors'>{item.name}</span>
         </NavLink>
       ))}
     </>
