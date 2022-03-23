@@ -1,12 +1,11 @@
 # Data models of the app. These will have to be defined as database models later on.
 
 class Notification():
-    def __init__(self, code, summary, text, date, time) -> None:
+    def __init__(self, code, summary, text, dateTime) -> None:
         self.code = code
         self.summary = summary
         self.text = text
-        self.date = date
-        self.time = time
+        self.dateTime = dateTime
 
     def __str__(self) -> str:
         return f'{self.name} {self.surname}'

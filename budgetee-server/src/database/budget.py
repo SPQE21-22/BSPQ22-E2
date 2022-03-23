@@ -3,26 +3,26 @@ from sqlalchemy import Column, DateTime, Float, ForeignKey, Integer, String, or_
 from sqlalchemy.orm import relationship, backref
 from .db import Base, db_session
 
-class User(Base):
-    __tablename__ = 'user'
+class Budget(Base):
+    __tablename__ = 'Budget'
     id = Column(Integer, primary_key=True)
     title = Column(String(255), nullable=False)
     description = Column(String(255), nullable=False)
     start_date = Column(DateTime(255), nullable=False)
     end_date = Column(DateTime(255), nullable=False)
 
-    records = relationship('Records', backref=backref('user'))
-    notifications = relationship('Notifications', backref=backref('user'))
+    records = relationship('Records', backref=backref('Budget'))
+    notifications = relationship('Notifications', backref=backref('Budget'))
 
-    def __init__(self, code, title, description, start_date, end_date):
-        self.code = code
+    def __init__(self,  title, description, start_date, end_date):
+       
         self.title = title
         self.description = description
         self.start_date = start_date
         self.end_date = end_date
         
     def __repr__(self):
-        return f'<User {self.name!r}>'
+        return f'<Budget {self.name!r}>'
     
     def save(self):
         if not self.id:
@@ -35,17 +35,17 @@ class User(Base):
     
     @staticmethod
     def all():
-        return User.query.all()
+        return Budget.query.all()
 
     @staticmethod
-    def get(user_id) -> User:
-        return User.query.get(user_id)
+    def get(Budget_id) -> Budget:
+        return Budget.query.get(Budget_id)
 
     @staticmethod
-    def get_by_email(user_email) -> User:
-        return User.query.filter_by(email=user_email).first()
+    def get_by_email(Budget_email) -> Budget:
+        return Budget.query.filter_by(email=Budget_email).first()
   
     @staticmethod
-    def exists(user_email) -> bool:
-        return User.query.filter_by(email=user_email).first() is not None
+    def exists(Budget_email) -> bool:
+        return Budget.query.filter_by(email=Budget_email).first() is not None
 
