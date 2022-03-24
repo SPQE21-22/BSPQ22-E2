@@ -1,23 +1,24 @@
 from __future__ import annotations
-from sqlalchemy import Column, DateTime, Integer, String
+from sqlalchemy import Column, Date, Integer, String
 from sqlalchemy.orm import relationship, backref
-from src.db import Base, db_session
+from src.database.db import Base, db_session
 
 class User(Base):
     __tablename__ = 'user'
     id = Column(Integer, primary_key=True)
-    name = Column(String(255), nullable=False)
-    surname = Column(String(255), nullable=False)
-    bday = Column(DateTime(255), nullable=False)
+    username = Column(String(255), nullable=False)
+    name = Column(String(255), nullable=False)    
     email = Column(String(255), unique=True, nullable=False)
+    password = Column(String(255), nullable=False)
+    birthDate = Column(Date(255), nullable=False)
+    budgets = relationship('Budget', backref=backref('user'))
 
-    budgets = relationship('Budgets', backref=backref('user'))
-
-    def __init__(self, name, email, surname, bday):
+    def __init__(self, username, name, email, password, birthDate):
         self.name = name
-        self.surname = surname
-        self.bday = bday
+        self.username = username
         self.email = email
+        self.password = password
+        self.birthDate = birthDate        
         
     def __repr__(self):
         return f'<User {self.name!r}>'

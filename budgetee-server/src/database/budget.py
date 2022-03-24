@@ -1,22 +1,20 @@
 from __future__ import annotations
 from sqlalchemy import Column, DateTime, Integer, String
 from sqlalchemy.orm import relationship, backref
-from src.db import Base, db_session
+from src.database.db import Base, db_session
 
 class Budget(Base):
     __tablename__ = 'Budget'
     id = Column(Integer, primary_key=True)
-    title = Column(String(255), nullable=False)
+    name = Column(String(255), nullable=False)
     description = Column(String(255), nullable=False)
     start_date = Column(DateTime(255), nullable=False)
     end_date = Column(DateTime(255), nullable=False)
+    records = relationship('Record', backref=backref('Budget'))
+    warnings = relationship('Integer', backref=backref('Budget')) #Warns when budget goes over or under a certain amount
 
-    records = relationship('Records', backref=backref('Budget'))
-    notifications = relationship('Notifications', backref=backref('Budget'))
-
-    def __init__(self,  title, description, start_date, end_date):
-       
-        self.title = title
+    def __init__(self,  name, description, start_date, end_date):       
+        self.name = name
         self.description = description
         self.start_date = start_date
         self.end_date = end_date
@@ -31,7 +29,7 @@ class Budget(Base):
         # db_session.expunge() # REVIEW necessary when using a single session?
     
     def as_dict(self):
-        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+        return {b.name: getattr(self, b.name) for b in self.__table__.columns}
     
     @staticmethod
     def all():

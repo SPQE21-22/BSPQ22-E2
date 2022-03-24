@@ -1,21 +1,24 @@
 from __future__ import annotations
-from sqlalchemy import Column, DateTime, Integer, String
-from src.db import Base, db_session
+from re import A
+from sqlalchemy import Column, user, Integer, String, Boolean
+from models import User
+from src.database.db import Base, db_session
 
 class Notification(Base):
     __tablename__ = 'Notification'
     id = Column(Integer, primary_key=True)
-    summary = Column(String(255), nullable=False)
-    text = Column(Integer, nullable=False)
-    dateTime = Column(DateTime, nullable=False)
+    title = Column(String(255), nullable=False)
+    description = Column(String(255), nullable=False)
+    read = Column(Boolean, default=False)
     
-    def __init__(self, summary, text, dateTime):
-        self.summary = summary
-        self.text = text
-        self.dateTime = dateTime
+    def __init__(self, title, description, read, user):
+        self.title = title
+        self.description = description
+        self.read = read
+        self.user = user
         
     def __repr__(self):
-        return f'<Notification {self.summary!r}>'
+        return f'<Notification {self.description!r}>'
     
     def save(self):
         if not self.id:
@@ -24,7 +27,7 @@ class Notification(Base):
         # db_session.expunge() # REVIEW necessary when using a single session?
     
     def as_dict(self):
-        return {c.summary: getattr(self, c.summary) for c in self.__table__.columns}
+        return {c.description: getattr(self, c.description) for c in self.__table__.columns}
     
     @staticmethod
     def all():
