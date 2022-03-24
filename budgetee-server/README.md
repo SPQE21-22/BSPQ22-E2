@@ -18,6 +18,10 @@ source venv/bin/activate        # Linux/MacOS
 pip install -r requirements.txt
 
 # Execute the program
+export FLASK_APP=src.app        # Linux/MacOS
+$env:FLASK_APP = "src.app"           # Windows (Powershell)
+set FLASK_APP=src.app           # Windows (cmd.exe)
+
 python src/app.py
 ```
 

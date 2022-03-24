@@ -1,9 +1,6 @@
 from __future__ import annotations
-from datetime import date
-from xmlrpc.client import Boolean
-from sqlalchemy import Column, DateTime, Float, ForeignKey, Integer, String, or_
-from sqlalchemy.orm import relationship, backref
-from .db import Base, db_session
+from sqlalchemy import Column, DateTime, Integer, String
+from src.db import Base, db_session
 
 class Notification(Base):
     __tablename__ = 'Notification'

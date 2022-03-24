@@ -1,7 +1,7 @@
 from __future__ import annotations
-from sqlalchemy import Column, DateTime, Float, ForeignKey, Integer, String, or_
+from sqlalchemy import Column, DateTime, Integer, String
 from sqlalchemy.orm import relationship, backref
-from .db import Base, db_session
+from src.db import Base, db_session
 
 class User(Base):
     __tablename__ = 'user'

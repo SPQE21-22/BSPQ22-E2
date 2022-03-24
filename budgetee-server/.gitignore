@@ -127,6 +127,9 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+# configuration
+config.py
+
 # openssl certificates
 *.pem
 

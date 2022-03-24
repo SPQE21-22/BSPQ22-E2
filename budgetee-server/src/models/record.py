@@ -1,8 +1,6 @@
 from __future__ import annotations
-from xmlrpc.client import Boolean
-from sqlalchemy import Column, DateTime, Float, ForeignKey, Integer, String, or_
-from sqlalchemy.orm import relationship, backref
-from .db import Base, db_session
+from sqlalchemy import Boolean, Column, Integer, String
+from src.db import Base, db_session
 
 class Record(Base):
     __tablename__ = 'Record'

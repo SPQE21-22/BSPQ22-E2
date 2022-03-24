@@ -1,8 +1,11 @@
 from flask import Flask
 from flask_restful import Api, Resource
+from src.db import init_db
 
 app = Flask(__name__)
 api = Api(app)
+
+init_db()
 
 @app.before_request
 def middleware():
