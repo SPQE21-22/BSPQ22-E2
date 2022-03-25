@@ -4,7 +4,7 @@ from sqlalchemy import Column, user, Integer, String, Boolean
 from models import User
 from src.database.db import Base, db_session
 
-class Notification(Base):
+class Notification(Base): 
     __tablename__ = 'Notification'
     id = Column(Integer, primary_key=True)
     title = Column(String(255), nullable=False)
@@ -36,12 +36,8 @@ class Notification(Base):
     @staticmethod
     def get(Notification_id) -> Notification:
         return Notification.query.get(Notification_id)
-
-    @staticmethod
-    def get_by_email(Notification_email) -> Notification:
-        return Notification.query.filter_by(email=Notification_email).first()
   
     @staticmethod
-    def exists(Notification_email) -> bool:
-        return Notification.query.filter_by(email=Notification_email).first() is not None
+    def exists(Notification_id) -> bool:
+        return Notification.query.filter_by(id=Notification_id).first() is not None
 

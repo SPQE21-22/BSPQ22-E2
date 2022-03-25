@@ -36,10 +36,6 @@ class Label(Base):
         return Label.query.get(Label_id)
 
     @staticmethod
-    def get_by_email(Label_email) -> Label:
-        return Label.query.filter_by(email=Label_email).first()
-  
-    @staticmethod
-    def exists(Label_email) -> bool:
-        return Label.query.filter_by(email=Label_email).first() is not None
+    def exists(Label_id) -> bool:
+        return Label.query.filter_by(id=Label_id).first() is not None
 

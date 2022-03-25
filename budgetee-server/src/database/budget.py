@@ -2,8 +2,9 @@ from __future__ import annotations
 from sqlalchemy import Column, DateTime, Integer, String
 from sqlalchemy.orm import relationship, backref
 from src.database.db import Base, db_session
+from database import Record
 
-class Budget(Base):
+class Budget(Base): #Sprint1
     __tablename__ = 'Budget'
     id = Column(Integer, primary_key=True)
     name = Column(String(255), nullable=False)
@@ -40,10 +41,18 @@ class Budget(Base):
         return Budget.query.get(Budget_id)
 
     @staticmethod
-    def get_by_email(Budget_email) -> Budget:
-        return Budget.query.filter_by(email=Budget_email).first()
+    def get_records(budget_id):
+        return Budget.query.get(budget_id).records
+
+    @staticmethod
+    def delete_one(budget_id):
+        to_delete = Budget.query.get(budget_id)
+        db_session.delete(to_delete)
+        db_session.commit()
   
     @staticmethod
-    def exists(Budget_email) -> bool:
-        return Budget.query.filter_by(email=Budget_email).first() is not None
+    def exists(budget_id) -> bool:
+        return Budget.query.filter_by(id=budget_id).first() is not None
+
+
 

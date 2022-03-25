@@ -3,7 +3,7 @@ from sqlalchemy import Column, Date, Integer, String
 from sqlalchemy.orm import relationship, backref
 from src.database.db import Base, db_session
 
-class User(Base):
+class User(Base): #Sprint 1
     __tablename__ = 'user'
     id = Column(Integer, primary_key=True)
     username = Column(String(255), nullable=False)
