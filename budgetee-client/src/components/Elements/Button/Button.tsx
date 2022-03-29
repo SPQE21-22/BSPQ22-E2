@@ -32,7 +32,7 @@ export const Button = (
       className={`flex justify-center items-center border-2 disabled:opacity-70 disabled:cursor-not-allowed rounded-full shadow font-medium transition-colors focus:outline-none ${variants[variant]} ${sizes[size]} ${className}`}
       {...props}
     >
-      <span className='mx-2'>{props.children}</span>
+      <span className='mx-2 flex items-center justify-center'>{props.children}</span>
     </button>
   );
 };
