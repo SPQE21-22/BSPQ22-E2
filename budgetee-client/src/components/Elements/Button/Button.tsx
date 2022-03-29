@@ -17,22 +17,26 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   size?: keyof typeof sizes;
 }
 
-export const Button = (
-  {
-    type = 'button',
-    className = '',
-    variant = 'primary',
-    size = 'md',
-    ...props
-  } : ButtonProps
-) => {
-  return (
-    <button
-      type={type}
-      className={`flex justify-center items-center border-2 disabled:opacity-70 disabled:cursor-not-allowed rounded-full shadow font-medium transition-colors focus:outline-none ${variants[variant]} ${sizes[size]} ${className}`}
-      {...props}
-    >
-      <span className='mx-2 flex items-center justify-center'>{props.children}</span>
-    </button>
-  );
-};
+export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  (
+    {
+      type = 'button',
+      className = '',
+      variant = 'primary',
+      size = 'md',
+      ...props
+    },
+    ref
+  ) => {
+    return (
+      <button
+        ref={ref}
+        type={type}
+        className={`flex justify-center items-center border-2 disabled:opacity-70 disabled:cursor-not-allowed rounded-full shadow font-medium transition-colors focus:outline-none ${variants[variant]} ${sizes[size]} ${className}`}
+        {...props}
+      >
+        <span className='mx-2 flex items-center justify-center'>{props.children}</span>
+      </button>
+    );
+  }
+);
