@@ -1,10 +1,12 @@
 from flask import Flask
 from flask_restful import Api, Resource
 from src.common.admin import create_admin
+from src.config import app_secret_key
 from src.database.db import init_db
 from src.resources.budgets import BudgetsAll
 
 app = Flask(__name__)
+app.secret_key = app_secret_key
 api = Api(app)
 
 init_db()

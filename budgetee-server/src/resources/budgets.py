@@ -6,6 +6,9 @@ class BudgetsAll(Resource): #Sprint 1
     def get(self): #get all the budgets
         budgets = Budget.all()
         budget_dicts = [budget.as_dict() for budget in budgets]
+        for budget in budget_dicts:
+            budget['start_date'] = str(budget['start_date'])
+            budget['end_date'] = str(budget['end_date'])
         return budget_dicts
 
     def post(self): #create a budget
