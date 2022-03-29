@@ -1,7 +1,6 @@
 from flask import request
 from flask_restful import Resource
-#from common.utils import get_user_from_token
-from database import Budget
+from src.database.budget import Budget
 
 class BudgetsAll(Resource): #Sprint 1
     def get(self): #get all the budgets

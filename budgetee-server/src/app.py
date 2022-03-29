@@ -1,11 +1,14 @@
 from flask import Flask
 from flask_restful import Api, Resource
-from src.db import init_db
+from src.common.admin import create_admin
+from src.database.db import init_db
+from src.resources.budgets import BudgetsAll
 
 app = Flask(__name__)
 api = Api(app)
 
 init_db()
+create_admin(app)
 
 @app.before_request
 def middleware():
@@ -20,7 +23,7 @@ class Ping(Resource):
 
     def post(self):
         return 'pong POST'
-    
+
     def put(self):
         return 'pong PUT'
 
@@ -30,6 +33,7 @@ class Ping(Resource):
 
 # Define API endpoint routes
 api.add_resource(Ping, '/')
+api.add_resource(BudgetsAll, '/budgets')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, use_reloader=False)

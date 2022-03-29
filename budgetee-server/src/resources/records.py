@@ -1,7 +1,7 @@
 from flask import request
 from flask_restful import Resource
-#from common.utils import get_user_from_token
-from database import Budget, Record
+from src.database.budget import Budget
+from src.database.record import Record
 
 class RecordsAll(Resource): #Sprint 1
     def get(self, budget_id): #get all the records in a budget

@@ -2,7 +2,7 @@ from __future__ import annotations
 from sqlalchemy import Column, DateTime, Integer, String
 from sqlalchemy.orm import relationship, backref
 from src.database.db import Base, db_session
-from database import Record
+from src.database.record import Record
 
 class Budget(Base): #Sprint1
     __tablename__ = 'Budget'
@@ -11,8 +11,8 @@ class Budget(Base): #Sprint1
     description = Column(String(255), nullable=False)
     start_date = Column(DateTime(255), nullable=False)
     end_date = Column(DateTime(255), nullable=False)
-    records = relationship('Record', backref=backref('Budget'))
-    warnings = relationship('Integer', backref=backref('Budget')) #Warns when budget goes over or under a certain amount
+
+    # records = relationship('Record', backref=backref('Budget'))
 
     def __init__(self,  name, description, start_date, end_date):       
         self.name = name

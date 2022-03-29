@@ -1,23 +1,22 @@
 from __future__ import annotations
-from tkinter import Label
 from unicodedata import category
-from sqlalchemy import DateTime, Column, Integer, String
+from sqlalchemy import DateTime, Column, Float, Integer, String
 from src.database.db import Base, db_session
 
 class Record(Base): #Sprint 1
     __tablename__ = 'Record'
     id = Column(Integer, primary_key=True)
     category = Column(String(255), nullable=False)
-    label = Column(Label, nullable=False)
-    value = Column(float, nullable=False)
+    # label = Column(Label, nullable=False)
+    value = Column(Float, nullable=False)
     dateTime = Column(DateTime(255), nullable=False)
     extraInfo = Column(String(255), nullable=False) 
     paymentType = Column(String(255), nullable=False) #Do we need?
     place = Column(String(255), nullable=False) #Do we need ?
 
-    def __init__(self, category, label, value, dateTime, extraInfo, paymentType, place):
+    def __init__(self, category, value, dateTime, extraInfo, paymentType, place):
         self.category = category
-        self.label = label
+        # self.label = label
         self.value = value
         self.dateTime = dateTime
         self.extraInfo = extraInfo

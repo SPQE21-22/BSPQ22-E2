@@ -6,11 +6,12 @@ from src.config import postgresqlUrl
 # https://flask.palletsprojects.com/en/2.0.x/patterns/sqlalchemy/
 
 engine = create_engine(postgresqlUrl)
-db_session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
+db_session = scoped_session(sessionmaker(
+    autocommit=False, autoflush=False, bind=engine))
 
 Base = declarative_base()
 Base.query = db_session.query_property()
 
+
 def init_db():
-    import src.models
     Base.metadata.create_all(bind=engine)
