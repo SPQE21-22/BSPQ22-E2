@@ -8,9 +8,9 @@ class Budget(Base): #Sprint1
     __tablename__ = 'Budget'
     id = Column(Integer, primary_key=True)
     name = Column(String(255), nullable=False)
-    description = Column(String(255), nullable=False)
-    start_date = Column(DateTime(255), nullable=False)
-    end_date = Column(DateTime(255), nullable=False)
+    description = Column(String(255), nullable=True)
+    start_date = Column(DateTime(255), nullable=True)
+    end_date = Column(DateTime(255), nullable=True)
 
     # records = relationship('Record', backref=backref('Budget'))
 

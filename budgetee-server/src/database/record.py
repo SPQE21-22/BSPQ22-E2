@@ -9,10 +9,10 @@ class Record(Base): #Sprint 1
     category = Column(String(255), nullable=False)
     # label = Column(Label, nullable=False)
     value = Column(Float, nullable=False)
-    dateTime = Column(DateTime(255), nullable=False)
-    extraInfo = Column(String(255), nullable=False) 
-    paymentType = Column(String(255), nullable=False) #Do we need?
-    place = Column(String(255), nullable=False) #Do we need ?
+    dateTime = Column(DateTime(255), nullable=True)
+    extraInfo = Column(String(255), nullable=True) 
+    paymentType = Column(String(255), nullable=True) #Do we need?
+    place = Column(String(255), nullable=True) #Do we need ?
 
     def __init__(self, category, value, dateTime, extraInfo, paymentType, place):
         self.category = category
