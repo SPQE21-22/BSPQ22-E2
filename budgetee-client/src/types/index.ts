@@ -9,10 +9,12 @@ export type Budget = {
 
 export type Record = {
   id: number;
+  name: string;
   category: string;
   value: number;
-  date?: string;
+  date: string;
   extraInfo?: string;
   paymentType?: string;
   place?: string;
+  budgetId: number;
 };

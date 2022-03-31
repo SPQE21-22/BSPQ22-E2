@@ -1,10 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { PencilAltIcon } from '@heroicons/react/solid';
 
 import { Budget } from '../../../types';
 import { DashboardWidget } from './DashboardWidget';
-import { Button } from '../../../components/Elements/Button';
 
 import { getBudgets } from '../api/getBudgets';
 import { formatDate } from '../../../utils/helper';
@@ -22,7 +20,7 @@ const BudgetItem = ({ budget }: BudgetProps) => {
         </div>
       </div>
       <div className='p-2 my-0.5 flex flex-col transition-all'>
-        <span>{budget.name}</span>
+        <span className='font-semibold'>{budget.name}</span>
         {/* TODO calculate total balances */}
         <div className='text-sm font-medium text-green-500'>
           €{budget.initialBudget}
