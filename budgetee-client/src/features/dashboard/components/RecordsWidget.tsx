@@ -11,6 +11,7 @@ type RecordProps = {
 }
 
 const RecordItem = ({ record }: RecordProps) => {
+  // TODO different color for zero-value records
   const getCleanValue = (value: number): string => value > 0 ? `€${value}` : `-€${-value}`;
 
   return (

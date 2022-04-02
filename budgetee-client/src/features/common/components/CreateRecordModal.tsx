@@ -6,6 +6,7 @@ import { Button } from '../../../components/Elements/Button';
 import { createRecord } from '../api/createRecord';
 import { ActionType, useModals } from '../../../context/ModalContext';
 import { useData } from '../../../context/DataContext';
+import { SelectField } from '../../../components/Form/SelectField';
 
 type FormProps = {
   closeModal: () => void;
@@ -20,7 +21,7 @@ export type RecordFormData = {
   extraInfo?: string;
   paymentType?: string;
   place?: string;
-  budgetId: number;
+  budgetId: string;
 };
 
 const initialFormData: RecordFormData = {
@@ -31,16 +32,25 @@ const initialFormData: RecordFormData = {
   extraInfo: '',
   paymentType: '',
   place: '',
-  budgetId: 0,
+  budgetId: '',
 };
 
 // TODO style datepicker
 const CreateRecordForm = ({ closeModal }: FormProps) => {
   const [formState, setFormState] = React.useState<RecordFormData>(initialFormData);
-  const { dispatch } = useData();
+  const { data, dispatch } = useData();
+
+  const budgets = data.budgets.map(budget => {
+    return {
+      label: budget.name,
+      value: budget.id
+    }
+  });
 
   // TODO type checking for initialBudget type
-  const handleInputChange = (event: React.FormEvent<HTMLInputElement>): void => {
+  const handleInputChange = (
+    event: React.FormEvent<HTMLInputElement> | React.FormEvent<HTMLSelectElement>
+  ): void => {
     const target = event.currentTarget;
     const value = target.value;
     const name = target.name;
@@ -124,6 +134,14 @@ const CreateRecordForm = ({ closeModal }: FormProps) => {
         label='Place'
         name='place'
         value={formState.place}
+        onChange={handleInputChange}
+        className='mb-2'
+      />
+      <SelectField
+        label='Budget'
+        name='budgetId'
+        options={budgets}
+        value={formState.budgetId}
         onChange={handleInputChange}
         className='mb-2'
       />
