@@ -18,10 +18,10 @@ class RecordsAll(Resource): #Sprint 1
             category = data.get('category'),
             value = data.get('value'),
             date = data.get('date'),
-            extraInfo = data.get('extraInfo'),
-            paymentType = data.get('paymentType'),
+            extra_info = data.get('extraInfo'),
+            payment_type = data.get('paymentType'),
             place = data.get('place'),
-            budgetId = data.get('budgetId')
+            budget_id = data.get('budgetId')
         )
         new_record.save()
 
@@ -44,8 +44,8 @@ class RecordsDetail(Resource): #Sprint 1
         record.category = data.get('category')
         record.value = data.get('value')
         record.date = data.get('date')
-        record.extraInfo = data.get('extraInfo')
-        record.paymentType = data.get('paymentType')
+        record.extra_info = data.get('extraInfo')
+        record.payment_type = data.get('paymentType')
         record.place = data.get('place')
         record.budget_id = data.get('budgetId')
         

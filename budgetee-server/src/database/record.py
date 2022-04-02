@@ -1,6 +1,7 @@
 from __future__ import annotations
 from sqlalchemy import DateTime, Column, Float, ForeignKey, String
 from sqlalchemy.dialects.postgresql import UUID
+from src.common.helper import camelize
 from src.database.db import Base, db_session
 import uuid
 
@@ -11,21 +12,21 @@ class Record(Base): #Sprint 1
     category = Column(String(255), nullable=False)
     value = Column(Float, nullable=False)
     date = Column(DateTime, nullable=True)
-    extraInfo = Column(String(255), nullable=True)
-    paymentType = Column(String(255), nullable=True)
+    extra_info = Column(String(255), nullable=True)
+    payment_type = Column(String(255), nullable=True)
     place = Column(String(255), nullable=True)
     
     budget_id = Column(UUID(as_uuid=True), ForeignKey('budget.id', ondelete='CASCADE'), nullable=False)
 
-    def __init__(self, name, category, value, date, extraInfo, paymentType, place, budgetId):
+    def __init__(self, name, category, value, date, extra_info, payment_type, place, budget_id):
         self.name = name
         self.category = category
         self.value = value
         self.date = date
-        self.extraInfo = extraInfo
-        self.paymentType = paymentType
+        self.extraInfo = extra_info
+        self.paymentType = payment_type
         self.place = place
-        self.budget_id = budgetId
+        self.budget_id = budget_id
 
     def __repr__(self):
         return f'<Record {self.name!r}>'
@@ -36,9 +37,9 @@ class Record(Base): #Sprint 1
         db_session.commit()
     
     def as_dict(self):
-        record = {c.name: getattr(self, c.name) for c in self.__table__.columns}
+        record = {camelize(c.name): getattr(self, c.name) for c in self.__table__.columns}
         record['id'] = str(record['id'])
-        record['budget_id'] = str(record['budget_id'])
+        record['budgetId'] = str(record['budgetId'])
         record['date'] = str(record['date'])
         return record
     

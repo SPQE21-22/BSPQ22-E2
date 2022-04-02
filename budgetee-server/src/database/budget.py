@@ -2,6 +2,7 @@ from __future__ import annotations
 from sqlalchemy import Column, Date, Float, String
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship, backref
+from src.common.helper import camelize
 from src.database.db import Base, db_session
 import uuid
 
@@ -32,10 +33,10 @@ class Budget(Base): #Sprint1
         db_session.commit()
     
     def as_dict(self):
-        budget = {b.name: getattr(self, b.name) for b in self.__table__.columns}
+        budget = {camelize(b.name): getattr(self, b.name) for b in self.__table__.columns}
         budget['id'] = str(budget['id'])
-        budget['start_date'] = str(budget['start_date'])
-        budget['end_date'] = str(budget['end_date'])
+        budget['startDate'] = str(budget['startDate'])
+        budget['endDate'] = str(budget['endDate'])
         return budget
     
     @staticmethod
