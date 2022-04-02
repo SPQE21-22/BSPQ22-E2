@@ -11,7 +11,7 @@ class RecordsAll(Resource): #Sprint 1
     def post(self): #create a record in a budget
         if request.content_type != 'application/json':
             return {'error': 'only application/json is accepted'}, 400         
-        
+
         data = request.json
         new_record = Record(
             name = data.get('name'),
@@ -20,38 +20,42 @@ class RecordsAll(Resource): #Sprint 1
             date = data.get('date'),
             extraInfo = data.get('extraInfo'),
             paymentType = data.get('paymentType'),
-            place = data.get('place')
+            place = data.get('place'),
+            budgetId = data.get('budgetId')
         )
-        
-        return ''
+        new_record.save()
+
+        return new_record.as_dict() , 201
 
 class RecordsDetail(Resource): #Sprint 1
-    def get(self, budget_id, record_id): #get a single record in a budget
+    def get(self, record_id): #get a single record in a budget
         record = Record.get(record_id)
         return record.as_dict()
 
-    def put(self, budget_id, record_id): #edit a single record in a budget
+    def put(self, record_id): #edit a single record in a budget
         if request.content_type != 'application/json':
             return {'error': 'only application/json is accepted'}, 400
         
         record = Record.get(record_id)
 
         data = request.json
-        record.category = data['category']
-        record.label = data['label']
-        record.value = data['value']
-        record.dateTime = data['dateTime']
-        record.extraInfo = data['extraInfo']
-        record.paymentType = data['paymentType']
-        record.place = data['place']
+        
+        record.name = data.get('name')
+        record.category = data.get('category')
+        record.value = data.get('value')
+        record.date = data.get('date')
+        record.extraInfo = data.get('extraInfo')
+        record.paymentType = data.get('paymentType')
+        record.place = data.get('place')
+        record.budget_id = data.get('budgetId')
+        
         record.save()
 
-        return record.as_dict(), 200
+        return record.as_dict(), 201
 
-    def delete(self, budget_id, record_id): #delete a single record in a budget
-        if(Record.exists(record_id)): #if the record exists
-            record = Record.get(record_id)
-            Record.delete_one(record)
+    def delete(self, record_id): #delete a single record in a budget
+        if Record.exists(record_id): #if the record exists
+            Record.delete_one(record_id)
             return {'result' : 'success'}, 204
         
-        return{'error' : 'it is denied to complete this action'}, 403
+        return {'error' : 'budget does not exist'}, 404

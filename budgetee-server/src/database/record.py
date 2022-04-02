@@ -34,7 +34,6 @@ class Record(Base): #Sprint 1
         if not self.id:
             db_session.add(self)
         db_session.commit()
-        # db_session.expunge() # REVIEW necessary when using a single session?
     
     def as_dict(self):
         record = {c.name: getattr(self, c.name) for c in self.__table__.columns}

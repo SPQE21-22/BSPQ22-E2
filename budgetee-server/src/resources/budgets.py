@@ -53,7 +53,3 @@ class BudgetsDetail(Resource): #Sprint 1
             return {'result' : 'success'}, 204
         
         return {'error' : 'budget does not exist'}, 404
-           
-        
-        
-
