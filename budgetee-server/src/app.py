@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 from flask_restful import Api, Resource
 from src.common.admin import create_admin
 from src.config import app_secret_key
@@ -8,6 +9,7 @@ from src.resources.records import RecordsAll, RecordsDetail
 
 
 app = Flask(__name__)
+CORS(app)
 app.secret_key = app_secret_key
 api = Api(app)
 
