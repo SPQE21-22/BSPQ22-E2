@@ -3,7 +3,7 @@ import React from 'react';
 import { ModalBase } from '../../../components/Overlay/ModalBase';
 import { InputField } from '../../../components/Form'
 import { Button } from '../../../components/Elements/Button';
-import { createBudget } from '../api/createBudget';
+import { createRecord } from '../api/createRecord';
 import { ActionType, useModals } from '../../../context/ModalContext';
 
 type FormProps = {
@@ -11,25 +11,31 @@ type FormProps = {
 };
 
 // TODO export to external file
-export type BudgetFormData = {
+export type RecordFormData = {
   name: string;
-  description?: string;
-  startDate: string;
-  endDate: string;
-  initialBudget: number;
+  category: string;
+  value: number;
+  date: string;
+  extraInfo?: string;
+  paymentType?: string;
+  place?: string;
+  budgetId: number;
 };
 
-const initialFormData: BudgetFormData = {
+const initialFormData: RecordFormData = {
   name: '',
-  description: '',
-  startDate: '',
-  endDate: '',
-  initialBudget: 0,
+  category: '',
+  value: 0,
+  date: '',
+  extraInfo: '',
+  paymentType: '',
+  place: '',
+  budgetId: 0,
 };
 
 // TODO style datepicker
-const CreateBudgetForm = ({ closeModal }: FormProps) => {
-  const [formState, setFormState] = React.useState<BudgetFormData>(initialFormData);
+const CreateRecordForm = ({ closeModal }: FormProps) => {
+  const [formState, setFormState] = React.useState<RecordFormData>(initialFormData);
 
   // TODO type checking for initialBudget type
   const handleInputChange = (event: React.FormEvent<HTMLInputElement>): void => {
@@ -46,7 +52,7 @@ const CreateBudgetForm = ({ closeModal }: FormProps) => {
   const handleSubmit = (event: React.FormEvent): void => {
     event.preventDefault();
     
-    createBudget(formState)
+    createRecord(formState)
       .then(result => {
         console.log(result);
         closeModal();
@@ -68,52 +74,67 @@ const CreateBudgetForm = ({ closeModal }: FormProps) => {
         onChange={handleInputChange}
         className='mb-2'
       />
+      {/* TODO use <select> */}
       <InputField
-        label='Description'
-        name='description'
-        value={formState.description}
-        onChange={handleInputChange}
-        className='mb-2'
-        />
-      <InputField
-        label='Start date'
-        type='date'
-        name='startDate'
-        value={formState.startDate}
+        label='Category'
+        name='category'
+        value={formState.category}
         required
         onChange={handleInputChange}
         className='mb-2'
       />
       <InputField
-        label='End date'
-        type='date'
-        name='endDate'
-        value={formState.endDate}
-        required
-        onChange={handleInputChange}
-        className='mb-2'
-      />
-      <InputField
-        label='Initial budget'
+        label='Value'
+        name='value'
+        value={formState.value}
         type='number'
-        name='initialBudget'
-        value={formState.initialBudget}
+        required
         onChange={handleInputChange}
         className='mb-2'
       />
-      <Button type='submit' variant='inverse' className='mt-2'>Create budget</Button>
+      <InputField
+        label='Date'
+        name='date'
+        value={formState.date}
+        type='datetime-local'
+        onChange={handleInputChange}
+        className='mb-2'
+      />
+      <InputField
+        label='Extra information'
+        name='extraInfo'
+        value={formState.extraInfo}
+        onChange={handleInputChange}
+        className='mb-2'
+      />
+      {/* TODO use <select>? */}
+      <InputField
+        label='Payment type'
+        name='extraInfo'
+        value={formState.paymentType}
+        onChange={handleInputChange}
+        className='mb-2'
+      />
+      <InputField
+        label='Place'
+        name='place'
+        value={formState.place}
+        onChange={handleInputChange}
+        className='mb-2'
+      />
+      <Button type='submit' variant='inverse' className='mt-2'>Create record</Button>
     </form>
   );
 };
 
-export const CreateBudgetModal = () => {
+export const CreateRecordModal = () => {
   const { modalState, dispatch } = useModals();
 
   const closeModal = () => dispatch(ActionType.CLOSE_ALL);
 
   return (
-    <ModalBase isOpen={modalState.newBudgetOpen} closeModal={closeModal} title='Create budget'>
-      <CreateBudgetForm closeModal={closeModal} />
+    <ModalBase isOpen={modalState.newRecordOpen} closeModal={closeModal} title='Create record'>
+      <CreateRecordForm closeModal={closeModal} />
     </ModalBase>
   );
 };

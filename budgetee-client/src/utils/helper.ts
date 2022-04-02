@@ -18,7 +18,9 @@ const months: Months = {
 };
 
 // TODO unit tests, format guards
-export const formatDate = (date: string): string => {
+export const formatDate = (date: string | undefined): string => {
+  if (date === undefined) return 'No date defined';
+
   const splitDate = date.split('-');
   const year = splitDate[0];
   const month = months[splitDate[1]];

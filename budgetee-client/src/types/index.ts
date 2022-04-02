@@ -12,7 +12,7 @@ export type Record = {
   name: string;
   category: string;
   value: number;
-  date: string;
+  date?: string;
   extraInfo?: string;
   paymentType?: string;
   place?: string;

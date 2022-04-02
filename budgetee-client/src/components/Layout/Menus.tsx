@@ -16,6 +16,7 @@ import { Menu, Popover, Transition } from '@headlessui/react';
 
 import user from '../../assets/user.png';
 import { Button } from '../Elements/Button';
+import { ActionType, useModals } from '../../context/ModalContext';
 
 // TODO unify NewMenu and MobileCreateMenu
 
@@ -54,6 +55,8 @@ const Notification = ({ type = 'info', title = 'Title', content = 'Content' }: N
 };
 
 export const NewMenu = () => {
+  const { dispatch } = useModals();
+
   return (
     <Menu as="div" className="relative inline-block text-left" >
       <Menu.Button as={React.Fragment}>
@@ -86,6 +89,7 @@ export const NewMenu = () => {
               {({ active }) => (
                 <button
                   className={`${active && 'bg-gray-100'} text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                  onClick={() => dispatch(ActionType.SHOW_NEW_BUDGET)}
                 >
                   <div className={`p-2 mr-4 rounded-full ${active ? 'bg-gray-200' : 'bg-gray-100'}`}>
                     <ClipboardListIcon
@@ -104,6 +108,7 @@ export const NewMenu = () => {
               {({ active }) => (
                 <button
                   className={`${active && 'bg-gray-100'} text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                  onClick={() => dispatch(ActionType.SHOW_NEW_RECORD)}
                 >
                   <div className={`p-2 mr-4 rounded-full ${active ? 'bg-gray-200' : 'bg-gray-100'}`}>
                     <CurrencyEuroIcon
@@ -215,6 +220,8 @@ export const UserMenu = () => {
 };
 
 export const MobileCreateMenu = () => {
+  const { dispatch } = useModals();
+
   return (
     <Menu>
       <Menu.Button className="flex flex-col items-center w-full">
@@ -251,6 +258,7 @@ export const MobileCreateMenu = () => {
               {({ active }) => (
                 <button
                   className={`${active && 'bg-gray-100'} text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                  onClick={() => dispatch(ActionType.SHOW_NEW_BUDGET)}
                 >
                   <div className={`p-2 mr-4 rounded-full ${active ? 'bg-gray-200' : 'bg-gray-100'}`}>
                     <ClipboardListIcon
@@ -269,6 +277,7 @@ export const MobileCreateMenu = () => {
               {({ active }) => (
                 <button
                   className={`${active && 'bg-gray-100'} text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                  onClick={() => dispatch(ActionType.SHOW_NEW_RECORD)}
                 >
                   <div className={`p-2 mr-4 rounded-full ${active ? 'bg-gray-200' : 'bg-gray-100'}`}>
                     <CurrencyEuroIcon
