@@ -17,6 +17,8 @@ import { Menu, Popover, Transition } from '@headlessui/react';
 import user from '../../assets/user.png';
 import { Button } from '../Elements/Button';
 
+// TODO unify NewMenu and MobileCreateMenu
+
 type NotificationProps = {
   type?: 'check' | 'warn' | 'info';
   title?: string;

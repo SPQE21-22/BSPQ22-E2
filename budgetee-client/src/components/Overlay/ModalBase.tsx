@@ -1,18 +1,18 @@
 import React from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { ExclamationIcon } from '@heroicons/react/outline';
 
 type ModalProps = {
   isOpen: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  closeModal: () => void;
+  title?: string;
   children: React.ReactNode;
 };
 
-export const ModalBase = ({ isOpen, setIsOpen, children }: ModalProps) => {
+export const ModalBase = ({ isOpen, closeModal, title, children }: ModalProps) => {
   return (
     <Transition.Root show={isOpen} as={React.Fragment}>
       {/* TODO add ref prop, remake contents */}
-      <Dialog as='div' className="fixed z-10 inset-0 overflow-y-auto" initialFocus={undefined} onClose={() => setIsOpen(false)}>
+      <Dialog as='div' className="fixed z-10 inset-0 overflow-y-auto" initialFocus={undefined} onClose={closeModal}>
         <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
           <Transition.Child
             as={React.Fragment}
@@ -41,20 +41,14 @@ export const ModalBase = ({ isOpen, setIsOpen, children }: ModalProps) => {
           >
             <div className="relative inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
               <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                <div className="sm:flex sm:items-start">
-                  <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                    <ExclamationIcon className="h-6 w-6 text-red-600" aria-hidden="true" />
-                  </div>
-                  <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                <div className="text-center sm:mt-0 sm:ml-4 sm:text-left">
+                  {title &&
                     <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900">
-                      Deactivate account
+                      {title}
                     </Dialog.Title>
-                    <div className="mt-2">
-                      <p className="text-sm text-gray-500">
-                        Are you sure you want to deactivate your account? All of your data will be permanently removed.
-                        This action cannot be undone.
-                      </p>
-                    </div>
+                  }
+                  <div className="mt-2">
+                    {children}
                   </div>
                 </div>
               </div>

@@ -18,9 +18,9 @@ export const DashboardWidget = ({ title, to, linkText = 'See all', children }: D
         {children}
       </div>
       {to && (
-        <div className='w-full p-1 absolute bottom-0 flex items-center justify-center bg-white'>
+        <div className='w-full p-1 absolute bottom-0 flex items-center justify-center bg-slate-100 border-t border-slate-200'>
           <Link to={to} className='w-11/12 rounded-full'>
-            <Button className='w-full'>{linkText}</Button>
+            <Button className='w-full my-2'>{linkText}</Button>
           </Link>
         </div>
       )}

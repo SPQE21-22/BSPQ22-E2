@@ -32,7 +32,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       <button
         ref={ref}
         type={type}
-        className={`flex justify-center items-center border-2 disabled:opacity-70 disabled:cursor-not-allowed rounded-full shadow font-medium transition-colors focus:outline-none ${variants[variant]} ${sizes[size]} ${className}`}
+        className={`flex justify-center items-center border-2 disabled:opacity-70 disabled:cursor-not-allowed rounded-lg shadow font-medium transition-colors focus:outline-none ${variants[variant]} ${sizes[size]} ${className}`}
         {...props}
       >
         <span className='mx-2 flex items-center justify-center'>{props.children}</span>
