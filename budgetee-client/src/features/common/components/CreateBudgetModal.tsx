@@ -5,6 +5,7 @@ import { InputField } from '../../../components/Form'
 import { Button } from '../../../components/Elements/Button';
 import { createBudget } from '../api/createBudget';
 import { ActionType, useModals } from '../../../context/ModalContext';
+import { useData } from '../../../context/DataContext';
 
 type FormProps = {
   closeModal: () => void;
@@ -30,6 +31,7 @@ const initialFormData: BudgetFormData = {
 // TODO style datepicker
 const CreateBudgetForm = ({ closeModal }: FormProps) => {
   const [formState, setFormState] = React.useState<BudgetFormData>(initialFormData);
+  const { dispatch } = useData();
 
   // TODO type checking for initialBudget type
   const handleInputChange = (event: React.FormEvent<HTMLInputElement>): void => {
@@ -48,9 +50,12 @@ const CreateBudgetForm = ({ closeModal }: FormProps) => {
     
     createBudget(formState)
       .then(result => {
-        console.log(result);
+        dispatch({
+          type: 'createBudget',
+          payload: result
+        });
         closeModal();
-        // TODO add to state, notify creation, etc
+        // TODO notify creation, etc
       })
       .catch(err => {
         console.log(err);

@@ -1,3 +1,4 @@
+import React from 'react';
 import { ClipboardListIcon, CurrencyEuroIcon } from '@heroicons/react/solid';
 
 import { BudgetsWidget } from '../components/BudgetsWidget';
@@ -6,6 +7,11 @@ import { CreateBudgetModal } from '../../common/components/CreateBudgetModal';
 import { Button } from '../../../components/Elements/Button';
 import { ActionType, useModals } from '../../../context/ModalContext';
 import { CreateRecordModal } from '../../common/components/CreateRecordModal';
+
+import { getBudgets } from '../api/getBudgets';
+import { getRecords } from '../api/getRecords';
+import { useData } from '../../../context/DataContext';
+
 
 const DashboardHeader = () => {
   const { dispatch } = useModals();
@@ -31,6 +37,26 @@ const DashboardHeader = () => {
 };
 
 export const Dashboard = () => {
+  const { dispatch } = useData();
+  
+  // TODO implement React.Suspense for this
+  React.useEffect(() => {
+    const budgets = getBudgets();
+    const records = getRecords();
+
+    Promise.all([budgets, records])
+      .then(result => {
+        dispatch({
+          type: 'loadData',
+          payload: {
+            budgets: result[0],
+            records: result[1]
+          }
+        })
+      })
+      .catch(err => console.log(err));
+  }, [dispatch]);
+
   return (
     <div className=''>
       <DashboardHeader />

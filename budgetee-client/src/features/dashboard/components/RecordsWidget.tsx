@@ -1,11 +1,10 @@
-import React from 'react';
 import { LibraryIcon, PencilAltIcon } from '@heroicons/react/outline';
 
 import { Record } from '../../../types';
 import { DashboardWidget } from "./DashboardWidget";
 
-import { getRecords } from '../api/getRecords';
 import { formatDate } from '../../../utils/helper';
+import { useData } from '../../../context/DataContext';
 
 type RecordProps = {
   record: Record;
@@ -46,21 +45,14 @@ const RecordItem = ({ record }: RecordProps) => {
 };
 
 export const RecordsWidget = () => {
-  const [records, setRecords] = React.useState<Record[]>([]);
-
-  // TODO implement React.Suspense for this
-  React.useEffect(() => {
-    getRecords()
-      .then(result => setRecords(result))
-      .catch(error => console.log(error));
-  }, []);
+  const { data } = useData();
 
   // TODO render "empty" state when there are no budgets, differentiate between empty and unloaded
   return (
     <DashboardWidget title="Latest records" to="/records" linkText='See all records'>
       <div className='flex flex-col divide-y divide-slate-200'>
         {/* TODO order by date */}
-        {records.map(record => <RecordItem key={record.id} record={record} />)}
+        {data.records.map(record => <RecordItem key={record.id} record={record} />)}
       </div>
     </DashboardWidget>
   );

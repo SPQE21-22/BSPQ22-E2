@@ -1,5 +1,5 @@
 export type Budget = {
-  id: number;
+  id: string;
   name: string;
   description?: string;
   startDate: string;
@@ -8,7 +8,7 @@ export type Budget = {
 };
 
 export type Record = {
-  id: number;
+  id: string;
   name: string;
   category: string;
   value: number;

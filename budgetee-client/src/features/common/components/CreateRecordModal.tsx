@@ -5,6 +5,7 @@ import { InputField } from '../../../components/Form'
 import { Button } from '../../../components/Elements/Button';
 import { createRecord } from '../api/createRecord';
 import { ActionType, useModals } from '../../../context/ModalContext';
+import { useData } from '../../../context/DataContext';
 
 type FormProps = {
   closeModal: () => void;
@@ -36,6 +37,7 @@ const initialFormData: RecordFormData = {
 // TODO style datepicker
 const CreateRecordForm = ({ closeModal }: FormProps) => {
   const [formState, setFormState] = React.useState<RecordFormData>(initialFormData);
+  const { dispatch } = useData();
 
   // TODO type checking for initialBudget type
   const handleInputChange = (event: React.FormEvent<HTMLInputElement>): void => {
@@ -54,9 +56,12 @@ const CreateRecordForm = ({ closeModal }: FormProps) => {
     
     createRecord(formState)
       .then(result => {
-        console.log(result);
+        dispatch({
+          type: 'createRecord',
+          payload: result
+        });
         closeModal();
-        // TODO add to state, notify creation, etc
+        // TODO notify creation, etc
       })
       .catch(err => {
         console.log(err);

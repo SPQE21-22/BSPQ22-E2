@@ -1,11 +1,10 @@
-import React from 'react';
 import { PencilAltIcon } from '@heroicons/react/solid';
 
 import { Budget } from '../../../types';
 import { DashboardWidget } from './DashboardWidget';
 
-import { getBudgets } from '../api/getBudgets';
 import { formatDate } from '../../../utils/helper';
+import { useData } from '../../../context/DataContext';
 
 type BudgetProps = {
   budget: Budget;
@@ -36,21 +35,14 @@ const BudgetItem = ({ budget }: BudgetProps) => {
 };
 
 export const BudgetsWidget = () => {
-  const [budgets, setBudgets] = React.useState<Budget[]>([]);
-
-  // TODO implement React.Suspense for this
-  React.useEffect(() => {
-    getBudgets()
-      .then(result => setBudgets(result))
-      .catch(error => console.log(error));
-  }, []);
+  const { data } = useData();
 
   // TODO render "empty" state when there are no budgets, differentiate between empty and unloaded
   return (
     <DashboardWidget title="Latest budgets" to="/budgets" linkText="See all budgets">
       <div className='flex flex-col divide-y divide-slate-200'>
         {/* TODO order by date */}
-        {budgets.map(budget => <BudgetItem key={budget.id} budget={budget} />)}
+        {data.budgets.map(budget => <BudgetItem key={budget.id} budget={budget} />)}
       </div>
     </DashboardWidget>
   );

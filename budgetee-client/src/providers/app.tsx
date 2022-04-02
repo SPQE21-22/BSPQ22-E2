@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { DataProvider } from '../context/DataContext';
 import { ModalProvider } from '../context/ModalContext';
 
 type AppProviderProps = {
@@ -8,8 +9,10 @@ type AppProviderProps = {
 
 export const AppProvider = ({ children }: AppProviderProps) => {
   return (
-    <ModalProvider>
-      <Router>{children}</Router>
-    </ModalProvider>
+    <DataProvider>
+      <ModalProvider>
+        <Router>{children}</Router>
+      </ModalProvider>
+    </DataProvider>
   );
 };
