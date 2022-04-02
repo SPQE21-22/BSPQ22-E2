@@ -1,24 +1,27 @@
 from __future__ import annotations
-from sqlalchemy import Column, DateTime, Integer, String
+from sqlalchemy import Column, Date, Float, String
+from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship, backref
 from src.database.db import Base, db_session
-from src.database.record import Record
+import uuid
 
 class Budget(Base): #Sprint1
-    __tablename__ = 'Budget'
-    id = Column(Integer, primary_key=True)
+    __tablename__ = 'budget'
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     name = Column(String(255), nullable=False)
     description = Column(String(255), nullable=True)
-    start_date = Column(DateTime(255), nullable=True)
-    end_date = Column(DateTime(255), nullable=True)
+    start_date = Column(Date, nullable=True)
+    end_date = Column(Date, nullable=True)
+    initial_budget = Column(Float, nullable=False)
 
-    # records = relationship('Record', backref=backref('Budget'))
+    records = relationship('Record', backref=backref('budget'))
 
-    def __init__(self,  name, description, start_date, end_date):       
+    def __init__(self,  name, description, start_date, end_date, initial_budget):       
         self.name = name
         self.description = description
         self.start_date = start_date
         self.end_date = end_date
+        self.initial_budget = initial_budget
         
     def __repr__(self):
         return f'<Budget {self.name!r}>'
@@ -30,7 +33,11 @@ class Budget(Base): #Sprint1
         # db_session.expunge() # REVIEW necessary when using a single session?
     
     def as_dict(self):
-        return {b.name: getattr(self, b.name) for b in self.__table__.columns}
+        budget = {b.name: getattr(self, b.name) for b in self.__table__.columns}
+        budget['id'] = str(budget['id'])
+        budget['start_date'] = str(budget['start_date'])
+        budget['end_date'] = str(budget['end_date'])
+        return budget
     
     @staticmethod
     def all():
@@ -53,6 +60,3 @@ class Budget(Base): #Sprint1
     @staticmethod
     def exists(budget_id) -> bool:
         return Budget.query.filter_by(id=budget_id).first() is not None
-
-
-

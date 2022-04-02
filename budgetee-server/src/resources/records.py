@@ -4,32 +4,26 @@ from src.database.budget import Budget
 from src.database.record import Record
 
 class RecordsAll(Resource): #Sprint 1
-    def get(self, budget_id): #get all the records in a budget
-        budget = Budget.get(budget_id)
-        records = budget.records
+    def get(self): #get all the records in a budget
+        records = Record.all()
         return [record.as_dict() for record in records]
 
-    def post(self, budget_id): #create a record in a budget
+    def post(self): #create a record in a budget
         if request.content_type != 'application/json':
             return {'error': 'only application/json is accepted'}, 400         
         
-        budget = Budget.get(budget_id)
-        records = budget.records   
-        
         data = request.json
         new_record = Record(
-            category = data['category'],
-            label = data['label'],
-            value = data['value'],
-            dateTime = data['dateTime'],
-            extraInfo = data['extraInfo'],
-            paymentType = data['paymentType'],
-            place = data['place']
+            name = data.get('name'),
+            category = data.get('category'),
+            value = data.get('value'),
+            date = data.get('date'),
+            extraInfo = data.get('extraInfo'),
+            paymentType = data.get('paymentType'),
+            place = data.get('place')
         )
-        records.add(new_record)
-        budget.record = records
         
-        return budget.as_dict(), [record.as_dict() for record in records], 201
+        return ''
 
 class RecordsDetail(Resource): #Sprint 1
     def get(self, budget_id, record_id): #get a single record in a budget
