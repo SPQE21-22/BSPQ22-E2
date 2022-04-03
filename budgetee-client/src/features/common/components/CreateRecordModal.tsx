@@ -24,21 +24,22 @@ export type RecordFormData = {
   budgetId: string;
 };
 
-const initialFormData: RecordFormData = {
-  name: '',
-  category: '',
-  value: 0,
-  date: '',
-  extraInfo: '',
-  paymentType: '',
-  place: '',
-  budgetId: '',
-};
-
 // TODO style datepicker
 const CreateRecordForm = ({ closeModal }: FormProps) => {
-  const [formState, setFormState] = React.useState<RecordFormData>(initialFormData);
   const { data, dispatch } = useData();
+
+  const initialFormData: RecordFormData = {
+    name: '',
+    category: '',
+    value: 0,
+    date: '',
+    extraInfo: '',
+    paymentType: '',
+    place: '',
+    budgetId: data.budgets[0].id,
+  };
+
+  const [formState, setFormState] = React.useState<RecordFormData>(initialFormData);
 
   const budgets = data.budgets.map(budget => {
     return {
@@ -63,7 +64,7 @@ const CreateRecordForm = ({ closeModal }: FormProps) => {
 
   const handleSubmit = (event: React.FormEvent): void => {
     event.preventDefault();
-    
+
     createRecord(formState)
       .then(result => {
         dispatch({
@@ -81,70 +82,76 @@ const CreateRecordForm = ({ closeModal }: FormProps) => {
 
   return (
     <form className='flex flex-col' onSubmit={handleSubmit}>
-      <InputField
-        label='Name'
-        name='name'
-        value={formState.name}
-        required
-        onChange={handleInputChange}
-        className='mb-2'
-      />
-      {/* TODO use <select> */}
-      <InputField
-        label='Category'
-        name='category'
-        value={formState.category}
-        required
-        onChange={handleInputChange}
-        className='mb-2'
-      />
-      <InputField
-        label='Value'
-        name='value'
-        value={formState.value}
-        type='number'
-        required
-        onChange={handleInputChange}
-        className='mb-2'
-      />
-      <InputField
-        label='Date'
-        name='date'
-        value={formState.date}
-        type='datetime-local'
-        onChange={handleInputChange}
-        className='mb-2'
-      />
-      <InputField
-        label='Extra information'
-        name='extraInfo'
-        value={formState.extraInfo}
-        onChange={handleInputChange}
-        className='mb-2'
-      />
-      {/* TODO use <select> */}
-      <InputField
-        label='Payment type'
-        name='paymentType'
-        value={formState.paymentType}
-        onChange={handleInputChange}
-        className='mb-2'
-      />
-      <InputField
-        label='Place'
-        name='place'
-        value={formState.place}
-        onChange={handleInputChange}
-        className='mb-2'
-      />
-      <SelectField
-        label='Budget'
-        name='budgetId'
-        options={budgets}
-        value={formState.budgetId}
-        onChange={handleInputChange}
-        className='mb-2'
-      />
+      <div className='flex flex-col items-center justify-center lg:flex-row lg:gap-4'>
+        <div className='flex flex-col w-full'>
+          <InputField
+            label='Name'
+            name='name'
+            value={formState.name}
+            required
+            onChange={handleInputChange}
+            className='mb-2'
+          />
+          {/* TODO use <select> */}
+          <InputField
+            label='Category'
+            name='category'
+            value={formState.category}
+            required
+            onChange={handleInputChange}
+            className='mb-2'
+          />
+          <InputField
+            label='Value'
+            name='value'
+            value={formState.value}
+            type='number'
+            required
+            onChange={handleInputChange}
+            className='mb-2'
+          />
+          <SelectField
+            label='Budget'
+            name='budgetId'
+            options={budgets}
+            value={formState.budgetId}
+            onChange={handleInputChange}
+            className='mb-2'
+          />
+        </div>
+        <div className='flex flex-col w-full'>
+          <InputField
+            label='Date'
+            name='date'
+            value={formState.date}
+            type='datetime-local'
+            onChange={handleInputChange}
+            className='mb-2'
+          />
+          <InputField
+            label='Extra information'
+            name='extraInfo'
+            value={formState.extraInfo}
+            onChange={handleInputChange}
+            className='mb-2'
+          />
+          {/* TODO use <select> */}
+          <InputField
+            label='Payment type'
+            name='paymentType'
+            value={formState.paymentType}
+            onChange={handleInputChange}
+            className='mb-2'
+          />
+          <InputField
+            label='Place'
+            name='place'
+            value={formState.place}
+            onChange={handleInputChange}
+            className='mb-2'
+          />
+        </div>
+      </div>
       <Button type='submit' variant='inverse' className='mt-2'>Create record</Button>
     </form>
   );
@@ -156,7 +163,12 @@ export const CreateRecordModal = () => {
   const closeModal = () => dispatch(ActionType.CLOSE_ALL);
 
   return (
-    <ModalBase isOpen={modalState.newRecordOpen} closeModal={closeModal} title='Create record'>
+    <ModalBase
+      isOpen={modalState.newRecordOpen}
+      closeModal={closeModal}
+      title='Create record'
+      className='w-full lg:max-w-2xl'
+    >
       <CreateRecordForm closeModal={closeModal} />
     </ModalBase>
   );

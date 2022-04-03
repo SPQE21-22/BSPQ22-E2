@@ -28,7 +28,7 @@ export const SelectField = (
       <select
         placeholder={placeholder}
         name={name}
-        className={`appearance-none block w-full px-3 py-2 border border-gray-300 bg-white rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-violet-500 focus:border-violet-500 sm:text-sm ${className}`}
+        className={`mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-violet-500 focus:border-violet-500 sm:text-sm ${className}`}
         defaultValue={defaultValue}
         onChange={onChange}
       >

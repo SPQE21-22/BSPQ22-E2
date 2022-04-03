@@ -5,14 +5,21 @@ type ProviderProps = {
   children: React.ReactNode;
 };
 
+export enum LoadState {
+  NOT_LOADED,
+  ALL_LOADED,
+};
+
 type DataState = {
+  loadState: LoadState;
   budgets: Budget[];
   records: Record[];
 };
 
 const baseState: DataState = {
+  loadState: LoadState.NOT_LOADED,
   budgets: [],
-  records: []
+  records: [],
 };
 
 type BudgetId = string;
@@ -42,6 +49,7 @@ const dataReducer = (state: DataState, action: Action): DataState => {
     case 'loadData':
       return {
         ...state,
+        loadState: LoadState.ALL_LOADED,
         budgets: payload.budgets,
         records: payload.records
       };

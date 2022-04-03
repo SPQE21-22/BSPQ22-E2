@@ -1,10 +1,11 @@
-import { PencilAltIcon } from '@heroicons/react/solid';
+import { ClipboardListIcon, PencilAltIcon } from '@heroicons/react/solid';
 
 import { Budget } from '../../../types';
 import { DashboardWidget } from './DashboardWidget';
 
 import { formatDate } from '../../../utils/helper';
-import { useData } from '../../../context/DataContext';
+import { LoadState, useData } from '../../../context/DataContext';
+import { Spinner } from '../../../components/Elements/Spinner';
 
 type BudgetProps = {
   budget: Budget;
@@ -37,12 +38,32 @@ const BudgetItem = ({ budget }: BudgetProps) => {
 export const BudgetsWidget = () => {
   const { data } = useData();
 
-  // TODO render "empty" state when there are no budgets, differentiate between empty and unloaded
+  const getContent = () => {
+    if (data.budgets.length > 0) {
+      // TODO order by date
+      return data.budgets.map(budget => <BudgetItem key={budget.id} budget={budget} />);
+    }
+    if (data.loadState === LoadState.NOT_LOADED) {
+      return (
+        <div className='flex flex-col items-center justify-center h-full'>
+          <Spinner size='lg' />
+        </div>
+      );
+    }
+    return (
+      <div className='flex flex-col items-center justify-center h-full'>
+        <div className='mb-3 p-4 bg-violet-200 rounded-full'>
+          <ClipboardListIcon className='h-16 w-16 text-violet-500' />
+        </div>
+        <h3 className='font-medium text-xl'>No budgets created yet!</h3>
+      </div>
+    );
+  };
+
   return (
     <DashboardWidget title="Latest budgets" to="/budgets" linkText="See all budgets">
-      <div className='flex flex-col divide-y divide-slate-200'>
-        {/* TODO order by date */}
-        {data.budgets.map(budget => <BudgetItem key={budget.id} budget={budget} />)}
+      <div className='flex flex-col divide-y divide-slate-200 h-full'>
+        {getContent()}
       </div>
     </DashboardWidget>
   );

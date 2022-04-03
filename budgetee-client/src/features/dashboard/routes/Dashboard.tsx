@@ -46,11 +46,12 @@ export const Dashboard = () => {
 
     Promise.all([budgets, records])
       .then(result => {
+        const [budgets, records] = result;
         dispatch({
           type: 'loadData',
           payload: {
-            budgets: result[0],
-            records: result[1]
+            budgets: budgets,
+            records: records
           }
         })
       })

@@ -25,3 +25,4 @@ yarn-error.log*
 
 # json-server
 db.json
+db_empty.json

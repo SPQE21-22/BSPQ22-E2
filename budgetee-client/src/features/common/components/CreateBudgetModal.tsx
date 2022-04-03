@@ -71,14 +71,14 @@ const CreateBudgetForm = ({ closeModal }: FormProps) => {
         value={formState.name}
         required
         onChange={handleInputChange}
-        className='mb-2'
+        className='mb-4'
       />
       <InputField
         label='Description'
         name='description'
         value={formState.description}
         onChange={handleInputChange}
-        className='mb-2'
+        className='mb-4'
         />
       <InputField
         label='Start date'
@@ -87,7 +87,7 @@ const CreateBudgetForm = ({ closeModal }: FormProps) => {
         value={formState.startDate}
         required
         onChange={handleInputChange}
-        className='mb-2'
+        className='mb-4'
       />
       <InputField
         label='End date'
@@ -96,7 +96,7 @@ const CreateBudgetForm = ({ closeModal }: FormProps) => {
         value={formState.endDate}
         required
         onChange={handleInputChange}
-        className='mb-2'
+        className='mb-4'
       />
       <InputField
         label='Initial budget'
@@ -104,7 +104,7 @@ const CreateBudgetForm = ({ closeModal }: FormProps) => {
         name='initialBudget'
         value={formState.initialBudget}
         onChange={handleInputChange}
-        className='mb-2'
+        className='mb-4'
       />
       <Button type='submit' variant='inverse' className='mt-2'>Create budget</Button>
     </form>
