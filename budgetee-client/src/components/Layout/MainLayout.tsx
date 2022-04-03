@@ -61,7 +61,7 @@ const MobileNavigation = () => {
 
 const MobileBottombar = () => {
   return (
-    <div className='w-screen sm:hidden absolute bottom-0 h-14 shadow bg-gray-50 flex items-center justify-around'>
+    <div className='w-screen sm:hidden fixed bottom-0 z-50 h-14 shadow bg-gray-50 flex items-center justify-around'>
       <MobileNavigation />
     </div>
   );
