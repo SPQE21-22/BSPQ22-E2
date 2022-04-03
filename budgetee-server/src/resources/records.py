@@ -10,9 +10,14 @@ class RecordsAll(Resource): #Sprint 1
 
     def post(self): #create a record in a budget
         if request.content_type != 'application/json':
-            return {'error': 'only application/json is accepted'}, 400         
+            return {'error': 'only application/json is accepted'}, 400
+        
+        # TODO check received values:
+        # - Date has proper format
+        # - Mandatory values are not empty (e.g. name)
+        # - Budget with id 'budget_id' exists
 
-        data = request.json
+        data = request.json # get data received in the HTTP request body as JSON
         new_record = Record(
             name = data.get('name'),
             category = data.get('category'),
@@ -36,9 +41,11 @@ class RecordsDetail(Resource): #Sprint 1
         if request.content_type != 'application/json':
             return {'error': 'only application/json is accepted'}, 400
         
+        # TODO perform same checks as in RecordsAll.post()
+        
         record = Record.get(record_id)
 
-        data = request.json
+        data = request.json # get data received in the HTTP request body as JSON
         
         record.name = data.get('name')
         record.category = data.get('category')
@@ -53,8 +60,8 @@ class RecordsDetail(Resource): #Sprint 1
 
         return record.as_dict(), 201
 
-    def delete(self, record_id): #delete a single record in a budget
-        if Record.exists(record_id): #if the record exists
+    def delete(self, record_id): # delete a single record in a budget
+        if Record.exists(record_id): # if the record exists
             Record.delete_one(record_id)
             return {'result' : 'success'}, 204
         
