@@ -1,4 +1,4 @@
-import { CurrencyEuroIcon, LibraryIcon, PencilAltIcon } from '@heroicons/react/outline';
+import { CurrencyEuroIcon, ExclamationCircleIcon, LibraryIcon, PencilAltIcon } from '@heroicons/react/outline';
 
 import { Record } from '../../../types';
 import { DashboardWidget } from "./DashboardWidget";
@@ -60,6 +60,16 @@ export const RecordsWidget = () => {
           <Spinner size='lg' />
         </div>
       );
+    }
+    if (data.loadState === LoadState.LOADING_ERROR) {
+      return (
+        <div className='flex flex-col items-center justify-center h-full'>
+          <div className='mb-6 p-4 bg-red-100 rounded-full'>
+            <ExclamationCircleIcon className='h-16 w-16 text-rose-400' />
+          </div>
+          <h3 className='font-medium text-xl'>There was an error loading your data :(</h3>
+        </div>
+      )
     }
     return (
       <div className='flex flex-col items-center justify-center h-full'>

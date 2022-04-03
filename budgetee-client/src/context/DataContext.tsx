@@ -8,6 +8,7 @@ type ProviderProps = {
 export enum LoadState {
   NOT_LOADED,
   ALL_LOADED,
+  LOADING_ERROR,
 };
 
 type DataState = {
@@ -27,6 +28,7 @@ type RecordId = string;
 
 export type Action = 
   | { type: 'loadData', payload: { budgets: Budget[], records: Record[] }}
+  | { type: 'loadError', payload: {} }
   | { type: 'createBudget', payload: Budget }
   | { type: 'editBudget', payload: Budget }
   | { type: 'removeBudget', payload: BudgetId } // budget ID
@@ -53,6 +55,11 @@ const dataReducer = (state: DataState, action: Action): DataState => {
         budgets: payload.budgets,
         records: payload.records
       };
+    case 'loadError':
+      return {
+        ...state,
+        loadState: LoadState.LOADING_ERROR
+      }
     case 'createBudget':
       return {
         ...state,

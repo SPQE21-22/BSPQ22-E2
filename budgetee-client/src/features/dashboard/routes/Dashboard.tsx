@@ -55,7 +55,13 @@ export const Dashboard = () => {
           }
         })
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err);
+        dispatch({
+          type: 'loadError',
+          payload: {}
+        })
+      });
   }, [dispatch]);
 
   return (
