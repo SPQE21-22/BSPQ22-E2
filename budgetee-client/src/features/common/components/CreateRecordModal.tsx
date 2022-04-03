@@ -122,10 +122,10 @@ const CreateRecordForm = ({ closeModal }: FormProps) => {
         onChange={handleInputChange}
         className='mb-2'
       />
-      {/* TODO use <select>? */}
+      {/* TODO use <select> */}
       <InputField
         label='Payment type'
-        name='extraInfo'
+        name='paymentType'
         value={formState.paymentType}
         onChange={handleInputChange}
         className='mb-2'
