@@ -14,6 +14,7 @@ import { useData } from '../../../context/DataContext';
 
 
 const DashboardHeader = () => {
+  const { data } = useData();
   const { dispatch } = useModals();
 
   return (
@@ -27,7 +28,7 @@ const DashboardHeader = () => {
           <ClipboardListIcon className='h-5 w-5 mr-2 hidden xs:block' />
           New budget
         </Button>
-        <Button variant='inverse' size='sm' className='w-full' onClick={() => dispatch(ActionType.SHOW_NEW_RECORD)}>
+        <Button variant='inverse' size='sm' className='w-full' disabled={data.budgets.length === 0} onClick={() => dispatch(ActionType.SHOW_NEW_RECORD)}>
           <CurrencyEuroIcon className='h-5 w-5 mr-2 hidden xs:block' />
           New record
         </Button>

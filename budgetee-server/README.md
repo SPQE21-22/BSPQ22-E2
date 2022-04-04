@@ -19,10 +19,10 @@ pip install -r requirements.txt
 
 # Execute the program
 export FLASK_APP=src.app        # Linux/MacOS
-$env:FLASK_APP = "src.app"           # Windows (Powershell)
+$env:FLASK_APP = "src.app"      # Windows (Powershell)
 set FLASK_APP=src.app           # Windows (cmd.exe)
 
-python src/app.py
+flask run
 ```
 
 ### Normal execution
@@ -36,7 +36,7 @@ source venv/bin/activate        # Linux/MacOS
 .\venv\Scripts\Activate.bat     # Windows (cmd.exe)
 
 # Execute the program
-python src/app.py
+flask run
 ```
 
 ### Exit the virtual environment

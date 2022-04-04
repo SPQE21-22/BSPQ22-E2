@@ -71,13 +71,13 @@ export const NewMenu = () => {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="z-10 absolute top-0 right-0 w-72 mt-14 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <Menu.Items className="z-10 absolute top-0 right-0 w-72 mt-14 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none overflow-hidden">
           <Menu.Item>
             {({ active }) => (
-              <div className='px-3 py-2 cursor-pointer'>
-                <span className='flex items-center justify-between font-semibold text-lg'>
+              <div className='px-3 py-2 cursor-pointer bg-violet-500'>
+                <span className='flex items-center justify-between font-semibold text-lg text-white'>
                   Create
-                  <button className={`rounded-full p-1 transition-colors ${active ? 'bg-gray-200' : ''}`}>
+                  <button className={`rounded-full p-1 transition-colors ${active ? 'bg-violet-400' : ''}`}>
                     <XIcon className='h-7 w-7' strokeWidth="1" />
                   </button>
                 </span>
@@ -240,13 +240,13 @@ export const MobileCreateMenu = () => {
         leaveFrom="transform translate-y-0"
         leaveTo="transform translate-y-full"
       >
-        <Menu.Items className="z-10 absolute bottom-0 w-screen origin-bottom bg-white divide-y divide-gray-100 rounded-t-xl shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <Menu.Items className="z-10 absolute bottom-0 w-screen origin-bottom bg-white divide-y divide-gray-100 rounded-t-xl shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none overflow-hidden">
           <Menu.Item>
             {({ active }) => (
-              <div className='px-3 py-2 cursor-pointer'>
-                <span className='flex items-center justify-between font-semibold text-lg'>
-                  Create
-                  <button className={`rounded-full p-1 transition-colors ${active ? 'bg-gray-200' : ''}`}>
+              <div className='px-3 py-2 cursor-pointer bg-violet-500'>
+                <span className='flex items-center justify-between font-semibold text-lg text-gray-200'>
+                  Create new...
+                  <button className={`rounded-full p-1 transition-colors ${active ? 'bg-violet-400' : ''}`}>
                     <XIcon className='h-7 w-7' strokeWidth="1" />
                   </button>
                 </span>

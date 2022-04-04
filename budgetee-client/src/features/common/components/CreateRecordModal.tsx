@@ -7,6 +7,7 @@ import { createRecord } from '../api/createRecord';
 import { ActionType, useModals } from '../../../context/ModalContext';
 import { useData } from '../../../context/DataContext';
 import { SelectField } from '../../../components/Form/SelectField';
+import { ExclamationCircleIcon } from '@heroicons/react/outline';
 
 type FormProps = {
   closeModal: () => void;
@@ -36,10 +37,21 @@ const CreateRecordForm = ({ closeModal }: FormProps) => {
     extraInfo: '',
     paymentType: '',
     place: '',
-    budgetId: data.budgets[0].id,
+    budgetId: data.budgets.length > 0 ? data.budgets[0].id : '',
   };
 
   const [formState, setFormState] = React.useState<RecordFormData>(initialFormData);
+
+  if (data.budgets.length === 0) {
+    return (
+      <div className='flex flex-col items-center justify-center h-full my-10'>
+        <div className='mb-6 p-4 bg-red-100 rounded-full'>
+          <ExclamationCircleIcon className='h-16 w-16 text-rose-400' />
+        </div>
+        <h3 className='font-medium text-xl'>Please create a budget before creating records!</h3>
+      </div>
+    );
+  }
 
   const budgets = data.budgets.map(budget => {
     return {
