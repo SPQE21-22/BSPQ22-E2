@@ -1,4 +1,5 @@
 from __future__ import annotations
+from email.policy import default
 from sqlalchemy import Column, Date, Float, String
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship, backref
@@ -10,10 +11,10 @@ class Budget(Base): #Sprint1
     __tablename__ = 'budget'
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     name = Column(String(255), nullable=False)
-    description = Column(String(255), nullable=True)
+    description = Column(String(255), nullable=True, default='')
     start_date = Column(Date, nullable=True)
     end_date = Column(Date, nullable=True)
-    initial_budget = Column(Float, nullable=False)
+    initial_budget = Column(Float, nullable=False, default=0)
 
     records = relationship('Record', backref=backref('budget'))
 

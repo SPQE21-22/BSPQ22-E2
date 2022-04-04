@@ -1,8 +1,10 @@
 from __future__ import annotations
+from email.policy import default
 from sqlalchemy import DateTime, Column, Float, ForeignKey, String
 from sqlalchemy.dialects.postgresql import UUID
 from src.common.helper import camelize
 from src.database.db import Base, db_session
+import datetime
 import uuid
 
 class Record(Base): #Sprint 1
@@ -11,10 +13,10 @@ class Record(Base): #Sprint 1
     name = Column(String(128), nullable=False)
     category = Column(String(255), nullable=False)
     value = Column(Float, nullable=False)
-    date = Column(DateTime, nullable=True)
+    date = Column(DateTime, nullable=True, default=None)
     extra_info = Column(String(255), nullable=True)
     payment_type = Column(String(255), nullable=True)
-    place = Column(String(255), nullable=True)
+    place = Column(String(255), nullable=True, default='')
     
     budget_id = Column(UUID(as_uuid=True), ForeignKey('budget.id', ondelete='CASCADE'), nullable=False)
 
