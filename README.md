@@ -3,7 +3,7 @@ Repository were we will be uploading the project done for "Software process and 
 
 This project will be a client server web service which will make the client able to see all his/hers budgets related to what ever they work on. 
 
-# Mind map with the main idea.
+# Mindmap with the main idea.
 
 ![image](https://user-images.githubusercontent.com/61662649/158864400-630c171c-f50a-495e-8ad7-b6ad26a5bf89.png)
 
