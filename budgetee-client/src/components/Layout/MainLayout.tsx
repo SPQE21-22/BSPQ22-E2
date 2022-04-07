@@ -44,7 +44,7 @@ const MobileNavigation = () => {
               end={index === 0}
               key={item.name}
               to={item.to}
-              className={isActive => "border-2 border-transparent group flex flex-col items-center justify-center text-xs font-light h-full w-full hover:text-violet-600" + (isActive.isActive ? ' text-violet-500 font-medium border-b-violet-500' : ' text-gray-400')}
+              className={({ isActive }) => "border-2 border-transparent group flex flex-col items-center justify-center text-xs font-light h-full w-full hover:text-violet-600" + (isActive ? ' text-violet-500 font-medium border-b-violet-500' : ' text-gray-400')}
             >
               <item.icon
                 className="h-6 w-6 transition-colors"
@@ -61,9 +61,9 @@ const MobileNavigation = () => {
 
 const MobileBottombar = () => {
   return (
-    <div className='w-screen sm:hidden fixed bottom-0 z-50 h-14 shadow bg-gray-50 flex items-center justify-around'>
+    <nav className='w-screen sm:hidden fixed bottom-0 z-50 h-14 shadow bg-gray-50 flex items-center justify-around'>
       <MobileNavigation />
-    </div>
+    </nav>
   );
 };
 
@@ -106,9 +106,9 @@ const Topbar = () => {
       <div className='max-w-7xl h-full w-full px-3 flex items-center justify-between'>
         <div className='flex items-center h-full'>
           <Logo />
-          <div className='hidden sm:flex items-center h-full'>
+          <nav className='hidden sm:flex items-center h-full'>
             <TopNavigation />
-          </div>
+          </nav>
         </div>
         <div className='flex items-center gap-4'>
           <NewMenu />

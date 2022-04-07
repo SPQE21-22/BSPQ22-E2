@@ -1,4 +1,5 @@
-import { CurrencyEuroIcon, ExclamationCircleIcon, LibraryIcon, PencilAltIcon } from '@heroicons/react/outline';
+import { CurrencyEuroIcon, ExclamationCircleIcon, LibraryIcon } from '@heroicons/react/outline';
+import { PencilAltIcon } from '@heroicons/react/solid';
 
 import { Record } from '../../../types';
 import { DashboardWidget } from "./DashboardWidget";

@@ -4,6 +4,8 @@ import { FieldWrapper, FieldWrapperPassThroughProps } from './FieldWrapper';
 
 type InputFieldProps = FieldWrapperPassThroughProps & React.InputHTMLAttributes<HTMLInputElement> & {
   className?: string;
+  wrapperClassName?: string;
+  children?: React.ReactNode;
 };
 
 export const InputField = (
@@ -14,10 +16,12 @@ export const InputField = (
     value,
     required = false,
     onChange,
-    className
+    className,
+    wrapperClassName,
+    children
   }: InputFieldProps) => {
   return (
-    <FieldWrapper label={label}>
+    <FieldWrapper label={label} className={wrapperClassName}>
       <input
         type={type}
         className={`appearance-none block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-violet-500 focus:border-violet-500 sm:text-sm ${className}`}
@@ -26,6 +30,7 @@ export const InputField = (
         required={required}
         onChange={onChange}
       />
+      {children}
     </FieldWrapper>
   );
 };

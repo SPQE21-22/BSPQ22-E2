@@ -44,6 +44,10 @@ class Budget(Base): #Sprint1
     def all():
         return Budget.query.all()
 
+    # @staticmethod
+    # def getByUser(user_id):
+    #     return Budget.query.filter_by(user_id=user_id)
+
     @staticmethod
     def get(Budget_id) -> Budget:
         return Budget.query.get(Budget_id)
