@@ -2,10 +2,8 @@ import { ClipboardListIcon, CurrencyEuroIcon } from '@heroicons/react/solid';
 
 import { BudgetsWidget } from '../components/BudgetsWidget';
 import { RecordsWidget } from '../components/RecordsWidget';
-import { CreateBudgetModal } from '../../common/components/CreateBudgetModal';
 import { Button } from '../../../components/Elements/Button';
 import { ActionType, useModals } from '../../../context/ModalContext';
-import { CreateRecordModal } from '../../common/components/CreateRecordModal';
 
 import { useData } from '../../../context/DataContext';
 
@@ -17,8 +15,6 @@ const DashboardHeader = () => {
   return (
     <div className='w-full bg-white shadow-sm shadow-slate-300 p-2 sm:hidden'>
       {/* TODO move modals to higher-order component */}
-      <CreateBudgetModal />
-      <CreateRecordModal />
       <h1 className='font-medium text-xl'>Overview</h1>
       <div className='flex items-center justify-center gap-2 p-1'>
         <Button variant='inverse' size='sm' className='w-full' onClick={() => dispatch(ActionType.SHOW_NEW_BUDGET)}>

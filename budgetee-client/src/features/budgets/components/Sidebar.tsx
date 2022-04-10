@@ -3,6 +3,8 @@ import { SearchIcon } from '@heroicons/react/solid';
 
 import { InputField } from '../../../components/Form';
 import { useSearch } from '../context/SearchContext';
+import { Button } from '../../../components/Elements/Button';
+import { ActionType, useModals } from '../../../context/ModalContext';
 
 type SidebarProps = {
   className?: string;
@@ -13,7 +15,7 @@ type SearchBarProps = {
   changeHandler: (event: React.FormEvent<HTMLInputElement>) => void;
 };
 
-const SearchBar = ({ value, changeHandler }: SearchBarProps ) => {
+const SearchBar = ({ value, changeHandler }: SearchBarProps) => {
   return (
     <InputField
       value={value}
@@ -30,10 +32,16 @@ const SearchBar = ({ value, changeHandler }: SearchBarProps ) => {
 
 export const Sidebar = ({ className }: SidebarProps) => {
   const { searchValue, handleSearchChange } = useSearch();
+  const { dispatch } = useModals();
 
   return (
     <div className={`max-h-32 h-full w-full lg:col-span-2 sm:rounded-lg p-3 shadow ${className}`}>
-      <h1 className='text-2xl font-medium mb-3.5'>Budgets</h1>
+      <div className='flex items-center justify-between mb-3.5'>
+        <h1 className='text-2xl font-medium'>Budgets</h1>
+        <Button size='xs' onClick={() => dispatch(ActionType.SHOW_NEW_BUDGET)}>
+          + New
+        </Button>
+      </div>
       <SearchBar value={searchValue} changeHandler={handleSearchChange} />
     </div>
   );

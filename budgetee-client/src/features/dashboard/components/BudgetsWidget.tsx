@@ -1,3 +1,4 @@
+import React from 'react';
 import { ClipboardListIcon, PencilAltIcon } from '@heroicons/react/solid';
 import { ExclamationCircleIcon } from '@heroicons/react/outline';
 
@@ -7,14 +8,24 @@ import { DashboardWidget } from './DashboardWidget';
 import { formatDate } from '../../../utils/helper';
 import { LoadState, useData } from '../../../context/DataContext';
 import { Spinner } from '../../../components/Elements/Spinner';
+import { EditBudgetModal } from '../../common/components/EditBudgetModal';
+import { ActionType, useModals } from '../../../context/ModalContext';
 
 type BudgetProps = {
   budget: Budget;
+  setSelected: () => void;
 }
 
-const BudgetItem = ({ budget }: BudgetProps) => {
+const BudgetItem = ({ budget, setSelected }: BudgetProps) => {
+  const { dispatch } = useModals();
+
+  const toggleEditBudget = () => {
+    setSelected();
+    dispatch(ActionType.SHOW_EDIT_BUDGET);
+  };
+
   return (
-    <div className='relative group overflow-hidden cursor-pointer'>
+    <div className='relative group overflow-hidden cursor-pointer' onClick={toggleEditBudget}>
       <div className='rounded-md absolute opacity-0 h-full w-full bg-violet-200 group-hover:opacity-90 transition-all flex items-center justify-center'>
         <div className='p-2.5 rounded-full bg-violet-400 bg-opacity-50'>
           <PencilAltIcon className='h-7 w-7 text-violet-700' />
@@ -37,12 +48,15 @@ const BudgetItem = ({ budget }: BudgetProps) => {
 };
 
 export const BudgetsWidget = () => {
+  const [selectedBudget, setSelectedBudget] = React.useState<Budget | null>(null);
   const { data } = useData();
+
+  // TODO edition of budgets: https://stackoverflow.com/questions/55806877/how-to-pass-data-to-a-form-in-reactjs
 
   const getContent = () => {
     if (data.budgets.length > 0) {
       // TODO order by date
-      return data.budgets.map(budget => <BudgetItem key={budget.id} budget={budget} />);
+      return data.budgets.map(budget => <BudgetItem key={budget.id} budget={budget} setSelected={() => setSelectedBudget(budget)} />);
     }
     if (data.loadState === LoadState.NOT_LOADED) {
       return (
@@ -72,10 +86,13 @@ export const BudgetsWidget = () => {
   };
 
   return (
-    <DashboardWidget title="Latest budgets" to="/budgets" linkText="See all budgets">
-      <div className='flex flex-col divide-y divide-slate-200 h-full'>
-        {getContent()}
-      </div>
-    </DashboardWidget>
+    <>
+      <DashboardWidget title="Latest budgets" to="/budgets" linkText="See all budgets">
+        <div className='flex flex-col divide-y divide-slate-200 h-full bg-white p-1 rounded-t-xl'>
+          {getContent()}
+        </div>
+      </DashboardWidget>
+      <EditBudgetModal budget={selectedBudget}/>
+    </>
   );
 };

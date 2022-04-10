@@ -84,7 +84,7 @@ export const RecordsWidget = () => {
 
   return (
     <DashboardWidget title="Latest records" to="/records" linkText='See all records'>
-      <div className='flex flex-col divide-y divide-slate-200 h-full'>
+      <div className='flex flex-col divide-y divide-slate-200 h-full bg-white p-1 rounded-t-xl'>
         {getContent()}
       </div>
     </DashboardWidget>

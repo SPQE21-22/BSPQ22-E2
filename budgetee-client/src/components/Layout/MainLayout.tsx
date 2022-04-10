@@ -9,6 +9,8 @@ import {
 
 import logo from '../../assets/logo.png';
 import { MobileCreateMenu, NewMenu, NotificationMenu, UserMenu } from './Menus';
+import { CreateBudgetModal } from '../../features/common';
+import { CreateRecordModal } from '../../features/common/components/CreateRecordModal';
 
 type NavigationItem = {
   name: string;
@@ -127,6 +129,8 @@ type MainLayoutProps = {
 export const MainLayout = ({ children }: MainLayoutProps) => {
   return (
     <div className='h-screen pt-16 pb-14 sm:pb-0 flex overflow-hidden bg-slate-200'>
+      <CreateBudgetModal />
+      <CreateRecordModal />
       <MobileBottombar />
       <Topbar />
       <main className='flex-1 relative overflow-y-auto focus:outline-none max-w-7xl mx-auto sm:px-6 sm:py-2 md:px-8'>
