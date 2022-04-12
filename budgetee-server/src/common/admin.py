@@ -3,6 +3,7 @@ from flask_admin.contrib.sqla import ModelView
 from src.database.db import db_session
 from src.database.budget import Budget
 from src.database.record import Record
+from src.database.user import User
 
 
 def create_admin(app):
@@ -11,3 +12,4 @@ def create_admin(app):
 
     admin.add_view(ModelView(Budget, db_session))
     admin.add_view(ModelView(Record, db_session))
+    admin.add_view(ModelView(User, db_session))

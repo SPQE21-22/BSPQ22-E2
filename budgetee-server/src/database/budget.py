@@ -1,5 +1,4 @@
 from __future__ import annotations
-from email.policy import default
 from sqlalchemy import Column, Date, Float, String, ForeignKey
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship, backref

@@ -2,8 +2,8 @@ from __future__ import annotations
 from sqlalchemy import Column, Date, Integer, String
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.dialects.postgresql import UUID
-import uuid
 from src.database.db import Base, db_session
+import uuid
 
 class User(Base): #Sprint 1
     __tablename__ = 'user'
@@ -12,9 +12,9 @@ class User(Base): #Sprint 1
     name = Column(String(255), nullable=False)    
     email = Column(String(255), unique=True, nullable=False)
     password = Column(String(255), nullable=False)
-    birthDate = Column(Date(255), nullable=False)
+    birth_date = Column(Date, nullable=False)
     
-    budgets = relationship('Budget', backref=backref('user'))
+    budgets = relationship('Budget', backref=backref('user.id'))
 
 
     def __init__(self, username, name, email, password, birthDate):
