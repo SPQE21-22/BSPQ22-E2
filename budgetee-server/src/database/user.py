@@ -1,17 +1,21 @@
 from __future__ import annotations
 from sqlalchemy import Column, Date, Integer, String
 from sqlalchemy.orm import relationship, backref
+from sqlalchemy.dialects.postgresql import UUID
+import uuid
 from src.database.db import Base, db_session
 
 class User(Base): #Sprint 1
     __tablename__ = 'user'
-    id = Column(Integer, primary_key=True)
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     username = Column(String(255), nullable=False)
     name = Column(String(255), nullable=False)    
     email = Column(String(255), unique=True, nullable=False)
     password = Column(String(255), nullable=False)
     birthDate = Column(Date(255), nullable=False)
+    
     budgets = relationship('Budget', backref=backref('user'))
+
 
     def __init__(self, username, name, email, password, birthDate):
         self.name = name

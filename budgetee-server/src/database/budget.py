@@ -1,6 +1,6 @@
 from __future__ import annotations
 from email.policy import default
-from sqlalchemy import Column, Date, Float, String
+from sqlalchemy import Column, Date, Float, String, ForeignKey
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship, backref
 from src.common.helper import camelize
@@ -16,15 +16,18 @@ class Budget(Base): #Sprint1
     end_date = Column(Date, nullable=True)
     initial_budget = Column(Float, nullable=False, default=0)
 
-    records = relationship('Record', backref=backref('budget'))
+    user_id = Column(UUID(as_uuid=True), ForeignKey('user.id', ondelete='CASCADE'), nullable=False) #Sprint 2    
+    records = relationship('Record', backref=backref('budget')) #Sprint 2
 
-    def __init__(self,  name, description, start_date, end_date, initial_budget):       
+
+    def __init__(self,  name, description, start_date, end_date, initial_budget, user_id):       
         self.name = name
         self.description = description
         self.start_date = start_date
         self.end_date = end_date
         self.initial_budget = initial_budget
-        
+        self.user_id = user_id
+
     def __repr__(self):
         return f'<Budget {self.name!r}>'
     
