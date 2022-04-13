@@ -12,7 +12,7 @@ class User(Base): #Sprint 1
     name = Column(String(255), nullable=False)    
     email = Column(String(255), unique=True, nullable=False)
     password = Column(String(255), nullable=False)
-    birth_date = Column(Date, nullable=False)
+    birth_date = Column(Date, nullable=True)
     
     budgets = relationship('Budget', backref=backref('user.id'))
 
