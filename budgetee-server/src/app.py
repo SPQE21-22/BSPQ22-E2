@@ -6,7 +6,8 @@ from src.config import app_secret_key
 from src.database.db import init_db, db_session
 from src.resources.budgets import BudgetsAll, BudgetsDetail
 from src.resources.records import RecordsAll, RecordsDetail
-
+from src.resources.auth import Login, Register
+from src.resources.users import UsersDetail
 
 app = Flask(__name__)
 CORS(app)
@@ -38,6 +39,10 @@ api.add_resource(BudgetsAll, '/budgets')
 api.add_resource(BudgetsDetail, '/budgets/<string:budget_id>')
 api.add_resource(RecordsAll, '/records')
 api.add_resource(RecordsDetail, '/records/<string:record_id>')
+api.add_resource(Login,'/auth/login' )
+api.add_resource(Register,'/auth/register' )
+api.add_resource(UsersDetail,'/users/<string:user_id>' )
+
 
 if __name__ == '__main__':
     app.run(debug=True, use_reloader=True)

@@ -1,6 +1,5 @@
 from flask import request
 from flask_restful import Resource, reqparse
-from src.database.budget import Budget
 from src.database.user import User
 
 class UsersDetail(Resource): #Sprint 2
