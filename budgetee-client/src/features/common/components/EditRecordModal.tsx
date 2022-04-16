@@ -1,17 +1,26 @@
 import React from 'react';
+import { ExclamationCircleIcon } from '@heroicons/react/outline';
 
 import { ModalBase } from '../../../components/Overlay/ModalBase';
 import { InputField } from '../../../components/Form'
+import { SelectField } from '../../../components/Form/SelectField';
 import { Button } from '../../../components/Elements/Button';
-import { createRecord } from '../api/createRecord';
+
+import { editRecord } from '../api/editRecord';
+import { deleteRecord } from '../api/deleteRecord';
 import { ActionType, useModals } from '../../../context/ModalContext';
 import { useData } from '../../../context/DataContext';
-import { SelectField } from '../../../components/Form/SelectField';
-import { ExclamationCircleIcon } from '@heroicons/react/outline';
+import { Record } from '../../../types';
 
 type FormProps = {
   closeModal: () => void;
+  baseRecord: Record;
 };
+
+type ModalProps = {
+  record: Record | null;
+};
+
 
 // TODO export to external file
 export type RecordFormData = {
@@ -25,22 +34,36 @@ export type RecordFormData = {
   budgetId: string;
 };
 
+const initialFormData: RecordFormData = {
+  name: '',
+  category: '',
+  value: 0,
+  date: '',
+  extraInfo: '',
+  paymentType: '',
+  place: '',
+  budgetId: '',
+};
+
 // TODO style datepicker
-const CreateRecordForm = ({ closeModal }: FormProps) => {
+const EditRecordForm = ({ closeModal, baseRecord }: FormProps) => {
+  const [formState, setFormState] = React.useState<RecordFormData>(initialFormData);
   const { data, dispatch } = useData();
 
-  const initialFormData: RecordFormData = {
-    name: '',
-    category: '',
-    value: 0,
-    date: '',
-    extraInfo: '',
-    paymentType: '',
-    place: '',
-    budgetId: data.budgets.length > 0 ? data.budgets[0].id : '',
+  const loadDefaultData = () => {
+    setFormState({
+      name: baseRecord.name,
+      category: baseRecord.category,
+      value: baseRecord.value,
+      date: baseRecord.date ?? '',
+      extraInfo: baseRecord.extraInfo,
+      paymentType: baseRecord.paymentType,
+      place: baseRecord.place,
+      budgetId: baseRecord.budgetId,
+    });
   };
 
-  const [formState, setFormState] = React.useState<RecordFormData>(initialFormData);
+  React.useEffect(loadDefaultData, [baseRecord]);
 
   if (data.budgets.length === 0) {
     return (
@@ -74,13 +97,22 @@ const CreateRecordForm = ({ closeModal }: FormProps) => {
     });
   };
 
+  const handleDelete = async () => {
+    await deleteRecord(baseRecord.id);
+    dispatch({
+      type: 'removeRecord',
+      payload: baseRecord.id
+    });
+    closeModal();
+  };
+
   const handleSubmit = (event: React.FormEvent): void => {
     event.preventDefault();
 
-    createRecord(formState)
+    editRecord(baseRecord.id, formState)
       .then(result => {
         dispatch({
-          type: 'createRecord',
+          type: 'editRecord',
           payload: result
         });
         closeModal();
@@ -164,24 +196,29 @@ const CreateRecordForm = ({ closeModal }: FormProps) => {
           />
         </div>
       </div>
-      <Button type='submit' variant='inverse' className='mt-2'>Create record</Button>
+      <div className='flex flex-col sm:flex-row sm:gap-2'>
+        <Button variant='inverseRed' className='mt-2 w-full' onClick={handleDelete}>Delete record</Button>
+        <Button type='submit' variant='inverse' className='mt-2 w-full'>Edit record</Button>
+      </div>
     </form>
   );
 };
 
-export const CreateRecordModal = () => {
+export const EditRecordModal = ({ record }: ModalProps) => {
   const { modalState, dispatch } = useModals();
 
   const closeModal = () => dispatch(ActionType.CLOSE_ALL);
 
+  if (!record) return null;
+
   return (
     <ModalBase
-      isOpen={modalState.newRecordOpen}
+      isOpen={modalState.editRecordOpen}
       closeModal={closeModal}
-      title='Create record'
+      title='Edit record'
       className='w-full lg:max-w-2xl'
     >
-      <CreateRecordForm closeModal={closeModal} />
+      <EditRecordForm closeModal={closeModal} baseRecord={record} />
     </ModalBase>
   );
 };

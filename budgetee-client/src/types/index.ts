@@ -7,16 +7,26 @@ export type Budget = {
   initialBudget: number;
 };
 
+export type RecordCategory = 
+  'Other' |
+  'Income' |
+  'Housing' |
+  'Clothing' |
+  'Food & Drinks' |
+  'Entertainment' |
+  'Transportation' |
+  'Financial expenses';
+
 export type Record = {
   id: string;
   name: string;
-  category: string;
+  category: RecordCategory;
   value: number;
   date?: string;
   extraInfo?: string;
   paymentType?: string;
   place?: string;
-  budgetId: number;
+  budgetId: string;
 };
 
 export type User = {
