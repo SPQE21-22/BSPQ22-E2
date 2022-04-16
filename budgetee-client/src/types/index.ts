@@ -18,3 +18,11 @@ export type Record = {
   place?: string;
   budgetId: number;
 };
+
+export type User = {
+  id: string;
+  username: string;
+  name: string;
+  email: string;
+  birthDate: string;
+};
