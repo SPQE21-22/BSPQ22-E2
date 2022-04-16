@@ -3,7 +3,9 @@ import React from 'react';
 import { ModalBase } from '../../../components/Overlay/ModalBase';
 import { InputField } from '../../../components/Form'
 import { Button } from '../../../components/Elements/Button';
+
 import { editBudget } from '../api/editBudget';
+import { deleteBudget } from '../api/deleteBudget';
 import { ActionType, useModals } from '../../../context/ModalContext';
 import { useData } from '../../../context/DataContext';
 import { Budget } from '../../../types';
@@ -62,9 +64,18 @@ const EditBudgetForm = ({ closeModal, baseBudget }: FormProps) => {
     });
   };
 
+  const handleDelete = async () => {
+    await deleteBudget(baseBudget.id);
+    dispatch({
+      type: 'removeBudget',
+      payload: baseBudget.id
+    });
+    closeModal();
+  };
+
   const handleSubmit = (event: React.FormEvent): void => {
     event.preventDefault();
-    
+
     editBudget(baseBudget.id, formState)
       .then(result => {
         dispatch({
@@ -96,7 +107,7 @@ const EditBudgetForm = ({ closeModal, baseBudget }: FormProps) => {
         value={formState.description}
         onChange={handleInputChange}
         className='mb-4'
-        />
+      />
       <InputField
         label='Start date'
         type='date'
@@ -123,7 +134,10 @@ const EditBudgetForm = ({ closeModal, baseBudget }: FormProps) => {
         onChange={handleInputChange}
         className='mb-4'
       />
-      <Button type='submit' variant='inverse' className='mt-2'>Edit budget</Button>
+      <div className='flex flex-col sm:flex-row sm:gap-2'>
+        <Button variant='inverseRed' className='mt-2 w-full' onClick={handleDelete}>Delete budget</Button>
+        <Button type='submit' variant='inverse' className='mt-2 w-full'>Edit budget</Button>
+      </div>
     </form>
   );
 };

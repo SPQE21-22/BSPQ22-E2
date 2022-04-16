@@ -3,6 +3,8 @@ import React from 'react';
 const variants = {
   primary: 'bg-violet-500 text-white border-transparent hover:bg-violet-600 disabled:hover:bg-violet-500',
   inverse: 'bg-transparent text-violet-500 border-violet-500 hover:bg-violet-500 hover:text-white disabled:hover:bg-transparent disabled:hover:text-violet-500',
+  primaryRed: 'bg-red-500 text-white border-transparent hover:bg-red-600 disabled:hover:bg-red-500',
+  inverseRed: 'bg-transparent text-red-500 border-red-500 hover:bg-red-500 hover:text-white disabled:hover:bg-transparent disabled:hover:text-red-500',
 }
 
 const sizes = {

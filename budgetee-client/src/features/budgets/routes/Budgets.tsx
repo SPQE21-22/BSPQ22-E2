@@ -22,7 +22,7 @@ const BudgetItem = ({ budget, setSelected }: BudgetProps) => {
     setSelected();
     dispatch(ActionType.SHOW_EDIT_BUDGET);
   };
-  
+
   return (
     <div className='relative group overflow-hidden cursor-pointer' onClick={toggleEditBudget}>
       <div className='rounded-md absolute opacity-0 h-full w-full bg-violet-200 group-hover:opacity-90 transition-all flex items-center justify-center'>
@@ -48,26 +48,62 @@ const BudgetItem = ({ budget, setSelected }: BudgetProps) => {
   );
 };
 
+const compareDate = (date1: string, compare: 'isBefore' | 'isAfter', date2: string) => {
+  const date1Time = new Date(date1).getTime();
+  const date2Time = new Date(date2).getTime();
+  if (compare === 'isBefore') return date1Time <= date2Time;
+  return date1Time >= date2Time;
+};
+
 const BudgetsContent = () => {
   const [selectedBudget, setSelectedBudget] = React.useState<Budget | null>(null);
   const { data } = useData();
-  const { searchValue } = useSearch();
+  const { searchValue, startDateValue, endDateValue } = useSearch();
+  
+  const getFilteredBudgets = () => {
+    let filteredBudgets = data.budgets.slice();
 
-  const filteredBudgets = searchValue && searchValue !== ''
-    ? data.budgets.filter(budget => budget.name.toLowerCase().includes(searchValue.toLowerCase()))
-    : data.budgets;
+    if (searchValue && searchValue !== '')
+      filteredBudgets = filteredBudgets.filter(budget => budget.name.toLowerCase().includes(searchValue.toLowerCase()));
+    
+    if (startDateValue && startDateValue !== '')
+      filteredBudgets = filteredBudgets.filter(budget => compareDate(budget.startDate, 'isAfter', startDateValue));
+
+    if (endDateValue && endDateValue !== '')
+      filteredBudgets = filteredBudgets.filter(budget => compareDate(budget.endDate, 'isBefore', endDateValue));
+    
+    return filteredBudgets;
+  };
+
+  const getContent = () => {
+    if (data.budgets.length === 0) {
+      return (
+        <div className='flex items-center justify-center p-5 text-lg'>
+          No budgets created yet!
+        </div>
+      );
+    }
+    if (getFilteredBudgets().length === 0) {
+      return (
+        <div className='flex items-center justify-center p-5 text-lg'>
+          No budgets found!
+        </div>
+      );
+    }
+    return getFilteredBudgets().map(budget => <BudgetItem key={budget.id} budget={budget} setSelected={() => setSelectedBudget(budget)} />);
+  };
 
   return (
     <>
       <div className="h-full">
         <div className='flex flex-col gap-2 lg:grid lg:grid-cols-9 lg:gap-4 h-full w-full'>
-          <Sidebar className='bg-violet-200' />
+          <Sidebar className='bg-violet-300' />
           <div className="mx-2 p-1 bg-white rounded-lg lg:col-span-7 flex flex-col divide-y divide-slate-200 h-full">
-            {filteredBudgets.map(budget => <BudgetItem key={budget.id} budget={budget} setSelected={() => setSelectedBudget(budget)} />)}
+            {getContent()}
           </div>
         </div>
       </div>
-      <EditBudgetModal budget={selectedBudget}/>
+      <EditBudgetModal budget={selectedBudget} />
     </>
   );
 };
