@@ -5,6 +5,8 @@ type ProviderProps = {
 };
 
 type ModalState = {
+  loginOpen: boolean;
+  registerOpen: boolean;
   newBudgetOpen: boolean;
   newRecordOpen: boolean;
   editBudgetOpen: boolean;
@@ -12,6 +14,8 @@ type ModalState = {
 };
 
 const baseModalState: ModalState = {
+  loginOpen: false,
+  registerOpen: false,
   newBudgetOpen: false,
   newRecordOpen: false,
   editBudgetOpen: false,
@@ -20,6 +24,8 @@ const baseModalState: ModalState = {
 
 export enum ActionType {
   CLOSE_ALL,
+  SHOW_LOGIN,
+  SHOW_REGISTER,
   SHOW_NEW_BUDGET,
   SHOW_NEW_RECORD,
   SHOW_EDIT_BUDGET,
@@ -37,6 +43,10 @@ const modalReducer = (state: ModalState, action: ActionType): ModalState => {
   switch (action) {
     case ActionType.CLOSE_ALL:
       return { ...baseModalState };
+    case ActionType.SHOW_LOGIN:
+      return { ...baseModalState, loginOpen: true};
+    case ActionType.SHOW_REGISTER:
+      return { ...baseModalState, registerOpen: true};
     case ActionType.SHOW_NEW_BUDGET:
       return { ...baseModalState, newBudgetOpen: true };
     case ActionType.SHOW_NEW_RECORD:
