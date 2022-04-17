@@ -8,7 +8,7 @@ import { useData } from '../../../context/DataContext';
 import { Record } from '../../../types';
 import { formatDate } from '../../../utils/helper';
 import { EditRecordModal } from '../../common/components/EditRecordModal';
-import { CategoryIcon } from '../components/CategoryIcon';
+import { categories, CategoryIcon } from '../components/CategoryIcon';
 import { ActionType, useModals } from '../../../context/ModalContext';
 
 
@@ -35,11 +35,11 @@ const RecordItem = ({ record, setSelected }: RecordProps) => {
           <PencilAltIcon className='h-7 w-7 text-violet-700' />
         </div>
       </div>
-      <div className='grid grid-cols-5'>
+      <div className='grid grid-cols-5 md:grid-cols-7 pr-2'>
         <div className='col-span-1 flex items-center justify-center'>
-          <CategoryIcon category={record.category} />
+          <CategoryIcon category={categories.find(category => category.name === record.category)} />
         </div>
-        <div className='col-span-4 p-2 my-0.5 flex flex-col transition-all'>
+        <div className='col-span-4 md:col-span-6 p-2 my-0.5 flex flex-col transition-all'>
           <div className='font-medium flex items-center justify-between'>
             <span>{record.name}</span>
             <span className={`text-sm ${record.value > 0 ? 'text-green-500' : 'text-red-500'}`}>{getCleanValue(record.value)}</span>

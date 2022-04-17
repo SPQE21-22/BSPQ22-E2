@@ -1,13 +1,15 @@
 import React from 'react';
+import { ExclamationCircleIcon } from '@heroicons/react/outline';
 
 import { ModalBase } from '../../../components/Overlay/ModalBase';
-import { InputField } from '../../../components/Form'
+import { InputField, SelectField } from '../../../components/Form'
 import { Button } from '../../../components/Elements/Button';
+import { categories, Category } from '../../records/components/CategoryIcon';
+
 import { createRecord } from '../api/createRecord';
 import { ActionType, useModals } from '../../../context/ModalContext';
 import { useData } from '../../../context/DataContext';
-import { SelectField } from '../../../components/Form/SelectField';
-import { ExclamationCircleIcon } from '@heroicons/react/outline';
+import { CategoryListField } from './CategoryListField';
 
 type FormProps = {
   closeModal: () => void;
@@ -16,7 +18,7 @@ type FormProps = {
 // TODO export to external file
 export type RecordFormData = {
   name: string;
-  category: string;
+  category: Category;
   value: number;
   date: string;
   extraInfo?: string;
@@ -31,7 +33,7 @@ const CreateRecordForm = ({ closeModal }: FormProps) => {
 
   const initialFormData: RecordFormData = {
     name: '',
-    category: '',
+    category: categories[0],
     value: 0,
     date: '',
     extraInfo: '',
@@ -74,10 +76,17 @@ const CreateRecordForm = ({ closeModal }: FormProps) => {
     });
   };
 
+  const handleCategoryChange = (category: Category) => {
+    setFormState({
+      ...formState,
+      category: category
+    });
+  };
+
   const handleSubmit = (event: React.FormEvent): void => {
     event.preventDefault();
 
-    createRecord(formState)
+    createRecord({ ...formState, category: formState.category.name })
       .then(result => {
         dispatch({
           type: 'createRecord',
@@ -105,12 +114,19 @@ const CreateRecordForm = ({ closeModal }: FormProps) => {
             className='mb-2'
           />
           {/* TODO use <select> */}
-          <InputField
+          {/* <InputField
             label='Category'
             name='category'
             value={formState.category}
             required
             onChange={handleInputChange}
+            className='mb-2'
+          /> */}
+          <CategoryListField
+            categoryList={categories}
+            label='Category'
+            value={formState.category}
+            setValue={handleCategoryChange}
             className='mb-2'
           />
           <InputField

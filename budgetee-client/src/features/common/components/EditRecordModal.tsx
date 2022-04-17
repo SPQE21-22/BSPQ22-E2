@@ -4,6 +4,7 @@ import { ExclamationCircleIcon } from '@heroicons/react/outline';
 import { ModalBase } from '../../../components/Overlay/ModalBase';
 import { InputField } from '../../../components/Form'
 import { SelectField } from '../../../components/Form/SelectField';
+import { CategoryListField } from './CategoryListField';
 import { Button } from '../../../components/Elements/Button';
 
 import { editRecord } from '../api/editRecord';
@@ -11,6 +12,7 @@ import { deleteRecord } from '../api/deleteRecord';
 import { ActionType, useModals } from '../../../context/ModalContext';
 import { useData } from '../../../context/DataContext';
 import { Record } from '../../../types';
+import { categories, Category } from '../../records/components/CategoryIcon';
 
 type FormProps = {
   closeModal: () => void;
@@ -25,7 +27,7 @@ type ModalProps = {
 // TODO export to external file
 export type RecordFormData = {
   name: string;
-  category: string;
+  category: Category;
   value: number;
   date: string;
   extraInfo?: string;
@@ -36,7 +38,7 @@ export type RecordFormData = {
 
 const initialFormData: RecordFormData = {
   name: '',
-  category: '',
+  category: categories[0],
   value: 0,
   date: '',
   extraInfo: '',
@@ -53,7 +55,7 @@ const EditRecordForm = ({ closeModal, baseRecord }: FormProps) => {
   const loadDefaultData = () => {
     setFormState({
       name: baseRecord.name,
-      category: baseRecord.category,
+      category: categories.find(c => c.name === baseRecord.category) ?? categories[0],
       value: baseRecord.value,
       date: baseRecord.date ?? '',
       extraInfo: baseRecord.extraInfo,
@@ -97,6 +99,13 @@ const EditRecordForm = ({ closeModal, baseRecord }: FormProps) => {
     });
   };
 
+  const handleCategoryChange = (category: Category) => {
+    setFormState({
+      ...formState,
+      category: category
+    });
+  };
+
   const handleDelete = async () => {
     await deleteRecord(baseRecord.id);
     dispatch({
@@ -109,7 +118,7 @@ const EditRecordForm = ({ closeModal, baseRecord }: FormProps) => {
   const handleSubmit = (event: React.FormEvent): void => {
     event.preventDefault();
 
-    editRecord(baseRecord.id, formState)
+    editRecord(baseRecord.id, { ...formState, category: formState.category.name })
       .then(result => {
         dispatch({
           type: 'editRecord',
@@ -136,13 +145,11 @@ const EditRecordForm = ({ closeModal, baseRecord }: FormProps) => {
             onChange={handleInputChange}
             className='mb-2'
           />
-          {/* TODO use <select> */}
-          <InputField
+          <CategoryListField
+            categoryList={categories}
             label='Category'
-            name='category'
             value={formState.category}
-            required
-            onChange={handleInputChange}
+            setValue={handleCategoryChange}
             className='mb-2'
           />
           <InputField

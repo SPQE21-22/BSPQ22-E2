@@ -1,5 +1,5 @@
 import React from 'react';
-import { CurrencyEuroIcon, ExclamationCircleIcon, LibraryIcon } from '@heroicons/react/outline';
+import { CurrencyEuroIcon, ExclamationCircleIcon } from '@heroicons/react/outline';
 import { PencilAltIcon } from '@heroicons/react/solid';
 
 import { Record } from '../../../types';
@@ -10,6 +10,7 @@ import { LoadState, useData } from '../../../context/DataContext';
 import { Spinner } from '../../../components/Elements/Spinner';
 import { EditRecordModal } from '../../common/components/EditRecordModal';
 import { ActionType, useModals } from '../../../context/ModalContext';
+import { categories, CategoryIcon } from '../../records/components/CategoryIcon';
 
 type RecordProps = {
   record: Record;
@@ -36,9 +37,7 @@ const RecordItem = ({ record, setSelected }: RecordProps) => {
       </div>
       <div className='grid grid-cols-5'>
         <div className='col-span-1 flex items-center justify-center'>
-          <div className='p-3 rounded-full bg-violet-200'>
-            <LibraryIcon className='h-7 w-7 text-violet-600' />
-          </div>
+          <CategoryIcon category={categories.find(category => category.name === record.category)} />
         </div>
         <div className='col-span-4 p-2 my-0.5 flex flex-col transition-all'>
           <div className='font-medium flex items-center justify-between'>
@@ -65,7 +64,7 @@ export const RecordsWidget = () => {
   const getContent = () => {
     if (data.budgets.length > 0) {
       // TODO order by date
-      return data.records.map(record => <RecordItem key={record.id} record={record} setSelected={() => setSelectedRecord(record)}/>);
+      return data.records.map(record => <RecordItem key={record.id} record={record} setSelected={() => setSelectedRecord(record)} />);
     }
     if (data.loadState === LoadState.NOT_LOADED) {
       return (
