@@ -1,3 +1,5 @@
+// Entities
+
 export type Budget = {
   id: string;
   name: string;
@@ -36,3 +38,8 @@ export type User = {
   email: string;
   birthDate: string;
 };
+
+
+// Other
+// Used when waiting for a request to solve
+export type RequestLoadStates = 'unloaded' | 'loading' | 'success' | 'failure';

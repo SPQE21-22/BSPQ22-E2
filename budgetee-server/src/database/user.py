@@ -13,7 +13,7 @@ class User(Base): #Sprint 1
     name = Column(String(255), nullable=False)    
     email = Column(String(255), unique=True, nullable=False)
     password = Column(String(255), nullable=False)
-    birth_date = Column(Date, nullable=True)
+    birth_date = Column(Date, nullable=False)
     
     budgets = relationship('Budget', backref=backref('user.id'))
 
@@ -23,7 +23,7 @@ class User(Base): #Sprint 1
         self.username = username
         self.email = email
         self.password = password
-        self.birthDate = birth_date        
+        self.birth_date = birth_date        
         
     def __repr__(self):
         return f'<User {self.name!r}>'
@@ -56,6 +56,10 @@ class User(Base): #Sprint 1
     @staticmethod
     def exists(user_id) -> bool:
         return User.query.get(user_id) is not None
+    
+    @staticmethod
+    def email_exists(user_email) -> bool:
+        return User.query.filter_by(email=user_email).first() is not None
 
     @staticmethod
     def delete_one(user_id):

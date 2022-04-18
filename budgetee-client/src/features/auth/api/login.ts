@@ -3,7 +3,7 @@ import { axios } from "../../../lib/axios";
 import { UserResponse } from '../types';
 
 export type LoginCredentialsDTO = {
-  username: string;
+  email: string;
   password: string;
 };
 

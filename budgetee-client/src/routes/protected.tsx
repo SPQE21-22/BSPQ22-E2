@@ -56,6 +56,7 @@ export const protectedRoutes = [
       { path: '/budgets', element: <Budgets /> },
       { path: '/records', element: <Records /> },
       { path: '/analytics', element: <Analytics /> },
+      { path: '/', element: <Navigate to="/dashboard" /> },
       { path: '*', element: <Navigate to="." /> },
     ],
   },

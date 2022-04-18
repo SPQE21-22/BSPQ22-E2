@@ -6,11 +6,11 @@ from src.config import app_secret_key
 from src.database.db import init_db, db_session
 from src.resources.budgets import BudgetsAll, BudgetsDetail
 from src.resources.records import RecordsAll, RecordsDetail
-from src.resources.auth import Login, Register
+from src.resources.auth import Login, Logout, Register
 from src.resources.users import UsersSelf
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, supports_credentials=True)
 app.secret_key = app_secret_key
 api = Api(app)
 
@@ -35,12 +35,17 @@ class Ping(Resource):
 
 # Define API endpoint routes
 api.add_resource(Ping, '/')
+
 api.add_resource(BudgetsAll, '/budgets')
 api.add_resource(BudgetsDetail, '/budgets/<string:budget_id>')
+
 api.add_resource(RecordsAll, '/records')
 api.add_resource(RecordsDetail, '/records/<string:record_id>')
+
 api.add_resource(Login,'/auth/login' )
-api.add_resource(Register,'/auth/register' )
+api.add_resource(Logout, '/auth/logout')
+api.add_resource(Register,'/auth/register')
+
 api.add_resource(UsersSelf,'/auth/self' )
 
 

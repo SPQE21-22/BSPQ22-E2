@@ -17,6 +17,8 @@ import { Menu, Popover, Transition } from '@headlessui/react';
 import user from '../../assets/user.png';
 import { Button } from '../Elements/Button';
 import { ActionType, useModals } from '../../context/ModalContext';
+import { logout } from '../../features/auth/api/logout';
+import { useUser } from '../../context/UserContext';
 
 // TODO unify NewMenu and MobileCreateMenu
 
@@ -166,6 +168,13 @@ export const NotificationMenu = () => {
 }
 
 export const UserMenu = () => {
+  const { setUser } = useUser();
+
+  const logoutHandler = async () => {
+    await logout();
+    setUser(null);
+  };
+
   return (
     <Menu as="div" className="relative inline-block text-left" >
       <Menu.Button className="flex items-center border-2 border-gray-200 rounded-full">
@@ -200,16 +209,17 @@ export const UserMenu = () => {
           <div className="px-1 py-1">
             <Menu.Item>
               {({ active }) => (
-                <Link to="/logout"  // TODO review logout method
+                <button
                   className={`${active ? 'bg-gray-200' : 'text-gray-900'
                     } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                  onClick={logoutHandler}
                 >
                   <LogoutIcon
                     className="w-6 h-6 mr-3"
                     aria-hidden="true"
                   />
                   Log out
-                </Link>
+                </button>
               )}
             </Menu.Item>
           </div>

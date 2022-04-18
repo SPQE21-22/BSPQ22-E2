@@ -25,7 +25,7 @@ class Login(Resource): #Sprint 2
         }, app_secret_key, algorithm="HS256");
         
         response = make_response(user.as_dict(), 200)
-        response.set_cookie('jwt_token', token)
+        response.set_cookie('jwt_token', token, path=None)
 
         return response
 
@@ -36,7 +36,7 @@ class Register(Resource): #Sprint 2
     parser.add_argument('name', required=True, help='parameter required')
     parser.add_argument('email', required=True, help='parameter required')
     parser.add_argument('password', required=True, help='parameter required')
-    parser.add_argument('birthDate')
+    parser.add_argument('birthDate', required=True, help='parameter required')
 
     def post(self): # send register data, register and get access token
         # TODO check received values:
@@ -44,7 +44,7 @@ class Register(Resource): #Sprint 2
 
         user_email = data.get('email')
 
-        if User.exists(user_email):
+        if User.email_exists(user_email):
             return {'error': f'user with email "${user_email}" already exists'}, 409
 
         new_user = User(
@@ -52,7 +52,7 @@ class Register(Resource): #Sprint 2
             name = data.get('name'),
             email = data.get('email'),
             password = data.get('password'),    # TODO user password hashing
-            birth_date = data.get('birthDate', ''),
+            birth_date = data.get('birthDate'),
         )
         new_user.save()
         
@@ -61,6 +61,13 @@ class Register(Resource): #Sprint 2
         }, app_secret_key, algorithm="HS256");
         
         response = make_response(new_user.as_dict(), 201)
-        response.set_cookie('jwt_token', token)
+        response.set_cookie('jwt_token', token, path=None)
 
+        return response
+
+
+class Logout(Resource):
+    def post(self):
+        response = make_response({'result': 'logged out'}, 202)
+        response.delete_cookie('jwt_token', path=None)
         return response
