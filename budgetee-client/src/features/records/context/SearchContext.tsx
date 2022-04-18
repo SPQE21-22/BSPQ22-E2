@@ -4,50 +4,47 @@ type ProviderProps = {
   children: React.ReactNode;
 };
 
+type RecordFilters = {
+  search: string;
+  budget: string;
+  startDate: string;
+  endDate: string;
+};
+
 type ContextValue = {
-  searchValue: string;
-  startDateValue: string;
-  endDateValue: string;
-  handleSearchChange: (event: React.FormEvent<HTMLInputElement>) => void;
-  handleStartDateChange: (event: React.FormEvent<HTMLInputElement>) => void;
-  handleEndDateChange: (event: React.FormEvent<HTMLInputElement>) => void;
+  filters: RecordFilters;
+  filterHandler: (event: React.FormEvent<HTMLInputElement | HTMLSelectElement>) => void;
   clearFilters: () => void;
 };
 
 const SearchContext = React.createContext<ContextValue>({} as ContextValue);
 
+const defaultFilters: RecordFilters = {
+  search: '',
+  budget: '',
+  startDate: '',
+  endDate: '',
+};
+
 export const SearchProvider = ({ children }: ProviderProps) => {
-  const [searchValue, setSearchValue] = React.useState('');
-  const [startDateValue, setStartDateValue] = React.useState('');
-  const [endDateValue, setEndDateValue] = React.useState('');
+  const [filters, setFilters] = React.useState<RecordFilters>(defaultFilters);
 
-  const handleSearchChange = (event: React.FormEvent<HTMLInputElement>) => {
-    const value = event.currentTarget.value;
-    setSearchValue(value);
+  const filterHandler = (event: React.FormEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const target = event.currentTarget;
+    const value = target.value;
+    const name = target.name;
+
+    setFilters({
+      ...filters,
+      [name]: value
+    });
   };
 
-  const handleStartDateChange = (event: React.FormEvent<HTMLInputElement>) => {
-    const value = event.currentTarget.value;
-    setStartDateValue(value);
-  };
-
-  const handleEndDateChange = (event: React.FormEvent<HTMLInputElement>) => {
-    const value = event.currentTarget.value;
-    setEndDateValue(value);
-  };
-
-  const clearFilters = () => {
-    setStartDateValue('');
-    setEndDateValue('');
-  };
+  const clearFilters = () => setFilters(defaultFilters);
   
   const value = {
-    searchValue,
-    startDateValue,
-    endDateValue,
-    handleSearchChange,
-    handleStartDateChange,
-    handleEndDateChange,
+    filters,
+    filterHandler,
     clearFilters,
   };
 

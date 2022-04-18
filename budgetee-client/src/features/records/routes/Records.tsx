@@ -68,20 +68,23 @@ const compareDate = (date1: string, compare: 'isBefore' | 'isAfter', date2: stri
 const RecordsContent = () => {
   const [selectedRecord, setSelectedRecord] = React.useState<Record | null>(null);
   const { data } = useData();
-  const { searchValue, startDateValue, endDateValue } = useSearch();
-  
+  const { filters } = useSearch();
+
   const getFilteredRecords = () => {
     let filteredRecords = data.records.slice();
 
-    if (searchValue && searchValue !== '')
-    filteredRecords = filteredRecords.filter(record => record.name.toLowerCase().includes(searchValue.toLowerCase()));
-    
-    if (startDateValue && startDateValue !== '')
-      filteredRecords = filteredRecords.filter(record => record.date && compareDate(record.date, 'isAfter', startDateValue));
+    if (filters.search && filters.search !== '')
+      filteredRecords = filteredRecords.filter(record => record.name.toLowerCase().includes(filters.search.toLowerCase()));
 
-    if (endDateValue && endDateValue !== '')
-      filteredRecords = filteredRecords.filter(record => record.date && compareDate(record.date, 'isBefore', endDateValue));
-    
+    if (filters.budget && filters.budget !== '')
+      filteredRecords = filteredRecords.filter(record => record.budgetId.toString() === filters.budget);
+
+    if (filters.startDate && filters.startDate !== '')
+      filteredRecords = filteredRecords.filter(record => record.date && compareDate(record.date, 'isAfter', filters.startDate));
+
+    if (filters.endDate && filters.endDate !== '')
+      filteredRecords = filteredRecords.filter(record => record.date && compareDate(record.date, 'isBefore', filters.endDate));
+
     return filteredRecords;
   };
 

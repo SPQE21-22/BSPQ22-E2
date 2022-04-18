@@ -2,11 +2,12 @@ import React from 'react';
 import { SearchIcon } from '@heroicons/react/solid';
 import { ChevronUpIcon } from '@heroicons/react/outline';
 
-import { InputField } from '../../../components/Form';
+import { InputField, SelectField } from '../../../components/Form';
 import { useSearch } from '../context/SearchContext';
 import { Button } from '../../../components/Elements/Button';
 import { ActionType, useModals } from '../../../context/ModalContext';
 import { Disclosure } from '@headlessui/react';
+import { useData } from '../../../context/DataContext';
 
 type SidebarProps = {
   className?: string;
@@ -20,6 +21,7 @@ type SearchBarProps = {
 const SearchBar = ({ value, changeHandler }: SearchBarProps) => {
   return (
     <InputField
+      name='search'
       value={value}
       onChange={changeHandler}
       className='relative pl-11 mb-2'
@@ -33,13 +35,20 @@ const SearchBar = ({ value, changeHandler }: SearchBarProps) => {
 };
 
 const FilterDisclosure = () => {
+  const { data } = useData();
   const {
-    startDateValue,
-    endDateValue,
-    handleStartDateChange,
-    handleEndDateChange,
+    filters,
+    filterHandler,
     clearFilters,
   } = useSearch();
+
+  const budgets = [{
+    label: 'No filter',
+    value: ''
+  }].concat(data.budgets.map(budget => ({
+    label: budget.name,
+    value: budget.id
+  })));
 
   return (
     <>
@@ -60,22 +69,30 @@ const FilterDisclosure = () => {
               <Button variant='inverse' size='sm' className='w-full mb-2' onClick={clearFilters}>
                 Clear filters
               </Button>
+              <SelectField 
+                label='Budget'
+                name='budget'
+                options={budgets}
+                value={filters.budget}
+                onChange={filterHandler}
+                className='mb-2'
+              />
               <InputField
                 label='From...'
                 type='date'
                 name='startDate'
-                value={startDateValue}
+                value={filters.startDate}
                 required
-                onChange={handleStartDateChange}
+                onChange={filterHandler}
                 className='mb-4'
               />
               <InputField
                 label='To...'
                 type='date'
                 name='endDate'
-                value={endDateValue}
+                value={filters.endDate}
                 required
-                onChange={handleEndDateChange}
+                onChange={filterHandler}
                 className='mb-4'
               />
             </Disclosure.Panel>
@@ -87,7 +104,7 @@ const FilterDisclosure = () => {
 };
 
 export const Sidebar = ({ className }: SidebarProps) => {
-  const { searchValue, handleSearchChange } = useSearch();
+  const { filters, filterHandler } = useSearch();
   const { dispatch } = useModals();
 
   return (
@@ -98,7 +115,7 @@ export const Sidebar = ({ className }: SidebarProps) => {
           + New
         </Button>
       </div>
-      <SearchBar value={searchValue} changeHandler={handleSearchChange} />
+      <SearchBar value={filters.search} changeHandler={filterHandler} />
       <FilterDisclosure />
     </div>
   );

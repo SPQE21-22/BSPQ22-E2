@@ -12,7 +12,6 @@ type SelectFieldProps = FieldWrapperPassThroughProps & React.InputHTMLAttributes
   className?: string;
 };
 
-// TODO use HeadlessUI
 export const SelectField = (
   {
     label,

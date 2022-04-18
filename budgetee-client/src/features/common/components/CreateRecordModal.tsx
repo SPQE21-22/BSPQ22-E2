@@ -113,15 +113,6 @@ const CreateRecordForm = ({ closeModal }: FormProps) => {
             onChange={handleInputChange}
             className='mb-2'
           />
-          {/* TODO use <select> */}
-          {/* <InputField
-            label='Category'
-            name='category'
-            value={formState.category}
-            required
-            onChange={handleInputChange}
-            className='mb-2'
-          /> */}
           <CategoryListField
             categoryList={categories}
             label='Category'
