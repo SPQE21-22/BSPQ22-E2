@@ -1,44 +1,69 @@
 from flask import request
 from flask_restful import Resource, reqparse
+from src.common.auth import decode_request_jwt
 from src.database.user import User
 
-class UsersDetail(Resource): #Sprint 2
-    parser = reqparse.RequestParser(bundle_errors=True)
-    parser.add_argument('username', required=True, help='parameter required')
-    parser.add_argument('name', required=True, help='parameter required')
-    parser.add_argument('email', required=True, help='parameter required')
-    parser.add_argument('password', required=True, help='parameter required')
-    parser.add_argument('birth_date')
-    parser.add_argument('budgets')
+def not_none(s, d):
+    if s is None:
+        return d
+    return s
 
-    def get(self, user_id): #get a single User in a budget
+class UsersSelf(Resource): #Sprint 2
+    edit_parser = reqparse.RequestParser(bundle_errors=True)
+    edit_parser.add_argument('username')
+    edit_parser.add_argument('name')
+    edit_parser.add_argument('email')
+    edit_parser.add_argument('password')
+    edit_parser.add_argument('birthDate')
+
+    def get(self): # get a user's own data
+        user_id = decode_request_jwt(request)
+        
+        if not user_id:
+            return {'error': 'invalid JWT'}, 401
+        
         user = User.get(user_id)
+        
+        # this error should never trigger, as we sign the token in the server with a secret key
+        if not user:
+            return {'error': 'user does not exist'}, 404
+        
         return user.as_dict()
 
-    def put(self, user_id): #edit a single User in a budget
-        if request.content_type != 'application/json':
-            return {'error': 'only application/json is accepted'}, 400
+    def put(self): # edit a user's own data
+        user_id = decode_request_jwt(request)
         
-        # TODO perform same checks as in UsersAll.post()
+        if not user_id:
+            return {'error': 'invalid JWT'}, 401
         
         user = User.get(user_id)
-
-        data = request.json # get data received in the HTTP request body as JSON
         
-        user.username = data.get('username')
-        user.name = data.get('name')
-        user.email = data.get('email')
-        user.password = data.get('password')
-        user.birth_date = data.get('birth_date')
-        user.budgets= data.get('budgets')
+        # this error should never trigger, as we sign the token in the server with a secret key
+        if not user:
+            return {'error': 'user does not exist'}, 404
+        
+        data = UsersSelf.edit_parser.parse_args()
+        
+        user.username = not_none(data.get('username'), user.username)
+        user.name = not_none(data.get('name'), user.name)
+        user.email = not_none(data.get('email'), user.email)
+        user.password = not_none(data.get('password'), user.password)
+        user.birth_date = not_none(data.get('birthDate'), user.birth_date)
         
         user.save()
 
-        return user.as_dict(), 201
+        return user.as_dict(), 200
 
-    def delete(self, user_id): # delete a single User
+    def delete(self): # delete a single User
+        user_id = decode_request_jwt(request)
+        
+        if not user_id:
+            return {'error': 'invalid JWT'}, 401
+        
+        print(user_id)
+        
         if User.exists(user_id): 
             User.delete_one(user_id)
             return {'result' : 'success'}, 204
         
-        return {'error' : 'This user does not exist'}, 404
+        return {'error' : 'user does not exist'}, 404

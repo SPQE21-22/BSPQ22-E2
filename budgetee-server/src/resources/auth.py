@@ -1,51 +1,66 @@
-from flask import request
+from flask import make_response
 from flask_restful import Resource, reqparse
+from src.config import app_secret_key
 from src.database.user import User
+import jwt
 
 class Login(Resource): #Sprint 2
+    parser = reqparse.RequestParser(bundle_errors=True)
+    parser.add_argument('email', required=True, help='parameter required')
+    parser.add_argument('password', required=True, help='parameter required')
 
     def post(self): #send login data, get access token
-        if request.content_type != 'application/json':
-            return {'error': 'only application/json is accepted'}, 400
-        
-        # TODO check received values:
         data = Login.parser.parse_args() # get data received in the HTTP request body as JSON
         
-        if not User.exists(data.user_email):
-            return {'error': 'User does not exist'}, 400
+        user = User.get_by_email(data.get('email'))
+
+        if not user:
+            return {'error': 'user does not exist'}, 404
+        
+        if user.password != data.get('password'):   # TODO user password hashing
+            return {'error': 'invalid credentials'}, 401
+        
+        token = jwt.encode({
+            'user_id': str(user.id)
+        }, app_secret_key, algorithm="HS256");
+        
+        response = make_response(user.as_dict(), 200)
+        response.set_cookie('jwt_token', token)
+
+        return response
 
 
-        return User.get_by_email(data.user_email) , 201
-
-     
 class Register(Resource): #Sprint 2
     parser = reqparse.RequestParser(bundle_errors=True)
     parser.add_argument('username', required=True, help='parameter required')
     parser.add_argument('name', required=True, help='parameter required')
     parser.add_argument('email', required=True, help='parameter required')
     parser.add_argument('password', required=True, help='parameter required')
-    parser.add_argument('birth_date')
-    parser.add_argument('budgets')
+    parser.add_argument('birthDate')
 
     def post(self): # send register data, register and get access token
-        if request.content_type != 'application/json':
-            return {'error': 'only application/json is accepted'}, 400
-        
         # TODO check received values:
         data = Register.parser.parse_args() # get data received in the HTTP request body as JSON
-        
-        if not User.exists(data.user_email):
-            return {'error': 'User does not exist'}, 400
+
+        user_email = data.get('email')
+
+        if User.exists(user_email):
+            return {'error': f'user with email "${user_email}" already exists'}, 409
 
         new_user = User(
             username = data.get('username'),
             name = data.get('name'),
-            value = data.get('value'),
             email = data.get('email'),
-            password = data.get('password'),
-            birth_date = data.get('birth_date'),
-            budgets = data.get('budgets')
+            password = data.get('password'),    # TODO user password hashing
+            birth_date = data.get('birthDate', ''),
         )
         new_user.save()
+        
+        token = jwt.encode({
+            'user_id': str(new_user.id)
+        }, app_secret_key, algorithm="HS256");
+        
+        response = make_response(new_user.as_dict(), 201)
+        response.set_cookie('jwt_token', token)
 
-        return new_user.as_dict() , 201   
+        return response

@@ -1,7 +1,8 @@
 from __future__ import annotations
-from sqlalchemy import Column, Date, Integer, String
+from sqlalchemy import Column, Date, String
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.dialects.postgresql import UUID
+from src.common.helper import camelize
 from src.database.db import Base, db_session
 import uuid
 
@@ -17,12 +18,12 @@ class User(Base): #Sprint 1
     budgets = relationship('Budget', backref=backref('user.id'))
 
 
-    def __init__(self, username, name, email, password, birthDate):
+    def __init__(self, username, name, email, password, birth_date):
         self.name = name
         self.username = username
         self.email = email
         self.password = password
-        self.birthDate = birthDate        
+        self.birthDate = birth_date        
         
     def __repr__(self):
         return f'<User {self.name!r}>'
@@ -34,7 +35,11 @@ class User(Base): #Sprint 1
         # db_session.expunge() # REVIEW necessary when using a single session?
     
     def as_dict(self):
-        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+        user = {camelize(b.name): getattr(self, b.name) for b in self.__table__.columns}
+        user['id'] = str(user.get('id'))
+        user['birthDate'] = str(user.get('birthDate'))
+        del user['password']
+        return user
     
     @staticmethod
     def all():
@@ -49,6 +54,11 @@ class User(Base): #Sprint 1
         return User.query.filter_by(email=user_email).first()
   
     @staticmethod
-    def exists(user_email) -> bool:
-        return User.query.filter_by(email=user_email).first() is not None
+    def exists(user_id) -> bool:
+        return User.query.get(user_id) is not None
 
+    @staticmethod
+    def delete_one(user_id):
+        to_delete = User.query.get(user_id)
+        db_session.delete(to_delete)
+        db_session.commit()
