@@ -3,7 +3,11 @@ import { axios } from '../../../lib/axios';
 import { Budget } from '../../../types';
 import { BudgetFormData } from '../components/CreateBudgetModal';
 
-export const createBudget = async (data: BudgetFormData): Promise<Budget> => {
+type NewBudgetDTO = BudgetFormData & {
+  userId: string;
+};
+
+export const createBudget = async (data: NewBudgetDTO): Promise<Budget> => {
   const result = await axios.post('/budgets', data);
   return result.data;
 }

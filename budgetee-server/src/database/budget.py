@@ -38,6 +38,7 @@ class Budget(Base): #Sprint1
     def as_dict(self):
         budget = {camelize(b.name): getattr(self, b.name) for b in self.__table__.columns}
         budget['id'] = str(budget['id'])
+        budget['userId'] = str(budget['userId'])
         budget['startDate'] = str(budget['startDate'])
         budget['endDate'] = str(budget['endDate'])
         return budget

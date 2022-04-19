@@ -10,6 +10,7 @@ class BudgetsAll(Resource):  # Sprint 1
     parser.add_argument('startDate', required=True, help='parameter required')
     parser.add_argument('endDate', required=True, help='parameter required')
     parser.add_argument('initialBudget', type=int, help='Initial budget cannot be converted')
+    parser.add_argument('userId', help='parameter required')
     
     def get(self):  # get all the budgets
         budgets = Budget.all()
@@ -17,10 +18,6 @@ class BudgetsAll(Resource):  # Sprint 1
         return budget_dicts
 
     def post(self):  # create a budget
-        # TODO revise, is this is necessary or does the parser do the work?
-        if request.content_type != 'application/json':
-            return {'error': 'only application/json is accepted'}, 400
-
         # TODO check received values:
         # - Start date is before end date, they both have the correct format
 
@@ -31,7 +28,8 @@ class BudgetsAll(Resource):  # Sprint 1
             description=data.get('description'),
             start_date=data.get('startDate'),
             end_date=data.get('endDate'),
-            initial_budget=data.get('initialBudget')
+            initial_budget=data.get('initialBudget'),
+            user_id=data.get('userId')
         )
         new_budget.save()
 
@@ -45,15 +43,13 @@ class BudgetsDetail(Resource):  # Sprint 1
     parser.add_argument('startDate')
     parser.add_argument('endDate')
     parser.add_argument('initialBudget', type=int, help='Initial budget cannot be converted')
+    parser.add_argument('userId')
     
     def get(self, budget_id):  # get a single budget
         budget = Budget.get(budget_id)
         return budget.as_dict()
 
     def put(self, budget_id):  # edit this single budget
-        if request.content_type != 'application/json':
-            return {'error': 'only application/json is accepted'}, 400
-
         budget = Budget.get(budget_id)
 
         data = BudgetsDetail.parser.parse_args()  # get data received in the HTTP request body as JSON

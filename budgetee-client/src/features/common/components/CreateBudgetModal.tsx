@@ -6,6 +6,7 @@ import { Button } from '../../../components/Elements/Button';
 import { createBudget } from '../api/createBudget';
 import { ActionType, useModals } from '../../../context/ModalContext';
 import { useData } from '../../../context/DataContext';
+import { useUser } from '../../../context/UserContext';
 
 type FormProps = {
   closeModal: () => void;
@@ -32,6 +33,7 @@ const initialFormData: BudgetFormData = {
 const CreateBudgetForm = ({ closeModal }: FormProps) => {
   const [formState, setFormState] = React.useState<BudgetFormData>(initialFormData);
   const { dispatch } = useData();
+  const { user } = useUser();
 
   // TODO type checking for initialBudget type
   const handleInputChange = (event: React.FormEvent<HTMLInputElement>): void => {
@@ -48,7 +50,7 @@ const CreateBudgetForm = ({ closeModal }: FormProps) => {
   const handleSubmit = (event: React.FormEvent): void => {
     event.preventDefault();
     
-    createBudget(formState)
+    createBudget({ ...formState, userId: user?.id ?? '' })
       .then(result => {
         dispatch({
           type: 'createBudget',

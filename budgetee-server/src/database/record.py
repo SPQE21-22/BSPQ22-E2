@@ -1,10 +1,8 @@
 from __future__ import annotations
-from email.policy import default
 from sqlalchemy import DateTime, Column, Float, ForeignKey, String
 from sqlalchemy.dialects.postgresql import UUID
 from src.common.helper import camelize
 from src.database.db import Base, db_session
-import datetime
 import uuid
 
 class Record(Base): #Sprint 1

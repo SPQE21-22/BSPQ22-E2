@@ -7,6 +7,7 @@ export type Budget = {
   startDate: string;
   endDate: string;
   initialBudget: number;
+  userId: string;
 };
 
 export type RecordCategory = 
