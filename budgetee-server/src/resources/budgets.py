@@ -18,11 +18,12 @@ class BudgetsAll(Resource):  # Sprint 1
         return budget_dicts
 
     def post(self):  # create a budget
-        # TODO check received values:
-        # - Start date is before end date, they both have the correct format
-
+        #TODO start date and end date are not checked  
         # get data received in the HTTP request body as JSON
         data = BudgetsAll.parser.parse_args()
+         
+        
+
         new_budget = Budget(
             name=data.get('name'),
             description=data.get('description'),
@@ -31,6 +32,9 @@ class BudgetsAll(Resource):  # Sprint 1
             initial_budget=data.get('initialBudget'),
             user_id=data.get('userId')
         )
+        if (new_budget.start_date > new_budget.end_date):
+            return {'error': 'dates are incorrect'}, 404
+        
         new_budget.save()
 
         return new_budget.as_dict(), 201

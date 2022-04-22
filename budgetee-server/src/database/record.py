@@ -1,8 +1,10 @@
 from __future__ import annotations
+from asyncio.windows_events import NULL
 from sqlalchemy import DateTime, Column, Float, ForeignKey, String
 from sqlalchemy.dialects.postgresql import UUID
 from src.common.helper import camelize
 from src.database.db import Base, db_session
+from src.database.budget import Budget
 import uuid
 
 class Record(Base): #Sprint 1
@@ -55,6 +57,14 @@ class Record(Base): #Sprint 1
     def get_by_date(Record_dateTime) -> Record:
         return Record.query.filter_by(dateTime=Record_dateTime)
     
+    @staticmethod
+    def get_by_user(user_id) -> Record:
+        budgets = Budget.query.filter_by(user_id = user_id) 
+        records = NULL 
+        for budget in budgets:            
+            records.append(Budget.get_records(budget.id))        
+        return records
+        
     @staticmethod
     def delete_one(record_id):
         to_delete = Record.query.get(record_id)
