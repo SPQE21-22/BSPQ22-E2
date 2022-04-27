@@ -21,9 +21,7 @@ class RecordsAll(Resource): #Sprint 1
 
         if not user_id:
             return {'error': 'invalid JWT'}, 401
-        
-        
-        
+
         records = Record.get_by_user(user_id)        
        
         return [record.as_dict() for record in records]
@@ -56,8 +54,18 @@ class RecordsAll(Resource): #Sprint 1
 
 class RecordsDetail(Resource): #Sprint 1
     def get(self, record_id): #get a single record in a budget
-        record = Record.get(record_id)
-        return record.as_dict()
+        
+        user_id = decode_request_jwt(request)
+
+        if not user_id:
+            return {'error': 'invalid JWT'}, 401
+
+        records = Record.get_by_user(user_id) 
+        for record in records:
+            if (record.id == record_id):
+                return record.as_dict()
+        
+        return {'error' : 'record does not exist'}, 404
 
     def put(self, record_id): #edit a single record in a budget
         if request.content_type != 'application/json':
@@ -66,25 +74,55 @@ class RecordsDetail(Resource): #Sprint 1
         # TODO perform same checks as in RecordsAll.post()
         
         record = Record.get(record_id)
+        budget = Budget.get(record.budget_id)
 
-        data = request.json # get data received in the HTTP request body as JSON
-        
-        record.name = data.get('name')
-        record.category = data.get('category')
-        record.value = data.get('value')
-        record.date = data.get('date')
-        record.extra_info = data.get('extraInfo')
-        record.payment_type = data.get('paymentType')
-        record.place = data.get('place')
-        record.budget_id = data.get('budgetId')
-        
-        record.save()
+        user_id = decode_request_jwt(request)
 
-        return record.as_dict(), 201
+        if not user_id:
+            return {'error': 'invalid JWT'}, 401
+        
+        user = User.get(user_id)
+
+        if not user:
+            return {'error': 'user does not exist'}, 404
+
+
+        if (budget.user_id == user_id):
+            data = request.json # get data received in the HTTP request body as JSON
+            
+            record.name = data.get('name')
+            record.category = data.get('category')
+            record.value = data.get('value')
+            record.date = data.get('date')
+            record.extra_info = data.get('extraInfo')
+            record.payment_type = data.get('paymentType')
+            record.place = data.get('place')
+            record.budget_id = data.get('budgetId')
+            
+            record.save()
+
+            return record.as_dict(), 201
+        
+        return {'Error: record is not correctly created'}, 404
 
     def delete(self, record_id): # delete a single record in a budget
-        if Record.exists(record_id): # if the record exists
-            Record.delete_one(record_id)
-            return {'result' : 'success'}, 204
+        record = Record.get(record_id)
+        budget = Budget.get(record.budget_id)
+
+        user_id = decode_request_jwt(request)
+
+        if not user_id:
+            return {'error': 'invalid JWT'}, 401
         
-        return {'error' : 'budget does not exist'}, 404
+        user = User.get(user_id)
+
+        if not user:
+            return {'error': 'user does not exist'}, 404
+
+        if (budget.user_id == user_id):    
+            if Record.exists(record_id): # if the record exists
+                Record.delete_one(record_id)
+                return {'result' : 'success'}, 204
+            
+        return {'error' : 'record does not exist'}, 404
+        

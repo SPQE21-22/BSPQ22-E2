@@ -60,11 +60,6 @@ class Budget(Base): #Sprint1
         return Budget.query.filter_by(user_id = user_id)  
     
     @staticmethod
-    def isValidBudget(user_id, budget_id) -> Budget:
-        userBudgets = Budget.query.filter_by(user_id = user_id)
-        return userBudgets.query.filter_by(budget_id = budget_id)
-
-    @staticmethod
     def delete_one(budget_id):
         to_delete = Budget.query.get(budget_id)
         db_session.delete(to_delete)

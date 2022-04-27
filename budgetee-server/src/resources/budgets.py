@@ -20,18 +20,23 @@ class BudgetsAll(Resource):  # Sprint 1
         if not user_id:
             return {'error': 'invalid JWT'}, 401
         
+        user = User.get(user_id)
+
+        if not user:
+            return {'error': 'user does not exist'}, 404
+
         budgets = Budget.get_by_user(user_id)
 
-        budget_dicts = [budget.as_dict() for budget in budgets] # transform budget objects in dictionaries
+        budget_dicts = []
+        for budget in budgets:
+            budget_dicts.append(budget.as_dict() )
         return budget_dicts
 
     def post(self):  # create a budget
         #TODO start date and end date are not checked  
         # get data received in the HTTP request body as JSON
-        data = BudgetsAll.parser.parse_args()
-         
+        data = BudgetsAll.parser.parse_args()     
         
-
         new_budget = Budget(
             name=data.get('name'),
             description=data.get('description'),
@@ -58,28 +63,67 @@ class BudgetsDetail(Resource):  # Sprint 1
     parser.add_argument('userId')
     
     def get(self, budget_id):  # get a single budget
-        budget = Budget.get(budget_id)
-        return budget.as_dict()
+        budget = Budget.get(budget_id) 
+        user_id = decode_request_jwt(request)
+        if not user_id:
+            return {'error': 'invalid JWT'}, 401
+       
+        user = User.get(user_id)
+
+        if not user:
+            return {'error': 'user does not exist'}, 404
+
+        if (budget.user_id == user_id):
+            return budget.as_dict()
+
+        return {'error': 'budget does not exist'}, 404
 
     def put(self, budget_id):  # edit this single budget
         budget = Budget.get(budget_id)
+        user_id = decode_request_jwt(request)
 
-        data = BudgetsDetail.parser.parse_args()  # get data received in the HTTP request body as JSON
+        if not user_id:
+            return {'error': 'invalid JWT'}, 401
+        
+        user = User.get(user_id)
 
-        # TODO implement safer way to safe-change values
-        budget.name = data.get('name') or budget.name
-        budget.description = data.get('description') or budget.description
-        budget.start_date = data.get('startDate') or budget.start_date
-        budget.end_date = data.get('endDate') or budget.end_date
-        budget.initial_budget = data.get('initialBudget') if data.get('initialBudget') is not None else budget.initial_budget
+        if not user:
+            return {'error': 'user does not exist'}, 404
 
-        budget.save()
 
-        return budget.as_dict(), 200
+        if (budget.user_id == user_id):
+
+            data = BudgetsDetail.parser.parse_args()  # get data received in the HTTP request body as JSON
+
+            # TODO implement safer way to safe-change values
+            budget.name = data.get('name') or budget.name
+            budget.description = data.get('description') or budget.description
+            budget.start_date = data.get('startDate') or budget.start_date
+            budget.end_date = data.get('endDate') or budget.end_date
+            budget.initial_budget = data.get('initialBudget') if data.get('initialBudget') is not None else budget.initial_budget
+
+            budget.save()
+
+            return budget.as_dict(), 200
+        
+        return {'error': 'budget does not belong this user'}, 404
 
     def delete(self, user_id, budget_id):  # delete this single budget_id
+
+        user_id = decode_request_jwt(request)
+
+        if not user_id:
+            return {'error': 'invalid JWT'}, 401
+        
+        user = User.get(user_id)
+
+        if not user:
+            return {'error': 'user does not exist'}, 404
+
+        budget = Budget.get(budget_id)
+
         if Budget.exists(budget_id):
-            if Budget.isValidBudget(user_id, budget_id):
+            if (budget.user_id == user_id):
                 Budget.delete_one(budget_id)
                 return {'result': 'success'}, 204
 
