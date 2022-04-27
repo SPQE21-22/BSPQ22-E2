@@ -2,6 +2,8 @@ from flask import request
 from flask_restful import Resource, reqparse
 from src.database.budget import Budget
 from src.database.record import Record
+from src.database.user import User
+from src.common.auth import decode_request_jwt
 
 class RecordsAll(Resource): #Sprint 1
     parser = reqparse.RequestParser(bundle_errors=True)
@@ -15,7 +17,15 @@ class RecordsAll(Resource): #Sprint 1
     parser.add_argument('budgetId', required=True, help='budget id cannot be converted')    # TODO send both errors
     
     def get(self): #get all the records in a budget
-        records = Record.all()
+        user_id = decode_request_jwt(request)
+
+        if not user_id:
+            return {'error': 'invalid JWT'}, 401
+        
+        
+        
+        records = Record.get_by_user(user_id)        
+       
         return [record.as_dict() for record in records]
 
     def post(self): #create a record in a budget

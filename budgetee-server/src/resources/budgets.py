@@ -1,6 +1,8 @@
 from flask import request
 from flask_restful import Resource, reqparse
 from src.database.budget import Budget
+from src.database.user import User
+from src.common.auth import decode_request_jwt
 
 
 class BudgetsAll(Resource):  # Sprint 1
@@ -13,7 +15,13 @@ class BudgetsAll(Resource):  # Sprint 1
     parser.add_argument('userId', help='parameter required')
     
     def get(self):  # get all the budgets
-        budgets = Budget.all()
+        user_id = decode_request_jwt(request)
+
+        if not user_id:
+            return {'error': 'invalid JWT'}, 401
+        
+        budgets = Budget.get_by_user(user_id)
+
         budget_dicts = [budget.as_dict() for budget in budgets] # transform budget objects in dictionaries
         return budget_dicts
 
