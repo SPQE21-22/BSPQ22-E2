@@ -48,8 +48,8 @@ class Budget(Base): #Sprint1
         return Budget.query.all()
 
     @staticmethod
-    def get(Budget_id) -> Budget:
-        return Budget.query.get(Budget_id)
+    def get(budget_id) -> Budget:
+        return Budget.query.get(budget_id)
 
     @staticmethod
     def get_records(budget_id):
@@ -57,7 +57,12 @@ class Budget(Base): #Sprint1
 
     @staticmethod
     def get_by_user(user_id) -> Budget:
-        return Budget.query.filter_by(user_id = user_id)
+        return Budget.query.filter_by(user_id = user_id)  
+    
+    @staticmethod
+    def isValidBudget(user_id, budget_id) -> Budget:
+        userBudgets = Budget.query.filter_by(user_id = user_id)
+        return userBudgets.query.filter_by(budget_id = budget_id)
 
     @staticmethod
     def delete_one(budget_id):

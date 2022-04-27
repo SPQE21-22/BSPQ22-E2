@@ -77,9 +77,10 @@ class BudgetsDetail(Resource):  # Sprint 1
 
         return budget.as_dict(), 200
 
-    def delete(self, budget_id):  # delete this single budget_id
+    def delete(self, user_id, budget_id):  # delete this single budget_id
         if Budget.exists(budget_id):
-            Budget.delete_one(budget_id)
-            return {'result': 'success'}, 204
+            if Budget.isValidBudget(user_id, budget_id):
+                Budget.delete_one(budget_id)
+                return {'result': 'success'}, 204
 
         return {'error': 'budget does not exist'}, 404
