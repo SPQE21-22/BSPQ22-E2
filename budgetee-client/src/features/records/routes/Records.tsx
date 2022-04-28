@@ -89,17 +89,17 @@ const RecordsContent = () => {
   };
 
   const getContent = () => {
-    if (data.budgets.length === 0) {
+    if (data.records.length === 0) {
       return (
         <div className='flex items-center justify-center p-5 text-lg'>
-          No budgets created yet!
+          No records created yet!
         </div>
       );
     }
     if (getFilteredRecords().length === 0) {
       return (
         <div className='flex items-center justify-center p-5 text-lg'>
-          No budgets found!
+          No records found!
         </div>
       );
     }

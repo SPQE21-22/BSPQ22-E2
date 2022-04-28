@@ -27,9 +27,6 @@ class RecordsAll(Resource): #Sprint 1
         return [record.as_dict() for record in records]
 
     def post(self): #create a record in a budget
-        if request.content_type != 'application/json':
-            return {'error': 'only application/json is accepted'}, 400
-        
         # TODO check received values:
         # - Date has proper format
         # - Budget with id 'budget_id' exists
@@ -54,75 +51,63 @@ class RecordsAll(Resource): #Sprint 1
 
 class RecordsDetail(Resource): #Sprint 1
     def get(self, record_id): #get a single record in a budget
-        
         user_id = decode_request_jwt(request)
 
         if not user_id:
             return {'error': 'invalid JWT'}, 401
 
-        records = Record.get_by_user(user_id) 
-        for record in records:
-            if (record.id == record_id):
-                return record.as_dict()
+        record = Record.get(record_id)
         
         return {'error' : 'record does not exist'}, 404
 
     def put(self, record_id): #edit a single record in a budget
-        if request.content_type != 'application/json':
-            return {'error': 'only application/json is accepted'}, 400
-        
         # TODO perform same checks as in RecordsAll.post()
-        
-        record = Record.get(record_id)
-        budget = Budget.get(record.budget_id)
-
         user_id = decode_request_jwt(request)
 
         if not user_id:
             return {'error': 'invalid JWT'}, 401
         
-        user = User.get(user_id)
-
-        if not user:
-            return {'error': 'user does not exist'}, 404
-
-
-        if (budget.user_id == user_id):
-            data = request.json # get data received in the HTTP request body as JSON
-            
-            record.name = data.get('name')
-            record.category = data.get('category')
-            record.value = data.get('value')
-            record.date = data.get('date')
-            record.extra_info = data.get('extraInfo')
-            record.payment_type = data.get('paymentType')
-            record.place = data.get('place')
-            record.budget_id = data.get('budgetId')
-            
-            record.save()
-
-            return record.as_dict(), 201
+        record = Record.get(record_id)
         
-        return {'Error: record is not correctly created'}, 404
+        if not record:
+            return {'error': f'record {record_id} not found'}, 404
+        
+        budget = Budget.get(record.budget_id)
 
+        if (budget.user_id != user_id):
+            return {'error': 'access not allowed'}, 403
+        
+        data = request.get_json() # get data received in the HTTP request body as JSON
+            
+        record.name = data.get('name')
+        record.category = data.get('category')
+        record.value = data.get('value')
+        record.date = data.get('date')
+        record.extra_info = data.get('extraInfo')
+        record.payment_type = data.get('paymentType')
+        record.place = data.get('place')
+        record.budget_id = data.get('budgetId')
+            
+        record.save()
+
+        return record.as_dict(), 201     
+        
     def delete(self, record_id): # delete a single record in a budget
-        record = Record.get(record_id)
-        budget = Budget.get(record.budget_id)
-
         user_id = decode_request_jwt(request)
 
         if not user_id:
             return {'error': 'invalid JWT'}, 401
+
+        record = Record.get(record_id)
         
-        user = User.get(user_id)
+        if not record:
+            return {'error': f'record {record_id} not found'}, 404
+        
+        budget = Budget.get(record.budget_id)
 
-        if not user:
-            return {'error': 'user does not exist'}, 404
-
-        if (budget.user_id == user_id):    
-            if Record.exists(record_id): # if the record exists
-                Record.delete_one(record_id)
-                return {'result' : 'success'}, 204
-            
-        return {'error' : 'record does not exist'}, 404
+        if (budget.user_id != user_id):    
+            return {'error' : 'deletion not allowed'}, 403
+        
+        Record.delete_one(record_id)
+        return {'result' : 'success'}, 204
         

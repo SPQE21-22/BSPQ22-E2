@@ -1,11 +1,8 @@
-import Axios from 'axios';
+import { default as aaa } from 'axios';
 
 import { API_URL } from '../config';
-console.log(API_URL);
 
-
-export const axios = Axios.create({
+export const axios = aaa.create({
+  withCredentials: true,
   baseURL: API_URL,
 });
-
-axios.defaults.withCredentials = true;

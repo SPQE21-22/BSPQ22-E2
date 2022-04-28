@@ -4,6 +4,7 @@ from sqlalchemy.dialects.postgresql import UUID
 from src.common.helper import camelize
 from src.database.db import Base, db_session
 from src.database.budget import Budget
+from typing import List
 import uuid
 
 class Record(Base): #Sprint 1
@@ -45,7 +46,7 @@ class Record(Base): #Sprint 1
         return record
     
     @staticmethod
-    def all():
+    def all() -> List[Record]:
         return Record.query.all()
 
     @staticmethod
@@ -58,15 +59,13 @@ class Record(Base): #Sprint 1
     
     @staticmethod
     def get_by_user(user_id) -> Record:
-        budgets = Budget.query.filter_by(user_id = user_id) 
-        records = [] 
-        for budget in budgets:            
-            records.append(Budget.get_records(budget.id))        
+        budget_ids = [budget.id for budget in Budget.get_by_user(user_id)] 
+        all_records = Record.all()
+        records = []
+        for record in all_records:
+            if record.budget_id in budget_ids:
+                records.append(record)
         return records
-    
-    @staticmethod
-    def get_by_user(user_id) -> Budget:
-        return Budget.query.filter_by(user_id = user_id)
 
     @staticmethod
     def delete_one(record_id):

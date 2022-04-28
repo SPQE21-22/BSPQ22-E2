@@ -60,8 +60,6 @@ class UsersSelf(Resource): #Sprint 2
         if not user_id:
             return {'error': 'invalid JWT'}, 401
         
-        print(user_id)
-        
         if User.exists(user_id): 
             User.delete_one(user_id)
             return {'result' : 'success'}, 204

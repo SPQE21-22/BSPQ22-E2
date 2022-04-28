@@ -4,6 +4,7 @@ from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship, backref
 from src.common.helper import camelize
 from src.database.db import Base, db_session
+from typing import List
 import uuid
 
 class Budget(Base): #Sprint1
@@ -52,11 +53,7 @@ class Budget(Base): #Sprint1
         return Budget.query.get(budget_id)
 
     @staticmethod
-    def get_records(budget_id):
-        return Budget.query.get(budget_id).records
-
-    @staticmethod
-    def get_by_user(user_id) -> Budget:
+    def get_by_user(user_id) -> List[Budget]:
         return Budget.query.filter_by(user_id = user_id)  
     
     @staticmethod

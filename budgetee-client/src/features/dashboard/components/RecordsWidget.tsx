@@ -62,7 +62,7 @@ export const RecordsWidget = () => {
   const { data } = useData();
 
   const getContent = () => {
-    if (data.budgets.length > 0) {
+    if (data.records.length > 0) {
       // TODO order by date
       return data.records.map(record => <RecordItem key={record.id} record={record} setSelected={() => setSelectedRecord(record)} />);
     }
