@@ -1,19 +1,20 @@
 from __future__ import annotations
 from unicodedata import category
-from sqlalchemy import Column, Integer, String
-from .user import User
+from sqlalchemy import Column, Integer, String, ForeignKey
 from .db import Base, db_session
+from sqlalchemy.dialects.postgresql import UUID
+import uuid 
 
 
-class Label(Base):
+class Label(Base): #Sprint 2 
     __tablename__ = 'Label'
-    id = Column(Integer, primary_key=True)
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     name = Column(String(255), nullable=False)
-    user = Column(User, nullable=False)
+    user_id = Column(UUID(as_uuid=True), ForeignKey('user.id', ondelete='CASCADE'), nullable=False) 
 
     def __init__(self, name, user):
         self.name = name
-        self.user = user
+        self.user_id = user
 
     def __repr__(self):
         return f'<Label {self.category!r}>'
@@ -34,6 +35,10 @@ class Label(Base):
     @staticmethod
     def get(Label_id) -> Label:
         return Label.query.get(Label_id)
+
+    @staticmethod
+    def get_by_user(user_id) -> Label:
+        return Label.query.filter_by(user_id = user_id) 
 
     @staticmethod
     def exists(Label_id) -> bool:

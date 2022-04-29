@@ -6,6 +6,7 @@ from src.config import app_secret_key
 from src.database.db import init_db, db_session
 from src.resources.budgets import BudgetsAll, BudgetsDetail
 from src.resources.records import RecordsAll, RecordsDetail
+from src.resources.labels import LabelsAll, LabelsDetail
 from src.resources.auth import Login, Logout, Register
 from src.resources.users import UsersSelf
 
@@ -42,11 +43,16 @@ api.add_resource(BudgetsDetail, '/budgets/<string:budget_id>')
 api.add_resource(RecordsAll, '/records')
 api.add_resource(RecordsDetail, '/records/<string:record_id>')
 
+api.add_resource(LabelsAll, '/labels/')
+api.add_resource(LabelsDetail, '/labels/<string:label_id>')
+
 api.add_resource(Login,'/auth/login' )
 api.add_resource(Logout, '/auth/logout')
 api.add_resource(Register,'/auth/register')
 
 api.add_resource(UsersSelf,'/auth/self' )
+
+
 
 
 if __name__ == '__main__':
