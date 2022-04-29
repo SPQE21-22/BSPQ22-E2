@@ -1,6 +1,6 @@
-# from __future__ import annotations
-# from unicodedata import category
-# from sqlalchemy import Column, Integer, String
+ from __future__ import annotations
+from unicodedata import category
+ from sqlalchemy import Column, Integer, String
 # from .user import User
 # from .db import Base, db_session
 
