@@ -55,7 +55,7 @@ const barOptions = {
   responsive: true,
   plugins: {
     legend: {
-      display: true,
+      display: false,
       position: 'top' as const,
     },
     title: {
@@ -114,20 +114,20 @@ export const Analytics = () => {
 
   return (
     <>
-      <div className="h-full grid grid-rows-2">
-        <div className="row-span-1 grid grid-cols-3 gap-4">
-          <AnalyticsWidget title='AAA' className='col-span-2'>
+      <div className="p-2 h-full flex flex-col items-center gap-2 lg:grid lg:grid-rows-2">
+        <div className="w-full flex flex-col items-center justify-center lg:row-span-1 lg:grid lg:grid-cols-3 gap-2 lg:gap-4">
+          <AnalyticsWidget title='Bar chart' className='col-span-2'>
             <Bar options={barOptions} data={barData} />
           </AnalyticsWidget>
-          <AnalyticsWidget title='AAA' className='col-span-1' containerClassName='h-5/6'>
+          <AnalyticsWidget title='Pie chart' className='col-span-1' containerClassName='h-5/6'>
             <Pie options={barOptions} data={pieData} />
           </AnalyticsWidget>
         </div>
-        <div className="row-span-1 grid grid-cols-3 gap-4">
-          <AnalyticsWidget title='AAA' className='col-span-1' containerClassName='h-5/6'>
+        <div className="w-full flex flex-col items-center justify-center lg:row-span-1 lg:grid lg:grid-cols-3 gap-2 lg:gap-4">
+          <AnalyticsWidget title='Pie chart' className='col-span-1' containerClassName='h-5/6'>
             <Pie options={barOptions} data={pieData} />
           </AnalyticsWidget>
-          <AnalyticsWidget title='AAA' className='col-span-2'>
+          <AnalyticsWidget title='Line chart' className='col-span-2'>
             <Line options={barOptions} data={lineData} />
           </AnalyticsWidget>
         </div>

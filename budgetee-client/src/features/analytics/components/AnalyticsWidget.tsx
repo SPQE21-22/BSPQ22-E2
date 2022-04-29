@@ -10,9 +10,9 @@ type AnalyticsWidgetProps = {
 
 export const AnalyticsWidget = ({ title, className = '', containerClassName = '', children }: AnalyticsWidgetProps) => {
   return (
-    <div className={`bg-white shadow shadow-slate-400 rounded-xl overflow-hidden h-96 flex flex-col items-stretch ${className}`}>
-      {/* <h2 className='py-1.5 px-3 font-medium text-lg text-gray-900'>{title}</h2> */}
-      <div className={`px-1 h-full`}>
+    <div className={`bg-white shadow shadow-slate-400 rounded-xl overflow-hidden lg:h-96 w-full flex flex-col items-stretch ${className}`}>
+      <h2 className='py-1.5 px-3 font-medium text-lg text-gray-900'>{title}</h2>
+      <div className={`px-1 py-4 h-full w-full`}>
         <div className={`relative mx-auto w-10/12 ${containerClassName}`}>
           {children}
         </div>
