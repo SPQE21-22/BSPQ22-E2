@@ -1,12 +1,9 @@
 from flask import request
 from flask_restful import Resource, reqparse
 from src.common.auth import decode_request_jwt
+from src.common.helper import not_none
 from src.database.user import User
 
-def not_none(s, d):
-    if s is None:
-        return d
-    return s
 
 class UsersSelf(Resource): #Sprint 2
     edit_parser = reqparse.RequestParser(bundle_errors=True)

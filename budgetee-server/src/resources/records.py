@@ -1,9 +1,10 @@
 from flask import request
 from flask_restful import Resource, reqparse
+from src.common.auth import decode_request_jwt
+from src.common.helper import is_valid_uuid, not_none
 from src.database.budget import Budget
 from src.database.record import Record
 from src.database.user import User
-from src.common.auth import decode_request_jwt
 
 class RecordsAll(Resource): #Sprint 1
     parser = reqparse.RequestParser(bundle_errors=True)
@@ -32,8 +33,11 @@ class RecordsAll(Resource): #Sprint 1
         # - Budget with id 'budget_id' exists
         data = RecordsAll.parser.parse_args() # get data received in the HTTP request body as JSON
         
+        if not is_valid_uuid(data.budgetId):
+            return {'error': 'invalid ID'}, 400
+        
         if not Budget.exists(data.budgetId):
-            return {'error': 'budget does not exist'}, 400
+            return {'error': 'budget does not exist'}, 404
 
         new_record = Record(
             name = data.get('name'),
@@ -47,18 +51,33 @@ class RecordsAll(Resource): #Sprint 1
         )
         new_record.save()
 
-        return new_record.as_dict() , 201
+        return new_record.as_dict(), 201
 
 class RecordsDetail(Resource): #Sprint 1
+    parser = reqparse.RequestParser(bundle_errors=True)
+    parser.add_argument('name')
+    parser.add_argument('category')
+    parser.add_argument('value', type=int, help='could not transform parameter to an integer')
+    parser.add_argument('date')
+    parser.add_argument('extraInfo')
+    parser.add_argument('paymentType')
+    parser.add_argument('place')
+    
     def get(self, record_id): #get a single record in a budget
         user_id = decode_request_jwt(request)
 
         if not user_id:
             return {'error': 'invalid JWT'}, 401
 
+        if not is_valid_uuid(record_id):
+            return {'error': 'invalid ID'}, 400
+
         record = Record.get(record_id)
         
-        return {'error' : 'record does not exist'}, 404
+        if not record:
+            return {'error' : 'record does not exist'}, 404
+
+        return record.as_dict()
 
     def put(self, record_id): #edit a single record in a budget
         # TODO perform same checks as in RecordsAll.post()
@@ -67,6 +86,9 @@ class RecordsDetail(Resource): #Sprint 1
         if not user_id:
             return {'error': 'invalid JWT'}, 401
         
+        if not is_valid_uuid(record_id):
+            return {'error': 'invalid ID'}, 400
+        
         record = Record.get(record_id)
         
         if not record:
@@ -74,29 +96,31 @@ class RecordsDetail(Resource): #Sprint 1
         
         budget = Budget.get(record.budget_id)
 
-        if (budget.user_id != user_id):
+        if (str(budget.user_id) != user_id):
             return {'error': 'access not allowed'}, 403
         
-        data = request.get_json() # get data received in the HTTP request body as JSON
-            
-        record.name = data.get('name')
-        record.category = data.get('category')
-        record.value = data.get('value')
-        record.date = data.get('date')
-        record.extra_info = data.get('extraInfo')
-        record.payment_type = data.get('paymentType')
-        record.place = data.get('place')
-        record.budget_id = data.get('budgetId')
+        data = RecordsDetail.parser.parse_args() # get data received in the HTTP request body as JSON
+
+        record.name = not_none(data.get('name'), record.name)
+        record.category = not_none(data.get('category'), record.category)
+        record.value = not_none(data.get('value'), record.value)
+        record.date = not_none(data.get('date'), record.date)
+        record.extra_info = not_none(data.get('extraInfo'), record.extra_info)
+        record.payment_type = not_none(data.get('paymentType'), record.payment_type)
+        record.place = not_none(data.get('place'), record.place)
             
         record.save()
 
-        return record.as_dict(), 201     
+        return record.as_dict(), 200
         
     def delete(self, record_id): # delete a single record in a budget
         user_id = decode_request_jwt(request)
 
         if not user_id:
             return {'error': 'invalid JWT'}, 401
+        
+        if not is_valid_uuid(record_id):
+            return {'error': 'invalid ID'}, 400
 
         record = Record.get(record_id)
         
@@ -105,7 +129,7 @@ class RecordsDetail(Resource): #Sprint 1
         
         budget = Budget.get(record.budget_id)
 
-        if (budget.user_id != user_id):    
+        if (str(budget.user_id) != user_id):    
             return {'error' : 'deletion not allowed'}, 403
         
         Record.delete_one(record_id)
