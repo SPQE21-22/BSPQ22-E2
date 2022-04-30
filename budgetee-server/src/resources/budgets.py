@@ -72,7 +72,7 @@ class BudgetsDetail(Resource):  # Sprint 1
         if not budget:
             return {'error': 'budget does not exist'}, 404
         
-        if (budget.user_id != user_id):
+        if str(budget.user_id) != user_id:
             return {'error': 'access not allowed'}, 403
         
         return budget.as_dict()
@@ -92,7 +92,7 @@ class BudgetsDetail(Resource):  # Sprint 1
         if not budget:
             return {'error': f'budget {budget_id} does not exist'}, 404
 
-        if (budget.user_id != user_id):
+        if str(budget.user_id) != user_id:
             return {'error': 'access not allowed'}, 403
 
         data = BudgetsDetail.parser.parse_args()  # get data received in the HTTP request body as JSON
@@ -108,8 +108,7 @@ class BudgetsDetail(Resource):  # Sprint 1
 
         return budget.as_dict(), 200
 
-    def delete(self, user_id, budget_id):  # delete this single budget_id
-
+    def delete(self, budget_id):  # delete this single budget_id
         user_id = decode_request_jwt(request)
 
         if not user_id:
@@ -123,7 +122,7 @@ class BudgetsDetail(Resource):  # Sprint 1
         if not budget:
             return {'error': f'budget {budget_id} not found'}, 404
 
-        if (budget.user_id != user_id):
+        if str(budget.user_id) != user_id:
             return {'error': 'deletion not allowed'}, 403
             
         Budget.delete_one(budget_id)
