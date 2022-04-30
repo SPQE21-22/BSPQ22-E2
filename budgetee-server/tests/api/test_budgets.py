@@ -39,7 +39,7 @@ def base_data(test_user):
   budget2.save()
   budget3.save()
   
-  yield [budget1, budget2, budget3]
+  yield [user, budget1, budget2, budget3]
 
 
 
