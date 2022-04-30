@@ -28,6 +28,11 @@ class RecordsAll(Resource): #Sprint 1
         return [record.as_dict() for record in records]
 
     def post(self): #create a record in a budget
+        user_id = decode_request_jwt(request)
+        
+        if not user_id:
+            return {'error': 'invalid JWT'}, 401
+        
         # TODO check received values:
         # - Date has proper format
         # - Budget with id 'budget_id' exists
@@ -36,8 +41,13 @@ class RecordsAll(Resource): #Sprint 1
         if not is_valid_uuid(data.budgetId):
             return {'error': 'invalid ID'}, 400
         
-        if not Budget.exists(data.budgetId):
+        budget = Budget.get(data.budgetId)
+        
+        if not budget:
             return {'error': 'budget does not exist'}, 404
+
+        if str(budget.user_id) != user_id:
+            return {'error': 'access not allowed'}, 403
 
         new_record = Record(
             name = data.get('name'),

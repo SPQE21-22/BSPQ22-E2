@@ -156,6 +156,45 @@ def test_records_post_invalid_budget(base_data, client):
   assert response.status_code == 400
 
 
+def test_records_post_no_token(client):
+  """Check that the response is forbidden when the token is not sent"""
+  client.cookie_jar.clear() # clear cookies before sending the request
+  response = client.post('/records')
+  assert response.status_code == 401
+
+
+def test_records_post_not_budget_owner(base_data, extra_user, client):
+  """The status code is 403 when the user doesn't own the record"""
+  user, token, budget, base_record_list = base_data
+  user_extra, token_extra = extra_user
+    
+  # create a budget owned by another user
+  external_budget = Budget(
+    name="external budget",
+    description="external description",
+    start_date="2022-01-01",
+    end_date="2022-12-31",
+    initial_budget=100,
+    user_id=user_extra.id
+  )
+  external_budget.save()
+  
+  client.cookie_jar.clear()
+  response = client.post('/records', data={
+    'name': 'new budget',
+    'category': 'miscellaneous',
+    'value': 400,
+    'date': '2022-03-24',
+    'extraInfo': 'new extra info',
+    'paymentType': 'card',
+    'place': 'new place',
+    'budgetId': external_budget.id
+  }, headers={
+    'Authorization': f'bearer {token}'
+  })
+  
+  assert response.status_code == 403
+
 
 # /record/:record_id tests
 # TODO test GET, PUT, DELETE methods, and check every possible error code

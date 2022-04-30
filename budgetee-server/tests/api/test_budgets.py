@@ -54,7 +54,7 @@ def test_budgets_get(base_data, client):
   assert len(response.json) == len(base_budget_list)     # check that the received number of items is the original one
   assert base_budget_list[0].as_dict() in response.json  # check that one of the base data is present in the request result
 
-def test_budgets_get_no_token(base_data, client):
+def test_budgets_get_no_token(client):
   """Check that the response is forbidden when the token is not sent"""
   client.cookie_jar.clear() # clear cookies before sending the request
   response = client.get('/budgets')
@@ -89,7 +89,7 @@ def test_budgets_post(base_data, client):
   new_budget_str = json.dumps(new_budget)
   assert new_budget_str in [json.dumps(budget.as_dict()) for budget in all_budgets]
 
-def test_budgets_post_no_token(base_data, client):
+def test_budgets_post_no_token(client):
   """Check that the response is forbidden when the token is not sent"""
   client.cookie_jar.clear() # clear cookies before sending the request
   response = client.post('/budgets')
