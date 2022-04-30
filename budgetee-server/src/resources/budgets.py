@@ -3,6 +3,7 @@ from flask_restful import Resource, reqparse
 from src.database.budget import Budget
 from src.database.user import User
 from src.common.auth import decode_request_jwt
+from src.common.helper import is_valid_uuid, not_none
 
 
 class BudgetsAll(Resource):  # Sprint 1
@@ -27,8 +28,13 @@ class BudgetsAll(Resource):  # Sprint 1
     def post(self):  # create a budget
         #TODO start date and end date are not checked  
         # get data received in the HTTP request body as JSON
-        data = BudgetsAll.parser.parse_args()     
-        
+        user_id = decode_request_jwt(request)
+
+        if not user_id:
+            return {'error': 'invalid JWT'}, 401
+
+        data = BudgetsAll.parser.parse_args() 
+  
         new_budget = Budget(
             name=data.get('name'),
             description=data.get('description'),
@@ -37,9 +43,7 @@ class BudgetsAll(Resource):  # Sprint 1
             initial_budget=data.get('initialBudget'),
             user_id=data.get('userId')
         )
-        if (new_budget.start_date > new_budget.end_date):
-            return {'error': 'dates are incorrect'}, 404
-        
+               
         new_budget.save()
 
         return new_budget.as_dict(), 201
@@ -59,11 +63,14 @@ class BudgetsDetail(Resource):  # Sprint 1
         
         if not user_id:
             return {'error': 'invalid JWT'}, 401
+
+        if not is_valid_uuid(budget_id):
+            return {'error': 'invalid ID'}, 400
        
         budget = Budget.get(budget_id)
 
         if not budget:
-            return {'error': 'budget not found'}, 404
+            return {'error': 'budget does not exist'}, 404
         
         if (budget.user_id != user_id):
             return {'error': 'access not allowed'}, 403
@@ -77,10 +84,13 @@ class BudgetsDetail(Resource):  # Sprint 1
         if not user_id:
             return {'error': 'invalid JWT'}, 401
         
+        if not is_valid_uuid(budget_id):
+            return {'error': 'invalid ID'}, 400
+        
         budget = Budget.get(budget_id)
         
         if not budget:
-            return {'error': 'budget not found'}, 404
+            return {'error': f'budget {budget_id} does not exist'}, 404
 
         if (budget.user_id != user_id):
             return {'error': 'access not allowed'}, 403
@@ -105,10 +115,13 @@ class BudgetsDetail(Resource):  # Sprint 1
         if not user_id:
             return {'error': 'invalid JWT'}, 401
 
+        if not is_valid_uuid(budget_id):
+            return {'error': 'invalid ID'}, 400
+        
         budget = Budget.get(budget_id)
         
         if not budget:
-            return {'error': 'budget not found'}, 404
+            return {'error': f'budget {budget_id} not found'}, 404
 
         if (budget.user_id != user_id):
             return {'error': 'deletion not allowed'}, 403

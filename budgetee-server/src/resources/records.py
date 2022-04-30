@@ -97,7 +97,7 @@ class RecordsDetail(Resource): #Sprint 1
         record = Record.get(record_id)
         
         if not record:
-            return {'error': f'record {record_id} not found'}, 404
+            return {'error': f'record {record_id} does not exist'}, 404
         
         budget = Budget.get(record.budget_id)
 

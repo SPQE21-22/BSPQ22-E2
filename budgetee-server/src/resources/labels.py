@@ -12,7 +12,9 @@ class LabelsAll(Resource):  # Sprint 2
 
         labels = Label.get_by_user(user_id)
         
-        return labels.as_dict()    
+        return labels.as_dict()   
+
+     
 
 
 class LabelsDetail(Resource):  # Sprint 2
