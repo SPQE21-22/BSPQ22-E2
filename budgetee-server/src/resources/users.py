@@ -21,7 +21,6 @@ class UsersSelf(Resource): #Sprint 2
         
         user = User.get(user_id)
         
-        # this error should never trigger, as we sign the token in the server with a secret key
         if not user:
             return {'error': 'user does not exist'}, 404
         
@@ -35,7 +34,6 @@ class UsersSelf(Resource): #Sprint 2
         
         user = User.get(user_id)
         
-        # this error should never trigger, as we sign the token in the server with a secret key
         if not user:
             return {'error': 'user does not exist'}, 404
         
@@ -57,8 +55,10 @@ class UsersSelf(Resource): #Sprint 2
         if not user_id:
             return {'error': 'invalid JWT'}, 401
         
-        if User.exists(user_id): 
-            User.delete_one(user_id)
-            return {'result' : 'success'}, 204
+        user = User.get(user_id)
         
-        return {'error' : 'user does not exist'}, 404
+        if not user:
+            return {'error' : 'user does not exist'}, 404
+        
+        User.delete_one(user_id)
+        return {'result' : 'success'}, 204
