@@ -1,4 +1,4 @@
 #!/bin/bash
-coverage run -m pytest
+coverage run --source=src -m pytest
 coverage html
 coverage report

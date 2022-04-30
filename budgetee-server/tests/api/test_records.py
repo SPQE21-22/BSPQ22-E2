@@ -2,7 +2,6 @@ import json
 import pytest
 from src.database.budget import Budget
 from src.database.record import Record
-from src.database.user import User
 
 
 @pytest.fixture()
@@ -56,16 +55,15 @@ def base_data(test_user):
   record2.save()
   record3.save()
   
-  yield [budget, [record1, record2, record3]]
+  yield [user, token, budget, [record1, record2, record3]]
 
 
 
 # /record tests
 # GET tests
-def test_records_get(test_user, base_data, client):
+def test_records_get(base_data, client):
   """Test if the records are properly received"""
-  user, token = test_user
-  budget, base_record_list = base_data
+  user, token, budget, base_record_list = base_data
   
   response = client.get('/records', headers={
     'Authorization': f'bearer {token}'  # send access token with the petition
@@ -80,7 +78,7 @@ def test_records_get(test_user, base_data, client):
   assert base_record in response_records
 
 
-def test_records_get_no_token(client):
+def test_records_get_no_token(base_data, client):
   """Check that the response is forbidden when the token is not sent"""
   client.cookie_jar.clear() # clear cookies before sending the request
   response = client.get('/records')
@@ -88,10 +86,9 @@ def test_records_get_no_token(client):
 
 
 # POST tests
-def test_records_post(test_user, base_data, client):
+def test_records_post(base_data, client):
   """Test that a new record can be created"""
-  user, token = test_user
-  budget, base_record_list = base_data
+  user, token, budget, base_record_list = base_data
   
   response = client.post('/records', data={
     'name': 'new budget',
@@ -119,9 +116,9 @@ def test_records_post(test_user, base_data, client):
   assert new_record_str in [json.dumps(record.as_dict()) for record in all_records]
 
 
-def test_records_nonexistent_budget(test_user, client):
+def test_records_post_nonexistent_budget(base_data, client):
   """Test that the status code is 404 when the budget doesn't exist"""
-  user, token = test_user
+  user, token, budget, base_record_list = base_data
   
   response = client.post('/records', data={
     'name': 'new budget',
@@ -139,9 +136,9 @@ def test_records_nonexistent_budget(test_user, client):
   assert response.status_code == 404
 
 
-def test_records_invalid_budget(test_user, client):
+def test_records_post_invalid_budget(base_data, client):
   """Test that the status code is 400 when the budget ID is not a valid UUID"""
-  user, token = test_user
+  user, token, budget, base_record_list = base_data
   
   response = client.post('/records', data={
     'name': 'new budget',
@@ -164,10 +161,9 @@ def test_records_invalid_budget(test_user, client):
 # TODO test GET, PUT, DELETE methods, and check every possible error code
 
 # GET tests
-def test_record_get(test_user, base_data, client):
+def test_record_get(base_data, client):
   """Test that a record can be obtained"""
-  user, token = test_user
-  budget, base_record_list = base_data
+  user, token, budget, base_record_list = base_data
   
   base_record = base_record_list[0]
   
@@ -186,11 +182,12 @@ def test_record_get_no_token(client):
   client.cookie_jar.clear() # clear cookies before sending the request
   response = client.get('/records/401')
   assert response.status_code == 401
+  assert 'invalid JWT' in json.dumps(response.json)
 
 
-def test_record_nonexistent(test_user, client):
+def test_record_get_nonexistent(base_data, client):
   """The status code is 404 when the record does not exist"""
-  user, token = test_user
+  user, token, budget, base_record_list = base_data
   
   response = client.get('/records/22968743-5e64-481d-a5d7-8cb46df035e5', headers={
     'Authorization': f'bearer {token}'
@@ -199,9 +196,9 @@ def test_record_nonexistent(test_user, client):
   assert response.status_code == 404
 
 
-def test_record_invalid_uuid(test_user, client):
+def test_record_get_invalid_uuid(base_data, client):
   """The status code is 400 when the record ID is not a valid UUID"""
-  user, token = test_user
+  user, token, budget, base_record_list = base_data
   
   response = client.get('/records/400', headers={
     'Authorization': f'bearer {token}'
@@ -210,22 +207,53 @@ def test_record_invalid_uuid(test_user, client):
   assert response.status_code == 400
 
 
-def test_record_get_not_owner(test_user, client):
+def test_record_get_not_owner(base_data, extra_user, client):
   """The status code is 403 when the user doesn't own the record"""
-  # TODO
+  user, token, budget, base_record_list = base_data
+  user_extra, token_extra = extra_user
+    
+  # create a budget owned by another user
+  external_budget = Budget(
+    name="external budget",
+    description="external description",
+    start_date="2022-01-01",
+    end_date="2022-12-31",
+    initial_budget=100,
+    user_id=user_extra.id
+  )
+  external_budget.save()
+  
+  external_record = Record(
+    name="external record 1",
+    category="entertainment",
+    value=100,
+    date="2022-06-01",
+    extra_info="external info 1",
+    payment_type="card",
+    place="external place",
+    budget_id=external_budget.id
+  )
+  external_record.save()
+  
+  client.cookie_jar.clear()
+  response = client.get(f'/records/{str(external_record.id)}', headers={
+    'Authorization': f'bearer {token}'
+  })
+  
+  assert response.status_code == 403
+  
 
 
 # PUT tests
-def test_record_put(test_user, base_data, client):
+def test_record_put(base_data, client):
   """Test that a record can be edited"""
-  user, token = test_user
-  budget, base_record_list = base_data
+  user, token, budget, base_record_list = base_data
   
   base_record = base_record_list[0]
   
   response = client.put(f'/records/{str(base_record_list[0].id)}', data={
     'name': 'updated name'
-  } ,headers={
+  }, headers={
     'Authorization': f'bearer {token}'
   })
   
@@ -236,16 +264,16 @@ def test_record_put(test_user, base_data, client):
   assert edited_record.get('value') == base_record.value
 
 
-def test_record_get_no_token(client):
+def test_record_put_no_token(client):
   """The response is forbidden when the token is not sent"""
   client.cookie_jar.clear() # clear cookies before sending the request
   response = client.put('/records/401')
   assert response.status_code == 401
 
 
-def test_record_nonexistent(test_user, client):
+def test_record_put_nonexistent(base_data, client):
   """The status code is 404 when the record does not exist"""
-  user, token = test_user
+  user, token, budget, base_record_list = base_data
   
   response = client.put('/records/22968743-5e64-481d-a5d7-8cb46df035e5', headers={
     'Authorization': f'bearer {token}'
@@ -254,9 +282,9 @@ def test_record_nonexistent(test_user, client):
   assert response.status_code == 404
 
 
-def test_record_invalid_uuid(test_user, client):
+def test_record_put_invalid_uuid(base_data, client):
   """The status code is 400 when the record ID is not a valid UUID"""
-  user, token = test_user
+  user, token, budget, base_record_list = base_data
   
   response = client.put('/records/400', headers={
     'Authorization': f'bearer {token}'
@@ -265,15 +293,47 @@ def test_record_invalid_uuid(test_user, client):
   assert response.status_code == 400
 
 
-def test_record_put_not_owner(test_user, client):
+def test_record_put_not_owner(base_data, extra_user, client):
   """The status code is 403 when the user doesn't own the record"""
-  # TODO
+  user, token, budget, base_record_list = base_data
+  user_extra, token_extra = extra_user
+    
+  # create a budget owned by another user
+  external_budget = Budget(
+    name="external budget",
+    description="external description",
+    start_date="2022-01-01",
+    end_date="2022-12-31",
+    initial_budget=100,
+    user_id=user_extra.id
+  )
+  external_budget.save()
+  
+  external_record = Record(
+    name="external record 1",
+    category="entertainment",
+    value=100,
+    date="2022-06-01",
+    extra_info="external info 1",
+    payment_type="card",
+    place="external place",
+    budget_id=external_budget.id
+  )
+  external_record.save()
+  
+  client.cookie_jar.clear()
+  response = client.put(f'/records/{str(external_record.id)}', data={
+    'name': 'external name'
+  }, headers={
+    'Authorization': f'bearer {token}'
+  })
+  
+  assert response.status_code == 403
 
 
 # DELETE tests
-def test_record_delete(test_user, base_data, client):
-  user, token = test_user
-  budget, base_record_list = base_data
+def test_record_delete(base_data, client):
+  user, token, budget, base_record_list = base_data
   
   to_delete_record = base_record_list[0]
   
@@ -288,16 +348,16 @@ def test_record_delete(test_user, base_data, client):
   assert json.dumps(to_delete_record.as_dict()) not in [json.dumps(record.as_dict()) for record in all_records]
 
 
-def test_record_get_no_token(client):
+def test_record_delete_no_token(client):
   """The response is forbidden when the token is not sent"""
   client.cookie_jar.clear() # clear cookies before sending the request
   response = client.delete('/records/401')
   assert response.status_code == 401
 
 
-def test_record_nonexistent(test_user, client):
+def test_record__delete_nonexistent(base_data, client):
   """The status code is 404 when the record does not exist"""
-  user, token = test_user
+  user, token, budget, base_record_list = base_data
   
   response = client.delete('/records/22968743-5e64-481d-a5d7-8cb46df035e5', headers={
     'Authorization': f'bearer {token}'
@@ -306,9 +366,9 @@ def test_record_nonexistent(test_user, client):
   assert response.status_code == 404
 
 
-def test_record_invalid_uuid(test_user, client):
+def test_record_delete_invalid_uuid(base_data, client):
   """The status code is 400 when the record ID is not a valid UUID"""
-  user, token = test_user
+  user, token, budget, base_record_list = base_data
   
   response = client.delete('/records/400', headers={
     'Authorization': f'bearer {token}'
@@ -317,6 +377,37 @@ def test_record_invalid_uuid(test_user, client):
   assert response.status_code == 400
 
 
-def test_record_delete_not_owner(test_user, client):
+def test_record_delete_not_owner(base_data, extra_user, client):
   """The status code is 403 when the user doesn't own the record"""
-  # TODO
+  user, token, budget, base_record_list = base_data
+  user_extra, token_extra = extra_user
+    
+  # create a budget owned by another user
+  external_budget = Budget(
+    name="external budget",
+    description="external description",
+    start_date="2022-01-01",
+    end_date="2022-12-31",
+    initial_budget=100,
+    user_id=user_extra.id
+  )
+  external_budget.save()
+  
+  external_record = Record(
+    name="external record 1",
+    category="entertainment",
+    value=100,
+    date="2022-06-01",
+    extra_info="external info 1",
+    payment_type="card",
+    place="external place",
+    budget_id=external_budget.id
+  )
+  external_record.save()
+  
+  client.cookie_jar.clear()
+  response = client.delete(f'/records/{str(external_record.id)}', headers={
+    'Authorization': f'bearer {token}'
+  })
+  
+  assert response.status_code == 403

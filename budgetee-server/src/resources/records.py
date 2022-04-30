@@ -75,7 +75,12 @@ class RecordsDetail(Resource): #Sprint 1
         record = Record.get(record_id)
         
         if not record:
-            return {'error' : 'record does not exist'}, 404
+            return {'error': 'record does not exist'}, 404
+
+        budget = Budget.get(record.budget_id)
+        
+        if str(budget.user_id) != user_id:
+            return {'error': 'access not allowed'}, 403
 
         return record.as_dict()
 
@@ -96,7 +101,7 @@ class RecordsDetail(Resource): #Sprint 1
         
         budget = Budget.get(record.budget_id)
 
-        if (str(budget.user_id) != user_id):
+        if str(budget.user_id) != user_id:
             return {'error': 'access not allowed'}, 403
         
         data = RecordsDetail.parser.parse_args() # get data received in the HTTP request body as JSON
@@ -129,7 +134,7 @@ class RecordsDetail(Resource): #Sprint 1
         
         budget = Budget.get(record.budget_id)
 
-        if (str(budget.user_id) != user_id):    
+        if str(budget.user_id) != user_id:    
             return {'error' : 'deletion not allowed'}, 403
         
         Record.delete_one(record_id)
