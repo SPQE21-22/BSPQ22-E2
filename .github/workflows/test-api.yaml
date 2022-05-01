@@ -3,6 +3,7 @@ on: [push]
 jobs:
   runtests:
     runs-on: ubuntu-latest
+    container: ubuntu
 
     services:
       postgres:
