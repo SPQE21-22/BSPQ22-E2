@@ -40,4 +40,4 @@ jobs:
         run: python -m pytest -s --import-mode=append tests/
         env:
           APP_SECRET: f06709g6df9s87gd0f98g6s0d9
-          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
+          DATABASE_URL: postgresql://postgres:postgres@postgres:5432/postgres
