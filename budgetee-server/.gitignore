@@ -128,7 +128,7 @@ dmypy.json
 .pyre/
 
 # configuration
-config.py
+# config.py
 
 # openssl certificates
 *.pem

@@ -66,7 +66,7 @@ def test_budgets_post(base_data, client):
   """Test that a new budget can be created"""
   user, token, base_budget_list = base_data
   
-  response = client.post('/budgets', data={
+  response = client.post('/budgets', json={
     'name': 'new budget',
     'description': 'miscellaneous',
     'startDate': '2022-03-24',
@@ -87,7 +87,8 @@ def test_budgets_post(base_data, client):
   assert new_budget.get('name') == 'new budget'
   
   new_budget_str = json.dumps(new_budget)
-  assert new_budget_str in [json.dumps(budget.as_dict()) for budget in all_budgets]
+  all_budgets_str = [json.dumps(budget.as_dict()) for budget in all_budgets]
+  assert new_budget_str in all_budgets_str
 
 def test_budgets_post_no_token(client):
   """Check that the response is forbidden when the token is not sent"""
@@ -176,7 +177,7 @@ def test_budget_put(base_data, client):
   
   base_budget = base_budget_list[0]
   
-  response = client.put(f'/budgets/{str(base_budget_list[0].id)}', data={
+  response = client.put(f'/budgets/{str(base_budget_list[0].id)}', json={
     'name': 'updated name'
   }, headers={
     'Authorization': f'bearer {token}'
@@ -235,7 +236,7 @@ def test_budget_put_not_owner(base_data, extra_user, client):
   external_budget.save()
   
   client.cookie_jar.clear()
-  response = client.put(f'/budgets/{str(external_budget.id)}', data={
+  response = client.put(f'/budgets/{str(external_budget.id)}', json={
     'name': 'external name'
   }, headers={
     'Authorization': f'bearer {token}'

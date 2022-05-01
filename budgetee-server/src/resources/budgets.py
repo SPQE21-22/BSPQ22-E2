@@ -12,8 +12,8 @@ class BudgetsAll(Resource):  # Sprint 1
     parser.add_argument('description')
     parser.add_argument('startDate', required=True, help='parameter required')
     parser.add_argument('endDate', required=True, help='parameter required')
-    parser.add_argument('initialBudget', type=int, help='Initial budget cannot be converted')
-    parser.add_argument('userId', help='parameter required')
+    parser.add_argument('initialBudget', type=float, help='Initial budget cannot be converted')
+    parser.add_argument('userId')
     
     def get(self):  # get all the budgets
         user_id = decode_request_jwt(request)
@@ -41,9 +41,9 @@ class BudgetsAll(Resource):  # Sprint 1
             start_date=data.get('startDate'),
             end_date=data.get('endDate'),
             initial_budget=data.get('initialBudget'),
-            user_id=data.get('userId')
+            user_id=user_id
         )
-               
+
         new_budget.save()
 
         return new_budget.as_dict(), 201

@@ -7,7 +7,7 @@ from src.config import postgresqlUrl
 
 engine = create_engine(postgresqlUrl)
 db_session = scoped_session(sessionmaker(
-    autocommit=False, autoflush=False, bind=engine))
+    autocommit=False, autoflush=False, bind=engine, expire_on_commit=False))
 
 Base = declarative_base()
 Base.query = db_session.query_property()

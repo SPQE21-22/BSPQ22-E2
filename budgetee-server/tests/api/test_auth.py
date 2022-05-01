@@ -25,7 +25,7 @@ def test_register(client):
     User.query.delete()
     response = client.post(
         "/auth/register",
-        data={
+        json={
             "username": "testuser",
             "name": "testname",
             "email": "test@user.com",
@@ -51,7 +51,7 @@ def test_register(client):
 def test_register_registered_email(base_user, client):
     response = client.post(
         "/auth/register",
-        data={
+        json={
             "username": "testuser",
             "name": "testname",
             "email": base_user.email,
@@ -67,7 +67,7 @@ def test_register_registered_email(base_user, client):
 def test_login(base_user, client):
     response = client.post(
         "/auth/login",
-        data={
+        json={
             "email": base_user.email,
             "password": base_user.password,
         },
@@ -87,7 +87,7 @@ def test_login(base_user, client):
 def test_login_no_user(client):
     User.query.delete()
     response = client.post(
-        "auth/login", data={"email": "wrong@email.com", "password": "1234"}
+        "auth/login", json={"email": "wrong@email.com", "password": "1234"}
     )
     
     assert response.status_code == 404
@@ -96,7 +96,7 @@ def test_login_no_user(client):
 def test_login_wrong_password(base_user, client):
     response = client.post(
         '/auth/login',
-        data={
+        json={
             "email": base_user.email,
             "password": '4321',
         }

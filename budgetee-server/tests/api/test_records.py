@@ -90,7 +90,7 @@ def test_records_post(base_data, client):
   """Test that a new record can be created"""
   user, token, budget, base_record_list = base_data
   
-  response = client.post('/records', data={
+  response = client.post('/records', json={
     'name': 'new budget',
     'category': 'miscellaneous',
     'value': 400,
@@ -109,18 +109,14 @@ def test_records_post(base_data, client):
   assert len(all_records) == len(base_record_list) + 1
   
   new_record = response.json
-  assert new_record in [record.as_dict() for record in all_records]
   assert new_record.get('name') == 'new budget'
-  
-  new_record_str = json.dumps(new_record)
-  assert new_record_str in [json.dumps(record.as_dict()) for record in all_records]
 
 
 def test_records_post_nonexistent_budget(base_data, client):
   """Test that the status code is 404 when the budget doesn't exist"""
   user, token, budget, base_record_list = base_data
   
-  response = client.post('/records', data={
+  response = client.post('/records', json={
     'name': 'new budget',
     'category': 'miscellaneous',
     'value': 400,
@@ -140,7 +136,7 @@ def test_records_post_invalid_budget(base_data, client):
   """Test that the status code is 400 when the budget ID is not a valid UUID"""
   user, token, budget, base_record_list = base_data
   
-  response = client.post('/records', data={
+  response = client.post('/records', json={
     'name': 'new budget',
     'category': 'miscellaneous',
     'value': 400,
@@ -180,7 +176,7 @@ def test_records_post_not_budget_owner(base_data, extra_user, client):
   external_budget.save()
   
   client.cookie_jar.clear()
-  response = client.post('/records', data={
+  response = client.post('/records', json={
     'name': 'new budget',
     'category': 'miscellaneous',
     'value': 400,
@@ -290,7 +286,7 @@ def test_record_put(base_data, client):
   
   base_record = base_record_list[0]
   
-  response = client.put(f'/records/{str(base_record_list[0].id)}', data={
+  response = client.put(f'/records/{str(base_record_list[0].id)}', json={
     'name': 'updated name'
   }, headers={
     'Authorization': f'bearer {token}'
@@ -361,7 +357,7 @@ def test_record_put_not_owner(base_data, extra_user, client):
   external_record.save()
   
   client.cookie_jar.clear()
-  response = client.put(f'/records/{str(external_record.id)}', data={
+  response = client.put(f'/records/{str(external_record.id)}', json={
     'name': 'external name'
   }, headers={
     'Authorization': f'bearer {token}'

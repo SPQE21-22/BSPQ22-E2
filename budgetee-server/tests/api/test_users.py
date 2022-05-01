@@ -44,7 +44,7 @@ def test_users_put_self(test_user, client):
 
     response = client.put(
         "/auth/self",
-        data={"username": "new username"},
+        json={"username": "new username"},
         headers={"Authorization": f"bearer {token}"},
     )
 
