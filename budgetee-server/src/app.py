@@ -9,11 +9,20 @@ from src.resources.records import RecordsAll, RecordsDetail
 from src.resources.labels import LabelsAll, LabelsDetail
 from src.resources.auth import Login, Logout, Register
 from src.resources.users import UsersSelf
+import flask_profiler
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
 app.secret_key = app_secret_key
 api = Api(app)
+
+app.config["DEBUG"] = True
+app.config['flask_profiler'] = {
+    "enabled": app.config["DEBUG"],
+    "storage": {
+        "engine": "sqlalchemy",
+    },
+}
 
 init_db()
 create_admin(app)
@@ -53,6 +62,7 @@ api.add_resource(Register,'/auth/register')
 api.add_resource(UsersSelf,'/auth/self' )
 
 
+flask_profiler.init_app(app)
 
 
 if __name__ == '__main__':
