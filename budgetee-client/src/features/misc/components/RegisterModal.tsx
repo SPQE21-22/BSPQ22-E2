@@ -78,6 +78,7 @@ export const RegisterModal = () => {
         return (
           <form className="flex flex-col" onSubmit={handleSubmit}>
             <InputField
+              id='register-username'
               label='Username'
               name='username'
               value={formState.username}
@@ -86,6 +87,7 @@ export const RegisterModal = () => {
               className='mb-4'
             />
             <InputField
+              id='register-password'
               label='Password'
               type='password'
               name='password'
@@ -96,14 +98,16 @@ export const RegisterModal = () => {
             />
             <hr className="my-4" />
             <InputField
+              id='register-name'
               label='Name'
               name='name'
               value={formState.name}
               required
               onChange={handleInputChange}
               className='mb-4'
-            />
+              />
             <InputField
+              id='register-email'
               label='Email'
               type='email'
               name='email'
@@ -113,6 +117,7 @@ export const RegisterModal = () => {
               className='mb-4'
             />
             <InputField
+              id='register-birthdate'
               label='Birth date'
               type='date'
               name='birthDate'
@@ -121,7 +126,7 @@ export const RegisterModal = () => {
               onChange={handleInputChange}
               className='mb-4'
             />
-            <Button type='submit' variant='inverse' className='mt-2'>Register</Button>
+            <Button type='submit' variant='inverse' className='mt-2' id='register-button'>Register</Button>
           </form>
         );
       case 'loading':

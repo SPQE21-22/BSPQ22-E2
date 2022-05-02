@@ -73,6 +73,7 @@ export const LoginModal = () => {
         return (
           <form className="flex flex-col" onSubmit={handleSubmit}>
             <InputField
+              id='login-email'
               label='Email'
               name='email'
               type='email'
@@ -80,8 +81,9 @@ export const LoginModal = () => {
               required
               onChange={handleInputChange}
               className='mb-4'
-            />
+              />
             <InputField
+              id='login-password'
               label='Password'
               type='password'
               name='password'
@@ -90,7 +92,7 @@ export const LoginModal = () => {
               onChange={handleInputChange}
               className='mb-4'
             />
-            <Button type='submit' variant='inverse' className='mt-2'>Log in</Button>
+            <Button type='submit' variant='inverse' className='mt-2' id='login-button'>Log in</Button>
           </form>
         );
       case 'loading':

@@ -17,9 +17,10 @@ const months: Months = {
   '12': 'December',
 };
 
-// TODO unit tests, format guards
 export const formatDate = (date: string | undefined): string => {
-  if (date === undefined) return 'No date defined';
+  const re = /[0-9]{4}-[0-1][0-9]-[0-3][0-9]/;
+  if (!date || !re.test(date)) return 'No date defined';
+
 
   const splitDate = date.split('-');
   const year = splitDate[0];
