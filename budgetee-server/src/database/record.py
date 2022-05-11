@@ -1,7 +1,4 @@
-"""@package docstring
-Documentation for this module Record.
- 
-More details.
+"""! @package database
 """
 from __future__ import annotations
 from sqlalchemy import DateTime, Column, Float, ForeignKey, String

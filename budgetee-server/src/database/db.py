@@ -1,7 +1,4 @@
-"""@package docstring
-Documentation for this db.py module.
- 
-More details.
+"""! @package database
 """
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker

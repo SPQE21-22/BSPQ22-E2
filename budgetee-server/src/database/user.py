@@ -1,7 +1,4 @@
-"""@package docstring
-Documentation for this module called User.
- 
-More details.
+"""!@package database
 """
 from __future__ import annotations
 from sqlalchemy import Column, Date, String

@@ -1,7 +1,4 @@
-"""@package docstring
-Documentation for this module Label.
- 
-More details.
+"""! @package database
 """
 from __future__ import annotations
 from unicodedata import category
