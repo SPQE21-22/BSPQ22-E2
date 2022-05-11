@@ -1,3 +1,4 @@
+"""! @package resources """
 from flask import make_response, request
 from flask_restful import Resource, reqparse
 from src.config import app_secret_key

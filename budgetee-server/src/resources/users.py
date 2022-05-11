@@ -1,3 +1,4 @@
+"""! @package resources """
 from flask import request
 from flask_restful import Resource, reqparse
 from src.common.auth import decode_request_jwt
