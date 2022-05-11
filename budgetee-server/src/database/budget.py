@@ -26,7 +26,14 @@ class Budget(Base): #Sprint1
 
 
     def __init__(self,  name, description, start_date, end_date, initial_budget, user_id):
-        """! The constructor for the budget class."""       
+        """! The constructor for the budget class.
+        @param [in] name The title of the budget
+        @param [in] description The description of the budget
+        @param [in] start_date The starting date of the budget
+        @param [in] end_date The ending date of the budget
+        @param [in] initial_budget The initial amount of the budget
+        @param [in] user_id The user that owns the budget
+        """       
         self.name = name
         self.description = description
         self.start_date = start_date
@@ -35,6 +42,10 @@ class Budget(Base): #Sprint1
         self.user_id = user_id
 
     def __repr__(self):
+        """! Documentation for the __repr__ function.
+        
+        This function will print the name.
+        """
         return f'<Budget {self.name!r}>'
     
     def save(self):
@@ -86,7 +97,7 @@ class Budget(Base): #Sprint1
     
     @staticmethod
     def delete_one(budget_id):
-        """Documentation for the delete_one function.
+        """! Documentation for the delete_one function.
         @param[in] budget_id The id we need to search in the database
  
         This fuction will delete the budget.
@@ -97,7 +108,7 @@ class Budget(Base): #Sprint1
   
     @staticmethod
     def exists(budget_id) -> bool:
-        """Documentation for the exists function.
+        """! Documentation for the exists function.
         @param[in] budget_id The id we need to search in the database
         @return This fuction returns a boolean if the budget exists or not.
 

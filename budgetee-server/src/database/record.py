@@ -1,3 +1,8 @@
+"""@package docstring
+Documentation for this module Record.
+ 
+More details.
+"""
 from __future__ import annotations
 from sqlalchemy import DateTime, Column, Float, ForeignKey, String
 from sqlalchemy.dialects.postgresql import UUID
@@ -21,6 +26,15 @@ class Record(Base): #Sprint 1
     budget_id = Column(UUID(as_uuid=True), ForeignKey('budget.id', ondelete='CASCADE'), nullable=False)
 
     def __init__(self, name, category, value, date, extra_info, payment_type, place, budget_id):
+        """! The constructor for the record class.
+        @param [in] name The title of the record
+        @param [in] category The category in which we classify the record
+        @param [in] value The value that is stored with the record
+        @param [in] date The date we place the record
+        @param [in] payment_type If it is in cash, cheque... 
+        @param [in] place The location we store with the record
+        @param [in] budget_id The budget that this record belongs
+        """ 
         self.name = name
         self.category = category
         self.value = value
@@ -31,14 +45,26 @@ class Record(Base): #Sprint 1
         self.budget_id = budget_id
 
     def __repr__(self):
+        """! Documentation for the __repr__ function.
+        
+        This function will print the name.
+        """
         return f'<Record {self.name!r}>'
     
     def save(self):
+        """! Documentation for the save function.
+        
+        This function will save the database state.
+        """
         if not self.id:
             db_session.add(self)
         db_session.commit()
     
     def as_dict(self):
+        """!Documentation for the as_dict function.
+        
+        This function will print the record with a format.
+        """
         record = {camelize(c.name): getattr(self, c.name) for c in self.__table__.columns}
         record['id'] = str(record['id'])
         record['budgetId'] = str(record['budgetId'])
@@ -47,18 +73,37 @@ class Record(Base): #Sprint 1
     
     @staticmethod
     def all() -> List[Record]:
+        """! Documentation for the all function.
+        @return This fuction will return all the records.
+        
+        """
         return Record.query.all()
 
     @staticmethod
-    def get(Record_id) -> Record:
-        return Record.query.get(Record_id)
+    def get(record_id) -> Record:
+        """! Documentation for the get function.
+        @param[in] rudget_id The id we need to search in the database
+        @return This fuction will return the record.
+        
+        """
+        return Record.query.get(record_id)
 
     @staticmethod
-    def get_by_date(Record_dateTime) -> Record:
-        return Record.query.filter_by(dateTime=Record_dateTime)
+    def get_by_date(record_dateTime) -> Record:
+        """! Documentation for the get_by_date function.
+        @param[in] record_dateTime The id we need to search in the database
+        @return This fuction will return a list of records that had been created at the specified date. 
+        
+        """
+        return Record.query.filter_by(dateTime=record_dateTime)
     
     @staticmethod
     def get_by_user(user_id) -> Record:
+        """! Documentation for the get_by_user function.
+        @param[in] user_id The id we need to search in the database
+        @return This fuction will return a list of records that had been created by a user. 
+        
+        """
         budget_ids = [budget.id for budget in Budget.get_by_user(user_id)] 
         all_records = Record.all()
         records = []
@@ -69,11 +114,21 @@ class Record(Base): #Sprint 1
 
     @staticmethod
     def delete_one(record_id):
+        """! Documentation for the delete_one function.
+        @param[in] record_id The id we need to search in the database
+ 
+        This fuction will delete the record.
+        """
         to_delete = Record.query.get(record_id)
         db_session.delete(to_delete)
         db_session.commit()
 
     @staticmethod
-    def exists(Record_id) -> bool:
-        return Record.query.filter_by(id=Record_id).first() is not None
+    def exists(record_id) -> bool:
+        """! Documentation for the exists function.
+        @param[in] record_id The id we need to search in the database
+        @return This fuction returns a boolean if the record exists or not.
+
+        """
+        return Record.query.filter_by(id=record_id).first() is not None
 
