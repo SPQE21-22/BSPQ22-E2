@@ -1,3 +1,8 @@
+"""@package docstring
+Documentation for this module Label.
+ 
+More details.
+"""
 from __future__ import annotations
 from unicodedata import category
 from sqlalchemy import Column, Integer, String, ForeignKey
@@ -13,6 +18,10 @@ class Label(Base): #Sprint 2
     user_id = Column(UUID(as_uuid=True), ForeignKey('user.id', ondelete='CASCADE'), nullable=False) 
 
     def __init__(self, name, user):
+        """! The constructor for the label class.
+        @param [in] name The title of the label
+        @param [in] user The user that owns the label
+        """  
         self.name = name
         self.user_id = user
 
@@ -20,26 +29,53 @@ class Label(Base): #Sprint 2
         return f'<Label {self.category!r}>'
 
     def save(self):
+        """! Documentation for the save function.
+        
+        This function will save the database state.
+        """
         if not self.id:
             db_session.add(self)
         db_session.commit()
         # db_session.expunge() # REVIEW necessary when using a single session?
 
     def as_dict(self):
+        """!Documentation for the as_dict function.
+        
+        This function will print the label with a format.
+        """
         return {c.category: getattr(self, c.category) for c in self.__table__.columns}
 
     @staticmethod
     def all():
+        """! Documentation for the all function.
+        @return This fuction will return all the labels.
+        
+        """
         return Label.query.all()
 
     @staticmethod
-    def get(Label_id) -> Label:
-        return Label.query.get(Label_id)
+    def get(label_id) -> Label:
+        """! Documentation for the get function.
+        @param[in] label_id The id we need to search in the database
+        @return This fuction will return the label.
+        
+        """
+        return Label.query.get(label_id)
 
     @staticmethod
     def get_by_user(user_id) -> Label:
+        """! Documentation for the get_by_user function.
+        @param[in] user_id The id we need to search in the database
+        @return This fuction will return a list of labels that had been created by a user. 
+        
+        """
         return Label.query.filter_by(user_id = user_id) 
 
     @staticmethod
-    def exists(Label_id) -> bool:
-        return Label.query.filter_by(id=Label_id).first() is not None
+    def exists(label_id) -> bool:
+        """! Documentation for the exists function.
+        @param[in] label_id The id we need to search in the database
+        @return This fuction returns a boolean if the label exists or not.
+
+        """
+        return Label.query.filter_by(id=label_id).first() is not None
