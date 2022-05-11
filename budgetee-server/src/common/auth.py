@@ -1,3 +1,4 @@
+"""! @package common"""
 from src.config import app_secret_key
 import jwt
 

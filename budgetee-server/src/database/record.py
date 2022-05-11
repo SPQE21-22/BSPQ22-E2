@@ -10,6 +10,7 @@ from typing import List
 import uuid
 
 class Record(Base): #Sprint 1
+    """! @Class Record"""
     __tablename__ = 'record'
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     name = Column(String(128), nullable=False)

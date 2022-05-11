@@ -9,6 +9,7 @@ from src.database.db import Base, db_session
 import uuid
 
 class User(Base): #Sprint 1
+    """! @Class User"""
     __tablename__ = 'user'
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     username = Column(String(255), nullable=False)

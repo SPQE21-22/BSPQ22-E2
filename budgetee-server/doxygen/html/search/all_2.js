@@ -9,5 +9,5 @@ var searchData=
   ['budgets_6',['budgets',['../dc/d9c/classuser_1_1_user.html#ae8be402bf0742e2b554b4dc630ff5dc5',1,'user::User']]],
   ['budgets_2epy_7',['budgets.py',['../d1/de8/budgets_8py.html',1,'']]],
   ['budgetsall_8',['BudgetsAll',['../d5/da1/classresources_1_1budgets_1_1_budgets_all.html',1,'resources::budgets']]],
-  ['budgetsdetail_9',['BudgetsDetail',['../d9/de1/classresources_1_1budgets_1_1_budgets_detail.html',1,'resources::budgets']]]
+  ['budgetsdetail_9',['BudgetsDetail',['../dc/d85/class_budgets_detail.html',1,'']]]
 ];

@@ -1,3 +1,4 @@
+"""! @package common"""
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 from src.database.db import db_session

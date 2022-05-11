@@ -8,5 +8,5 @@ var searchData=
   ['user_5fid_5',['user_id',['../d7/d2e/classbudget_1_1_budget.html#ab8e4fe22776aeac6701c6c43fdee5ac8',1,'budget.Budget.user_id()'],['../d9/d13/classlabel_1_1_label.html#ab8e4fe22776aeac6701c6c43fdee5ac8',1,'label.Label.user_id()']]],
   ['username_6',['username',['../dc/d9c/classuser_1_1_user.html#a0adcbe0e0e6f64a29b1d205ede9632c1',1,'user::User']]],
   ['users_2epy_7',['users.py',['../d2/d19/users_8py.html',1,'']]],
-  ['usersself_8',['UsersSelf',['../d6/d28/classresources_1_1users_1_1_users_self.html',1,'resources::users']]]
+  ['userself_8',['UserSelf',['../d9/d32/class_user_self.html',1,'']]]
 ];

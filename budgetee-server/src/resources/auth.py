@@ -6,7 +6,7 @@ from src.database.user import User
 import jwt
 
 class Login(Resource): #Sprint 2
-    """! @Class Budget
+    """! @Class Login
     @param email
     @param password
     """
@@ -39,7 +39,7 @@ class Login(Resource): #Sprint 2
 
 
 class Register(Resource): #Sprint 2
-    """! @Class Resource
+    """! @Class Register
     @param resource
     @param name
     @param email
@@ -83,7 +83,7 @@ class Register(Resource): #Sprint 2
 
 
 class Logout(Resource):
-    """! @Class Resource
+    """! @Class Logout
    
     """
     def post(self):
