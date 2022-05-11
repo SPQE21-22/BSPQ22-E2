@@ -1,0 +1,60 @@
+\hypertarget{namespacedb}{}\doxysection{db Namespace Reference}
+\label{namespacedb}\index{db@{db}}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{namespacedb_aca31edca03ea605ebf05131dc748e9ad}{init\+\_\+db}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespacedb_a450696a95d6cb29d7723838846948340}{Base}} = declarative\+\_\+base()
+\item 
+\mbox{\hyperlink{namespacedb_a177bda9e54e82e1bb6cf3edc3c3cb56d}{db\+\_\+session}}
+\item 
+\mbox{\hyperlink{namespacedb_a4720cf3b5a198cd8121ea0e55bdb2954}{engine}} = create\+\_\+engine(postgresql\+Url)
+\item 
+\mbox{\hyperlink{namespacedb_a6c84ba0942252fbf3bc9f20120a12ad1}{query}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespacedb_aca31edca03ea605ebf05131dc748e9ad}\label{namespacedb_aca31edca03ea605ebf05131dc748e9ad}} 
+\index{db@{db}!init\_db@{init\_db}}
+\index{init\_db@{init\_db}!db@{db}}
+\doxysubsubsection{\texorpdfstring{init\_db()}{init\_db()}}
+{\footnotesize\ttfamily def db.\+init\+\_\+db (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{namespacedb_a450696a95d6cb29d7723838846948340}\label{namespacedb_a450696a95d6cb29d7723838846948340}} 
+\index{db@{db}!Base@{Base}}
+\index{Base@{Base}!db@{db}}
+\doxysubsubsection{\texorpdfstring{Base}{Base}}
+{\footnotesize\ttfamily Base = declarative\+\_\+base()}
+
+\mbox{\Hypertarget{namespacedb_a177bda9e54e82e1bb6cf3edc3c3cb56d}\label{namespacedb_a177bda9e54e82e1bb6cf3edc3c3cb56d}} 
+\index{db@{db}!db\_session@{db\_session}}
+\index{db\_session@{db\_session}!db@{db}}
+\doxysubsubsection{\texorpdfstring{db\_session}{db\_session}}
+{\footnotesize\ttfamily db\+\_\+session}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 =  scoped\_session(sessionmaker(}
+\DoxyCodeLine{2     autocommit=\textcolor{keyword}{False}, autoflush=\textcolor{keyword}{False}, bind=engine, expire\_on\_commit=\textcolor{keyword}{False}))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{namespacedb_a4720cf3b5a198cd8121ea0e55bdb2954}\label{namespacedb_a4720cf3b5a198cd8121ea0e55bdb2954}} 
+\index{db@{db}!engine@{engine}}
+\index{engine@{engine}!db@{db}}
+\doxysubsubsection{\texorpdfstring{engine}{engine}}
+{\footnotesize\ttfamily engine = create\+\_\+engine(postgresql\+Url)}
+
+\mbox{\Hypertarget{namespacedb_a6c84ba0942252fbf3bc9f20120a12ad1}\label{namespacedb_a6c84ba0942252fbf3bc9f20120a12ad1}} 
+\index{db@{db}!query@{query}}
+\index{query@{query}!db@{db}}
+\doxysubsubsection{\texorpdfstring{query}{query}}
+{\footnotesize\ttfamily query}
+
