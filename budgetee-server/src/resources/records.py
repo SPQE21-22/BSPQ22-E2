@@ -7,6 +7,16 @@ from src.database.record import Record
 from src.database.user import User
 
 class RecordsAll(Resource): #Sprint 1
+    """! @class RecordsAll
+    @param name
+    @param category
+    @param value
+    @param date
+    @param extra info
+    @param payment type
+    @param place
+    @param budget id
+    """
     parser = reqparse.RequestParser(bundle_errors=True)
     parser.add_argument('name', required=True, help='parameter required')
     parser.add_argument('category', required=True, help='parameter required')
@@ -18,6 +28,9 @@ class RecordsAll(Resource): #Sprint 1
     parser.add_argument('budgetId', required=True, help='budget id cannot be converted')    # TODO send both errors
     
     def get(self): #get all the records in a budget
+        """! gets all the records 
+        @return all the records in an array
+        """
         user_id = decode_request_jwt(request)
 
         if not user_id:
@@ -28,6 +41,9 @@ class RecordsAll(Resource): #Sprint 1
         return [record.as_dict() for record in records]
 
     def post(self): #create a record in a budget
+        """! posts a new record
+        @return 201 code if succesfull
+        """
         user_id = decode_request_jwt(request)
         
         if not user_id:
@@ -64,6 +80,15 @@ class RecordsAll(Resource): #Sprint 1
         return new_record.as_dict(), 201
 
 class RecordsDetail(Resource): #Sprint 1
+    """! @class RecordsDetail
+    @param name
+    @param category
+    @param value
+    @param date
+    @param extra info
+    @param payment type
+    @param place
+    """
     parser = reqparse.RequestParser(bundle_errors=True)
     parser.add_argument('name')
     parser.add_argument('category')
@@ -74,6 +99,10 @@ class RecordsDetail(Resource): #Sprint 1
     parser.add_argument('place')
     
     def get(self, record_id): #get a single record in a budget
+        """! gets a single record
+        @param record id of the record
+        @return budget
+        """
         user_id = decode_request_jwt(request)
 
         if not user_id:
@@ -95,7 +124,11 @@ class RecordsDetail(Resource): #Sprint 1
         return record.as_dict()
 
     def put(self, record_id): #edit a single record in a budget
-        # TODO perform same checks as in RecordsAll.post()
+        """! edits a single record
+        @param record id of the record
+        @return 200 if successful
+        @return the edited record
+        """  
         user_id = decode_request_jwt(request)
 
         if not user_id:
@@ -129,6 +162,10 @@ class RecordsDetail(Resource): #Sprint 1
         return record.as_dict(), 200
         
     def delete(self, record_id): # delete a single record in a budget
+        """! deletes a single record
+        @param record id of the record
+        @return 204 if successful
+        """                
         user_id = decode_request_jwt(request)
 
         if not user_id:

@@ -13,6 +13,7 @@ from typing import List
 import uuid
 
 class Budget(Base): #Sprint1
+    """! @Class Budget"""
     __tablename__ = 'budget'
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     name = Column(String(255), nullable=False)

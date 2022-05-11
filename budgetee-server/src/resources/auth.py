@@ -5,11 +5,18 @@ from src.database.user import User
 import jwt
 
 class Login(Resource): #Sprint 2
+    """! @Class Budget
+    @param email
+    @param password
+    """
     parser = reqparse.RequestParser(bundle_errors=True)
     parser.add_argument('email', required=True, help='parameter required')
     parser.add_argument('password', required=True, help='parameter required')
 
     def post(self): #send login data, get access token
+        """! logs in a valid user if it exists on the db
+        @return boolean value
+        """
         data = Login.parser.parse_args() # get data received in the HTTP request body as JSON
         
         user = User.get_by_email(data.get('email'))
@@ -31,6 +38,13 @@ class Login(Resource): #Sprint 2
 
 
 class Register(Resource): #Sprint 2
+    """! @Class Resource
+    @param resource
+    @param name
+    @param email
+    @param password
+    @param birth date
+    """
     parser = reqparse.RequestParser(bundle_errors=True)
     parser.add_argument('username', required=True, help='parameter required')
     parser.add_argument('name', required=True, help='parameter required')
@@ -38,8 +52,9 @@ class Register(Resource): #Sprint 2
     parser.add_argument('password', required=True, help='parameter required')
     parser.add_argument('birthDate', required=True, help='parameter required')
 
-    def post(self): # send register data, register and get access token
-        # TODO check received values:
+    def post(self): 
+        """! send register data, register and get access token
+        """
         data = Register.parser.parse_args() # get data received in the HTTP request body as JSON
 
         user_email = data.get('email')
@@ -67,7 +82,11 @@ class Register(Resource): #Sprint 2
 
 
 class Logout(Resource):
+    """! @Class Resource
+   
+    """
     def post(self):
+        """! logs out the user from the system """
         response = make_response({'result': 'logged out'}, 202)
         response.delete_cookie('jwt_token')
         return response

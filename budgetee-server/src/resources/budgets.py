@@ -7,6 +7,14 @@ from src.common.helper import is_valid_uuid, not_none
 
 
 class BudgetsAll(Resource):  # Sprint 1
+    """! @Class BudgetsAll
+    @param name
+    @param description
+    @param start date
+    @param end date
+    @param initial budget 
+    @param user id 
+    """
     parser = reqparse.RequestParser(bundle_errors=True) # parse request values to check if they are ok
     parser.add_argument('name', required=True, help='parameter required')
     parser.add_argument('description')
@@ -15,7 +23,10 @@ class BudgetsAll(Resource):  # Sprint 1
     parser.add_argument('initialBudget', type=float, help='Initial budget cannot be converted')
     parser.add_argument('userId')
     
-    def get(self):  # get all the budgets
+    def get(self):  
+        """! gets all the budgets 
+        @return all the budgets in an array
+        """
         user_id = decode_request_jwt(request)
 
         if not user_id:
@@ -25,9 +36,12 @@ class BudgetsAll(Resource):  # Sprint 1
 
         return [budget.as_dict() for budget in budgets]
 
-    def post(self):  # create a budget
-        #TODO start date and end date are not checked  
-        # get data received in the HTTP request body as JSON
+    def post(self): 
+        """! posts a new budget
+        @return 201 code if succesfull
+        @return bidget created
+        """
+        
         user_id = decode_request_jwt(request)
 
         if not user_id:
@@ -50,6 +64,14 @@ class BudgetsAll(Resource):  # Sprint 1
 
 
 class BudgetsDetail(Resource):  # Sprint 1
+    """! @class BudgetsDetail 
+    @param name
+    @param description
+    @param start date
+    @param end date
+    @param initial budget
+    @param user id
+    """
     parser = reqparse.RequestParser(bundle_errors=True) # parse request values to check if they are ok
     parser.add_argument('name')
     parser.add_argument('description')
@@ -58,7 +80,11 @@ class BudgetsDetail(Resource):  # Sprint 1
     parser.add_argument('initialBudget', type=int, help='Initial budget cannot be converted')
     parser.add_argument('userId')
     
-    def get(self, budget_id):  # get a single budget
+    def get(self, budget_id):  
+        """! gets a single budget
+        @param budget id of the budget
+        @return budget
+        """
         user_id = decode_request_jwt(request)
         
         if not user_id:
@@ -78,7 +104,12 @@ class BudgetsDetail(Resource):  # Sprint 1
         return budget.as_dict()
 
 
-    def put(self, budget_id):  # edit this single budget
+    def put(self, budget_id):  
+        """! edits a single budget
+        @param budget id of the budget
+        @return 200 if successful
+        @return the edited budget
+        """        
         user_id = decode_request_jwt(request)
 
         if not user_id:
@@ -108,7 +139,11 @@ class BudgetsDetail(Resource):  # Sprint 1
 
         return budget.as_dict(), 200
 
-    def delete(self, budget_id):  # delete this single budget_id
+    def delete(self, budget_id): 
+        """! deletes a single budget
+        @param budget id of the budget
+        @return 204 if successful
+        """                
         user_id = decode_request_jwt(request)
 
         if not user_id:
