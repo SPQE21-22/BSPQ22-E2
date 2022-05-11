@@ -1,0 +1,119 @@
+\hypertarget{classlabel_1_1_label}{}\doxysection{Label Class Reference}
+\label{classlabel_1_1_label}\index{Label@{Label}}
+Inheritance diagram for Label\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{d9/d13/classlabel_1_1_label}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{classlabel_1_1_label_a77d091499ee0be62acf98837b9882dcb}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, \mbox{\hyperlink{classlabel_1_1_label_ab74e6bf80237ddc4109968cedc58c151}{name}}, user)
+\item 
+def \mbox{\hyperlink{classlabel_1_1_label_a9a47563093dfc5ba12274b66e368920c}{\+\_\+\+\_\+repr\+\_\+\+\_\+}} (self)
+\item 
+def \mbox{\hyperlink{classlabel_1_1_label_a55dca0afa9f8205575d7e5ea2a6c10cb}{as\+\_\+dict}} (self)
+\item 
+def \mbox{\hyperlink{classlabel_1_1_label_a564562f082521e37c7029e239abb56c6}{save}} (self)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{classlabel_1_1_label_a1315f87aa23b9e2160c8eae915f94557}{all}} ()
+\item 
+bool \mbox{\hyperlink{classlabel_1_1_label_af7d01f126717ff4f9ad8956028bb7ccf}{exists}} (Label\+\_\+id)
+\item 
+\mbox{\hyperlink{classlabel_1_1_label}{Label}} \mbox{\hyperlink{classlabel_1_1_label_a309a0ac305859f9bc5e8af6c3951772b}{get}} (Label\+\_\+id)
+\item 
+\mbox{\hyperlink{classlabel_1_1_label}{Label}} \mbox{\hyperlink{classlabel_1_1_label_ac5da34bee9dc6fcd7e0d8a63e781ecce}{get\+\_\+by\+\_\+user}} (\mbox{\hyperlink{classlabel_1_1_label_ab8e4fe22776aeac6701c6c43fdee5ac8}{user\+\_\+id}})
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classlabel_1_1_label_acf2488b95c97e0378c9bf49de3b50f28}{id}} = Column(UUID(as\+\_\+uuid=True), primary\+\_\+key=True, default=uuid.\+uuid4)
+\item 
+\mbox{\hyperlink{classlabel_1_1_label_ab74e6bf80237ddc4109968cedc58c151}{name}} = Column(String(255), nullable=False)
+\item 
+\mbox{\hyperlink{classlabel_1_1_label_ab8e4fe22776aeac6701c6c43fdee5ac8}{user\+\_\+id}} = Column(UUID(as\+\_\+uuid=True), Foreign\+Key(\textquotesingle{}user.\+id\textquotesingle{}, ondelete=\textquotesingle{}CASCADE\textquotesingle{}), nullable=False)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classlabel_1_1_label_a77d091499ee0be62acf98837b9882dcb}\label{classlabel_1_1_label_a77d091499ee0be62acf98837b9882dcb}} 
+\index{Label@{Label}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!Label@{Label}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily def \+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{name,  }\item[{}]{user }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classlabel_1_1_label_a9a47563093dfc5ba12274b66e368920c}\label{classlabel_1_1_label_a9a47563093dfc5ba12274b66e368920c}} 
+\index{Label@{Label}!\_\_repr\_\_@{\_\_repr\_\_}}
+\index{\_\_repr\_\_@{\_\_repr\_\_}!Label@{Label}}
+\doxysubsubsection{\texorpdfstring{\_\_repr\_\_()}{\_\_repr\_\_()}}
+{\footnotesize\ttfamily def \+\_\+\+\_\+repr\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classlabel_1_1_label_a1315f87aa23b9e2160c8eae915f94557}\label{classlabel_1_1_label_a1315f87aa23b9e2160c8eae915f94557}} 
+\index{Label@{Label}!all@{all}}
+\index{all@{all}!Label@{Label}}
+\doxysubsubsection{\texorpdfstring{all()}{all()}}
+{\footnotesize\ttfamily def all (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classlabel_1_1_label_a55dca0afa9f8205575d7e5ea2a6c10cb}\label{classlabel_1_1_label_a55dca0afa9f8205575d7e5ea2a6c10cb}} 
+\index{Label@{Label}!as\_dict@{as\_dict}}
+\index{as\_dict@{as\_dict}!Label@{Label}}
+\doxysubsubsection{\texorpdfstring{as\_dict()}{as\_dict()}}
+{\footnotesize\ttfamily def as\+\_\+dict (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classlabel_1_1_label_af7d01f126717ff4f9ad8956028bb7ccf}\label{classlabel_1_1_label_af7d01f126717ff4f9ad8956028bb7ccf}} 
+\index{Label@{Label}!exists@{exists}}
+\index{exists@{exists}!Label@{Label}}
+\doxysubsubsection{\texorpdfstring{exists()}{exists()}}
+{\footnotesize\ttfamily  bool exists (\begin{DoxyParamCaption}\item[{}]{Label\+\_\+id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classlabel_1_1_label_a309a0ac305859f9bc5e8af6c3951772b}\label{classlabel_1_1_label_a309a0ac305859f9bc5e8af6c3951772b}} 
+\index{Label@{Label}!get@{get}}
+\index{get@{get}!Label@{Label}}
+\doxysubsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily  \mbox{\hyperlink{classlabel_1_1_label}{Label}} get (\begin{DoxyParamCaption}\item[{}]{Label\+\_\+id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classlabel_1_1_label_ac5da34bee9dc6fcd7e0d8a63e781ecce}\label{classlabel_1_1_label_ac5da34bee9dc6fcd7e0d8a63e781ecce}} 
+\index{Label@{Label}!get\_by\_user@{get\_by\_user}}
+\index{get\_by\_user@{get\_by\_user}!Label@{Label}}
+\doxysubsubsection{\texorpdfstring{get\_by\_user()}{get\_by\_user()}}
+{\footnotesize\ttfamily  \mbox{\hyperlink{classlabel_1_1_label}{Label}} get\+\_\+by\+\_\+user (\begin{DoxyParamCaption}\item[{}]{user\+\_\+id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classlabel_1_1_label_a564562f082521e37c7029e239abb56c6}\label{classlabel_1_1_label_a564562f082521e37c7029e239abb56c6}} 
+\index{Label@{Label}!save@{save}}
+\index{save@{save}!Label@{Label}}
+\doxysubsubsection{\texorpdfstring{save()}{save()}}
+{\footnotesize\ttfamily def save (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classlabel_1_1_label_acf2488b95c97e0378c9bf49de3b50f28}\label{classlabel_1_1_label_acf2488b95c97e0378c9bf49de3b50f28}} 
+\index{Label@{Label}!id@{id}}
+\index{id@{id}!Label@{Label}}
+\doxysubsubsection{\texorpdfstring{id}{id}}
+{\footnotesize\ttfamily id = Column(UUID(as\+\_\+uuid=True), primary\+\_\+key=True, default=uuid.\+uuid4)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classlabel_1_1_label_ab74e6bf80237ddc4109968cedc58c151}\label{classlabel_1_1_label_ab74e6bf80237ddc4109968cedc58c151}} 
+\index{Label@{Label}!name@{name}}
+\index{name@{name}!Label@{Label}}
+\doxysubsubsection{\texorpdfstring{name}{name}}
+{\footnotesize\ttfamily name = Column(String(255), nullable=False)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classlabel_1_1_label_ab8e4fe22776aeac6701c6c43fdee5ac8}\label{classlabel_1_1_label_ab8e4fe22776aeac6701c6c43fdee5ac8}} 
+\index{Label@{Label}!user\_id@{user\_id}}
+\index{user\_id@{user\_id}!Label@{Label}}
+\doxysubsubsection{\texorpdfstring{user\_id}{user\_id}}
+{\footnotesize\ttfamily user\+\_\+id = Column(UUID(as\+\_\+uuid=True), Foreign\+Key(\textquotesingle{}user.\+id\textquotesingle{}, ondelete=\textquotesingle{}CASCADE\textquotesingle{}), nullable=False)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Gorka/\+Documents/\+Git\+Hub/\+BSPQ22-\/\+E2/budgetee-\/server/src/database/\mbox{\hyperlink{label_8py}{label.\+py}}\end{DoxyCompactItemize}

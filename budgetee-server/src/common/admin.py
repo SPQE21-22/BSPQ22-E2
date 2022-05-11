@@ -8,6 +8,9 @@ from src.database.label import Label
 
 
 def create_admin(app):
+    """! Create the views to add the models to the database.
+    
+    """
     app.config['FLASK_ADMIN_SWATCH'] = 'cosmo'
     admin = Admin(app, name='Budgetee', template_mode='bootstrap3')
 

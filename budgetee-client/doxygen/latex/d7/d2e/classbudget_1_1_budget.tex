@@ -1,0 +1,215 @@
+\hypertarget{classbudget_1_1_budget}{}\doxysection{Budget Class Reference}
+\label{classbudget_1_1_budget}\index{Budget@{Budget}}
+Inheritance diagram for Budget\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{d7/d2e/classbudget_1_1_budget}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{classbudget_1_1_budget_aecee0cb9fce08b68074428e4fb78cf15}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, \mbox{\hyperlink{classbudget_1_1_budget_ab74e6bf80237ddc4109968cedc58c151}{name}}, \mbox{\hyperlink{classbudget_1_1_budget_a2661f439a4a94ffdcd5e47ae1da0bb1d}{description}}, \mbox{\hyperlink{classbudget_1_1_budget_a43637aae427864cd298f44506f53b347}{start\+\_\+date}}, \mbox{\hyperlink{classbudget_1_1_budget_aa8e3c06cccfb4c56319575d55a2fba95}{end\+\_\+date}}, \mbox{\hyperlink{classbudget_1_1_budget_ad81f72cc9f35c985664ee08311a569cc}{initial\+\_\+budget}}, \mbox{\hyperlink{classbudget_1_1_budget_ab8e4fe22776aeac6701c6c43fdee5ac8}{user\+\_\+id}})
+\item 
+def \mbox{\hyperlink{classbudget_1_1_budget_a9a47563093dfc5ba12274b66e368920c}{\+\_\+\+\_\+repr\+\_\+\+\_\+}} (self)
+\item 
+def \mbox{\hyperlink{classbudget_1_1_budget_a55dca0afa9f8205575d7e5ea2a6c10cb}{as\+\_\+dict}} (self)
+\item 
+def \mbox{\hyperlink{classbudget_1_1_budget_a564562f082521e37c7029e239abb56c6}{save}} (self)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{classbudget_1_1_budget_a1315f87aa23b9e2160c8eae915f94557}{all}} ()
+\begin{DoxyCompactList}\small\item\em Documentation for the all function. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classbudget_1_1_budget_ae63d4309bf9bce901bdef75b298c8372}{delete\+\_\+one}} (budget\+\_\+id)
+\item 
+bool \mbox{\hyperlink{classbudget_1_1_budget_ad9ec917289070d6b44c4bee6c4abb663}{exists}} (budget\+\_\+id)
+\item 
+\mbox{\hyperlink{classbudget_1_1_budget}{Budget}} \mbox{\hyperlink{classbudget_1_1_budget_a42fc9baac0c74b96a79c9ab24e2aeb7a}{get}} (budget\+\_\+id)
+\begin{DoxyCompactList}\small\item\em Documentation for the get function. \end{DoxyCompactList}\item 
+List\mbox{[}\mbox{\hyperlink{classbudget_1_1_budget}{Budget}}\mbox{]} \mbox{\hyperlink{classbudget_1_1_budget_a0bf7b2d5d10af987c7095bdabd05ac76}{get\+\_\+by\+\_\+user}} (\mbox{\hyperlink{classbudget_1_1_budget_ab8e4fe22776aeac6701c6c43fdee5ac8}{user\+\_\+id}})
+\begin{DoxyCompactList}\small\item\em Documentation for the get\+\_\+by\+\_\+user function. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classbudget_1_1_budget_a2661f439a4a94ffdcd5e47ae1da0bb1d}{description}} = Column(String(255), nullable=True, default=\textquotesingle{}\textquotesingle{})
+\item 
+\mbox{\hyperlink{classbudget_1_1_budget_aa8e3c06cccfb4c56319575d55a2fba95}{end\+\_\+date}} = Column(Date, nullable=True)
+\item 
+\mbox{\hyperlink{classbudget_1_1_budget_acf2488b95c97e0378c9bf49de3b50f28}{id}} = Column(UUID(as\+\_\+uuid=True), primary\+\_\+key=True, default=uuid.\+uuid4)
+\item 
+\mbox{\hyperlink{classbudget_1_1_budget_ad81f72cc9f35c985664ee08311a569cc}{initial\+\_\+budget}} = Column(Float, nullable=False, default=0)
+\item 
+\mbox{\hyperlink{classbudget_1_1_budget_ab74e6bf80237ddc4109968cedc58c151}{name}} = Column(String(255), nullable=False)
+\item 
+\mbox{\hyperlink{classbudget_1_1_budget_a995be376aa1cfd5330696496de76ab5d}{records}} = relationship(\textquotesingle{}Record\textquotesingle{}, backref=backref(\textquotesingle{}budget\textquotesingle{}))
+\item 
+\mbox{\hyperlink{classbudget_1_1_budget_a43637aae427864cd298f44506f53b347}{start\+\_\+date}} = Column(Date, nullable=True)
+\item 
+\mbox{\hyperlink{classbudget_1_1_budget_ab8e4fe22776aeac6701c6c43fdee5ac8}{user\+\_\+id}} = Column(UUID(as\+\_\+uuid=True), Foreign\+Key(\textquotesingle{}user.\+id\textquotesingle{}, ondelete=\textquotesingle{}CASCADE\textquotesingle{}), nullable=False)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classbudget_1_1_budget_aecee0cb9fce08b68074428e4fb78cf15}\label{classbudget_1_1_budget_aecee0cb9fce08b68074428e4fb78cf15}} 
+\index{Budget@{Budget}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!Budget@{Budget}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily def \+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{name,  }\item[{}]{description,  }\item[{}]{start\+\_\+date,  }\item[{}]{end\+\_\+date,  }\item[{}]{initial\+\_\+budget,  }\item[{}]{user\+\_\+id }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}The constructor for the budget class.\end{DoxyVerb}
+ 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classbudget_1_1_budget_a9a47563093dfc5ba12274b66e368920c}\label{classbudget_1_1_budget_a9a47563093dfc5ba12274b66e368920c}} 
+\index{Budget@{Budget}!\_\_repr\_\_@{\_\_repr\_\_}}
+\index{\_\_repr\_\_@{\_\_repr\_\_}!Budget@{Budget}}
+\doxysubsubsection{\texorpdfstring{\_\_repr\_\_()}{\_\_repr\_\_()}}
+{\footnotesize\ttfamily def \+\_\+\+\_\+repr\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classbudget_1_1_budget_a1315f87aa23b9e2160c8eae915f94557}\label{classbudget_1_1_budget_a1315f87aa23b9e2160c8eae915f94557}} 
+\index{Budget@{Budget}!all@{all}}
+\index{all@{all}!Budget@{Budget}}
+\doxysubsubsection{\texorpdfstring{all()}{all()}}
+{\footnotesize\ttfamily def all (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Documentation for the all function. 
+
+\begin{DoxyReturn}{Returns}
+This fuction will return all the budgets. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classbudget_1_1_budget_a55dca0afa9f8205575d7e5ea2a6c10cb}\label{classbudget_1_1_budget_a55dca0afa9f8205575d7e5ea2a6c10cb}} 
+\index{Budget@{Budget}!as\_dict@{as\_dict}}
+\index{as\_dict@{as\_dict}!Budget@{Budget}}
+\doxysubsubsection{\texorpdfstring{as\_dict()}{as\_dict()}}
+{\footnotesize\ttfamily def as\+\_\+dict (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Documentation for the as_dict function.
+
+This function will print the budget with a format.
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classbudget_1_1_budget_ae63d4309bf9bce901bdef75b298c8372}\label{classbudget_1_1_budget_ae63d4309bf9bce901bdef75b298c8372}} 
+\index{Budget@{Budget}!delete\_one@{delete\_one}}
+\index{delete\_one@{delete\_one}!Budget@{Budget}}
+\doxysubsubsection{\texorpdfstring{delete\_one()}{delete\_one()}}
+{\footnotesize\ttfamily def delete\+\_\+one (\begin{DoxyParamCaption}\item[{}]{budget\+\_\+id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\begin{DoxyVerb}Documentation for the delete_one function.
+@param[in] budget_id The id we need to search in the database
+
+This fuction will delete the budget.
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classbudget_1_1_budget_ad9ec917289070d6b44c4bee6c4abb663}\label{classbudget_1_1_budget_ad9ec917289070d6b44c4bee6c4abb663}} 
+\index{Budget@{Budget}!exists@{exists}}
+\index{exists@{exists}!Budget@{Budget}}
+\doxysubsubsection{\texorpdfstring{exists()}{exists()}}
+{\footnotesize\ttfamily  bool exists (\begin{DoxyParamCaption}\item[{}]{budget\+\_\+id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\begin{DoxyVerb}Documentation for the exists function.
+@param[in] budget_id The id we need to search in the database
+@return This fuction returns a boolean if the budget exists or not.\end{DoxyVerb}
+ \mbox{\Hypertarget{classbudget_1_1_budget_a42fc9baac0c74b96a79c9ab24e2aeb7a}\label{classbudget_1_1_budget_a42fc9baac0c74b96a79c9ab24e2aeb7a}} 
+\index{Budget@{Budget}!get@{get}}
+\index{get@{get}!Budget@{Budget}}
+\doxysubsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily  \mbox{\hyperlink{classbudget_1_1_budget}{Budget}} get (\begin{DoxyParamCaption}\item[{}]{budget\+\_\+id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Documentation for the get function. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em budget\+\_\+id} & The id we need to search in the database \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+This fuction will return the budget. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classbudget_1_1_budget_a0bf7b2d5d10af987c7095bdabd05ac76}\label{classbudget_1_1_budget_a0bf7b2d5d10af987c7095bdabd05ac76}} 
+\index{Budget@{Budget}!get\_by\_user@{get\_by\_user}}
+\index{get\_by\_user@{get\_by\_user}!Budget@{Budget}}
+\doxysubsubsection{\texorpdfstring{get\_by\_user()}{get\_by\_user()}}
+{\footnotesize\ttfamily  List\mbox{[}\mbox{\hyperlink{classbudget_1_1_budget}{Budget}}\mbox{]} get\+\_\+by\+\_\+user (\begin{DoxyParamCaption}\item[{}]{user\+\_\+id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Documentation for the get\+\_\+by\+\_\+user function. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em user\+\_\+id} & The id we need to search in the database \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+This fuction will return a list of budgets that had been created by a user. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classbudget_1_1_budget_a564562f082521e37c7029e239abb56c6}\label{classbudget_1_1_budget_a564562f082521e37c7029e239abb56c6}} 
+\index{Budget@{Budget}!save@{save}}
+\index{save@{save}!Budget@{Budget}}
+\doxysubsubsection{\texorpdfstring{save()}{save()}}
+{\footnotesize\ttfamily def save (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Documentation for the save function.
+
+This function will save the database state.
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classbudget_1_1_budget_a2661f439a4a94ffdcd5e47ae1da0bb1d}\label{classbudget_1_1_budget_a2661f439a4a94ffdcd5e47ae1da0bb1d}} 
+\index{Budget@{Budget}!description@{description}}
+\index{description@{description}!Budget@{Budget}}
+\doxysubsubsection{\texorpdfstring{description}{description}}
+{\footnotesize\ttfamily description = Column(String(255), nullable=True, default=\textquotesingle{}\textquotesingle{})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classbudget_1_1_budget_aa8e3c06cccfb4c56319575d55a2fba95}\label{classbudget_1_1_budget_aa8e3c06cccfb4c56319575d55a2fba95}} 
+\index{Budget@{Budget}!end\_date@{end\_date}}
+\index{end\_date@{end\_date}!Budget@{Budget}}
+\doxysubsubsection{\texorpdfstring{end\_date}{end\_date}}
+{\footnotesize\ttfamily end\+\_\+date = Column(Date, nullable=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classbudget_1_1_budget_acf2488b95c97e0378c9bf49de3b50f28}\label{classbudget_1_1_budget_acf2488b95c97e0378c9bf49de3b50f28}} 
+\index{Budget@{Budget}!id@{id}}
+\index{id@{id}!Budget@{Budget}}
+\doxysubsubsection{\texorpdfstring{id}{id}}
+{\footnotesize\ttfamily id = Column(UUID(as\+\_\+uuid=True), primary\+\_\+key=True, default=uuid.\+uuid4)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classbudget_1_1_budget_ad81f72cc9f35c985664ee08311a569cc}\label{classbudget_1_1_budget_ad81f72cc9f35c985664ee08311a569cc}} 
+\index{Budget@{Budget}!initial\_budget@{initial\_budget}}
+\index{initial\_budget@{initial\_budget}!Budget@{Budget}}
+\doxysubsubsection{\texorpdfstring{initial\_budget}{initial\_budget}}
+{\footnotesize\ttfamily initial\+\_\+budget = Column(Float, nullable=False, default=0)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classbudget_1_1_budget_ab74e6bf80237ddc4109968cedc58c151}\label{classbudget_1_1_budget_ab74e6bf80237ddc4109968cedc58c151}} 
+\index{Budget@{Budget}!name@{name}}
+\index{name@{name}!Budget@{Budget}}
+\doxysubsubsection{\texorpdfstring{name}{name}}
+{\footnotesize\ttfamily name = Column(String(255), nullable=False)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classbudget_1_1_budget_a995be376aa1cfd5330696496de76ab5d}\label{classbudget_1_1_budget_a995be376aa1cfd5330696496de76ab5d}} 
+\index{Budget@{Budget}!records@{records}}
+\index{records@{records}!Budget@{Budget}}
+\doxysubsubsection{\texorpdfstring{records}{records}}
+{\footnotesize\ttfamily records = relationship(\textquotesingle{}Record\textquotesingle{}, backref=backref(\textquotesingle{}budget\textquotesingle{}))\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classbudget_1_1_budget_a43637aae427864cd298f44506f53b347}\label{classbudget_1_1_budget_a43637aae427864cd298f44506f53b347}} 
+\index{Budget@{Budget}!start\_date@{start\_date}}
+\index{start\_date@{start\_date}!Budget@{Budget}}
+\doxysubsubsection{\texorpdfstring{start\_date}{start\_date}}
+{\footnotesize\ttfamily start\+\_\+date = Column(Date, nullable=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classbudget_1_1_budget_ab8e4fe22776aeac6701c6c43fdee5ac8}\label{classbudget_1_1_budget_ab8e4fe22776aeac6701c6c43fdee5ac8}} 
+\index{Budget@{Budget}!user\_id@{user\_id}}
+\index{user\_id@{user\_id}!Budget@{Budget}}
+\doxysubsubsection{\texorpdfstring{user\_id}{user\_id}}
+{\footnotesize\ttfamily user\+\_\+id = Column(UUID(as\+\_\+uuid=True), Foreign\+Key(\textquotesingle{}user.\+id\textquotesingle{}, ondelete=\textquotesingle{}CASCADE\textquotesingle{}), nullable=False)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Gorka/\+Documents/\+Git\+Hub/\+BSPQ22-\/\+E2/budgetee-\/server/src/database/\mbox{\hyperlink{budget_8py}{budget.\+py}}\end{DoxyCompactItemize}

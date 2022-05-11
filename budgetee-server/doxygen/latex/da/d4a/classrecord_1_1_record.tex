@@ -1,0 +1,202 @@
+\hypertarget{classrecord_1_1_record}{}\doxysection{Record Class Reference}
+\label{classrecord_1_1_record}\index{Record@{Record}}
+Inheritance diagram for Record\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{da/d4a/classrecord_1_1_record}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{classrecord_1_1_record_a4702616e03a095acb0bb0d2a736a41fe}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, \mbox{\hyperlink{classrecord_1_1_record_ab74e6bf80237ddc4109968cedc58c151}{name}}, \mbox{\hyperlink{classrecord_1_1_record_a71494cb32e3acaab23cde05f1136df5e}{category}}, \mbox{\hyperlink{classrecord_1_1_record_afcc7a4b78ecd8fa7e713f8cfa0f51017}{value}}, \mbox{\hyperlink{classrecord_1_1_record_ade6a701b82b93dfb7eae4e79cd3b18a6}{date}}, \mbox{\hyperlink{classrecord_1_1_record_aeb658706bdb45c9813ec6572bf4c98c3}{extra\+\_\+info}}, \mbox{\hyperlink{classrecord_1_1_record_aed3ad5147fa678c43a57416d9873c3fa}{payment\+\_\+type}}, \mbox{\hyperlink{classrecord_1_1_record_a05f4db0d3aa9dc5c00fbe530bfd8fb7c}{place}}, \mbox{\hyperlink{classrecord_1_1_record_abc2508732609d7d26ab2745fcad5787f}{budget\+\_\+id}})
+\item 
+def \mbox{\hyperlink{classrecord_1_1_record_a9a47563093dfc5ba12274b66e368920c}{\+\_\+\+\_\+repr\+\_\+\+\_\+}} (self)
+\item 
+def \mbox{\hyperlink{classrecord_1_1_record_a55dca0afa9f8205575d7e5ea2a6c10cb}{as\+\_\+dict}} (self)
+\item 
+def \mbox{\hyperlink{classrecord_1_1_record_a564562f082521e37c7029e239abb56c6}{save}} (self)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+List\mbox{[}\mbox{\hyperlink{classrecord_1_1_record}{Record}}\mbox{]} \mbox{\hyperlink{classrecord_1_1_record_ae6506ef0dc47119821bd4e7d59905a74}{all}} ()
+\item 
+def \mbox{\hyperlink{classrecord_1_1_record_ad72c713ca218b5c2373ff56399374a91}{delete\+\_\+one}} (record\+\_\+id)
+\item 
+bool \mbox{\hyperlink{classrecord_1_1_record_acab7ce5d84b07de6c3fa1ed5990945aa}{exists}} (Record\+\_\+id)
+\item 
+\mbox{\hyperlink{classrecord_1_1_record}{Record}} \mbox{\hyperlink{classrecord_1_1_record_a0e8a717e1c4ac43034df7d0bc557fcf8}{get}} (Record\+\_\+id)
+\item 
+\mbox{\hyperlink{classrecord_1_1_record}{Record}} \mbox{\hyperlink{classrecord_1_1_record_a81daf4c1c4bbd6324b7d694b34b38329}{get\+\_\+by\+\_\+date}} (Record\+\_\+date\+Time)
+\item 
+\mbox{\hyperlink{classrecord_1_1_record}{Record}} \mbox{\hyperlink{classrecord_1_1_record_acc038228ed0ba86b38fe886743fc9308}{get\+\_\+by\+\_\+user}} (user\+\_\+id)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classrecord_1_1_record_a2e413a410477fc3553eac7582cc31a1c}{extra\+Info}}
+\item 
+\mbox{\hyperlink{classrecord_1_1_record_a106e6a69f42032efb2cf37ebde2b76a0}{payment\+Type}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classrecord_1_1_record_abc2508732609d7d26ab2745fcad5787f}{budget\+\_\+id}} = Column(UUID(as\+\_\+uuid=True), Foreign\+Key(\textquotesingle{}budget.\+id\textquotesingle{}, ondelete=\textquotesingle{}CASCADE\textquotesingle{}), nullable=False)
+\item 
+\mbox{\hyperlink{classrecord_1_1_record_a71494cb32e3acaab23cde05f1136df5e}{category}} = Column(String(255), nullable=False)
+\item 
+\mbox{\hyperlink{classrecord_1_1_record_ade6a701b82b93dfb7eae4e79cd3b18a6}{date}} = Column(Date\+Time, nullable=True, default=None)
+\item 
+\mbox{\hyperlink{classrecord_1_1_record_aeb658706bdb45c9813ec6572bf4c98c3}{extra\+\_\+info}} = Column(String(255), nullable=True)
+\item 
+\mbox{\hyperlink{classrecord_1_1_record_acf2488b95c97e0378c9bf49de3b50f28}{id}} = Column(UUID(as\+\_\+uuid=True), primary\+\_\+key=True, default=uuid.\+uuid4)
+\item 
+\mbox{\hyperlink{classrecord_1_1_record_ab74e6bf80237ddc4109968cedc58c151}{name}} = Column(String(128), nullable=False)
+\item 
+\mbox{\hyperlink{classrecord_1_1_record_aed3ad5147fa678c43a57416d9873c3fa}{payment\+\_\+type}} = Column(String(255), nullable=True)
+\item 
+\mbox{\hyperlink{classrecord_1_1_record_a05f4db0d3aa9dc5c00fbe530bfd8fb7c}{place}} = Column(String(255), nullable=True, default=\textquotesingle{}\textquotesingle{})
+\item 
+\mbox{\hyperlink{classrecord_1_1_record_afcc7a4b78ecd8fa7e713f8cfa0f51017}{value}} = Column(Float, nullable=False)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classrecord_1_1_record_a4702616e03a095acb0bb0d2a736a41fe}\label{classrecord_1_1_record_a4702616e03a095acb0bb0d2a736a41fe}} 
+\index{Record@{Record}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!Record@{Record}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily def \+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{name,  }\item[{}]{category,  }\item[{}]{value,  }\item[{}]{date,  }\item[{}]{extra\+\_\+info,  }\item[{}]{payment\+\_\+type,  }\item[{}]{place,  }\item[{}]{budget\+\_\+id }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classrecord_1_1_record_a9a47563093dfc5ba12274b66e368920c}\label{classrecord_1_1_record_a9a47563093dfc5ba12274b66e368920c}} 
+\index{Record@{Record}!\_\_repr\_\_@{\_\_repr\_\_}}
+\index{\_\_repr\_\_@{\_\_repr\_\_}!Record@{Record}}
+\doxysubsubsection{\texorpdfstring{\_\_repr\_\_()}{\_\_repr\_\_()}}
+{\footnotesize\ttfamily def \+\_\+\+\_\+repr\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classrecord_1_1_record_ae6506ef0dc47119821bd4e7d59905a74}\label{classrecord_1_1_record_ae6506ef0dc47119821bd4e7d59905a74}} 
+\index{Record@{Record}!all@{all}}
+\index{all@{all}!Record@{Record}}
+\doxysubsubsection{\texorpdfstring{all()}{all()}}
+{\footnotesize\ttfamily  List\mbox{[}\mbox{\hyperlink{classrecord_1_1_record}{Record}}\mbox{]} all (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classrecord_1_1_record_a55dca0afa9f8205575d7e5ea2a6c10cb}\label{classrecord_1_1_record_a55dca0afa9f8205575d7e5ea2a6c10cb}} 
+\index{Record@{Record}!as\_dict@{as\_dict}}
+\index{as\_dict@{as\_dict}!Record@{Record}}
+\doxysubsubsection{\texorpdfstring{as\_dict()}{as\_dict()}}
+{\footnotesize\ttfamily def as\+\_\+dict (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classrecord_1_1_record_ad72c713ca218b5c2373ff56399374a91}\label{classrecord_1_1_record_ad72c713ca218b5c2373ff56399374a91}} 
+\index{Record@{Record}!delete\_one@{delete\_one}}
+\index{delete\_one@{delete\_one}!Record@{Record}}
+\doxysubsubsection{\texorpdfstring{delete\_one()}{delete\_one()}}
+{\footnotesize\ttfamily def delete\+\_\+one (\begin{DoxyParamCaption}\item[{}]{record\+\_\+id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classrecord_1_1_record_acab7ce5d84b07de6c3fa1ed5990945aa}\label{classrecord_1_1_record_acab7ce5d84b07de6c3fa1ed5990945aa}} 
+\index{Record@{Record}!exists@{exists}}
+\index{exists@{exists}!Record@{Record}}
+\doxysubsubsection{\texorpdfstring{exists()}{exists()}}
+{\footnotesize\ttfamily  bool exists (\begin{DoxyParamCaption}\item[{}]{Record\+\_\+id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classrecord_1_1_record_a0e8a717e1c4ac43034df7d0bc557fcf8}\label{classrecord_1_1_record_a0e8a717e1c4ac43034df7d0bc557fcf8}} 
+\index{Record@{Record}!get@{get}}
+\index{get@{get}!Record@{Record}}
+\doxysubsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily  \mbox{\hyperlink{classrecord_1_1_record}{Record}} get (\begin{DoxyParamCaption}\item[{}]{Record\+\_\+id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classrecord_1_1_record_a81daf4c1c4bbd6324b7d694b34b38329}\label{classrecord_1_1_record_a81daf4c1c4bbd6324b7d694b34b38329}} 
+\index{Record@{Record}!get\_by\_date@{get\_by\_date}}
+\index{get\_by\_date@{get\_by\_date}!Record@{Record}}
+\doxysubsubsection{\texorpdfstring{get\_by\_date()}{get\_by\_date()}}
+{\footnotesize\ttfamily  \mbox{\hyperlink{classrecord_1_1_record}{Record}} get\+\_\+by\+\_\+date (\begin{DoxyParamCaption}\item[{}]{Record\+\_\+date\+Time }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classrecord_1_1_record_acc038228ed0ba86b38fe886743fc9308}\label{classrecord_1_1_record_acc038228ed0ba86b38fe886743fc9308}} 
+\index{Record@{Record}!get\_by\_user@{get\_by\_user}}
+\index{get\_by\_user@{get\_by\_user}!Record@{Record}}
+\doxysubsubsection{\texorpdfstring{get\_by\_user()}{get\_by\_user()}}
+{\footnotesize\ttfamily  \mbox{\hyperlink{classrecord_1_1_record}{Record}} get\+\_\+by\+\_\+user (\begin{DoxyParamCaption}\item[{}]{user\+\_\+id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classrecord_1_1_record_a564562f082521e37c7029e239abb56c6}\label{classrecord_1_1_record_a564562f082521e37c7029e239abb56c6}} 
+\index{Record@{Record}!save@{save}}
+\index{save@{save}!Record@{Record}}
+\doxysubsubsection{\texorpdfstring{save()}{save()}}
+{\footnotesize\ttfamily def save (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classrecord_1_1_record_abc2508732609d7d26ab2745fcad5787f}\label{classrecord_1_1_record_abc2508732609d7d26ab2745fcad5787f}} 
+\index{Record@{Record}!budget\_id@{budget\_id}}
+\index{budget\_id@{budget\_id}!Record@{Record}}
+\doxysubsubsection{\texorpdfstring{budget\_id}{budget\_id}}
+{\footnotesize\ttfamily budget\+\_\+id = Column(UUID(as\+\_\+uuid=True), Foreign\+Key(\textquotesingle{}budget.\+id\textquotesingle{}, ondelete=\textquotesingle{}CASCADE\textquotesingle{}), nullable=False)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classrecord_1_1_record_a71494cb32e3acaab23cde05f1136df5e}\label{classrecord_1_1_record_a71494cb32e3acaab23cde05f1136df5e}} 
+\index{Record@{Record}!category@{category}}
+\index{category@{category}!Record@{Record}}
+\doxysubsubsection{\texorpdfstring{category}{category}}
+{\footnotesize\ttfamily category = Column(String(255), nullable=False)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classrecord_1_1_record_ade6a701b82b93dfb7eae4e79cd3b18a6}\label{classrecord_1_1_record_ade6a701b82b93dfb7eae4e79cd3b18a6}} 
+\index{Record@{Record}!date@{date}}
+\index{date@{date}!Record@{Record}}
+\doxysubsubsection{\texorpdfstring{date}{date}}
+{\footnotesize\ttfamily date = Column(Date\+Time, nullable=True, default=None)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classrecord_1_1_record_aeb658706bdb45c9813ec6572bf4c98c3}\label{classrecord_1_1_record_aeb658706bdb45c9813ec6572bf4c98c3}} 
+\index{Record@{Record}!extra\_info@{extra\_info}}
+\index{extra\_info@{extra\_info}!Record@{Record}}
+\doxysubsubsection{\texorpdfstring{extra\_info}{extra\_info}}
+{\footnotesize\ttfamily extra\+\_\+info = Column(String(255), nullable=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classrecord_1_1_record_a2e413a410477fc3553eac7582cc31a1c}\label{classrecord_1_1_record_a2e413a410477fc3553eac7582cc31a1c}} 
+\index{Record@{Record}!extraInfo@{extraInfo}}
+\index{extraInfo@{extraInfo}!Record@{Record}}
+\doxysubsubsection{\texorpdfstring{extraInfo}{extraInfo}}
+{\footnotesize\ttfamily extra\+Info}
+
+\mbox{\Hypertarget{classrecord_1_1_record_acf2488b95c97e0378c9bf49de3b50f28}\label{classrecord_1_1_record_acf2488b95c97e0378c9bf49de3b50f28}} 
+\index{Record@{Record}!id@{id}}
+\index{id@{id}!Record@{Record}}
+\doxysubsubsection{\texorpdfstring{id}{id}}
+{\footnotesize\ttfamily id = Column(UUID(as\+\_\+uuid=True), primary\+\_\+key=True, default=uuid.\+uuid4)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classrecord_1_1_record_ab74e6bf80237ddc4109968cedc58c151}\label{classrecord_1_1_record_ab74e6bf80237ddc4109968cedc58c151}} 
+\index{Record@{Record}!name@{name}}
+\index{name@{name}!Record@{Record}}
+\doxysubsubsection{\texorpdfstring{name}{name}}
+{\footnotesize\ttfamily name = Column(String(128), nullable=False)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classrecord_1_1_record_aed3ad5147fa678c43a57416d9873c3fa}\label{classrecord_1_1_record_aed3ad5147fa678c43a57416d9873c3fa}} 
+\index{Record@{Record}!payment\_type@{payment\_type}}
+\index{payment\_type@{payment\_type}!Record@{Record}}
+\doxysubsubsection{\texorpdfstring{payment\_type}{payment\_type}}
+{\footnotesize\ttfamily payment\+\_\+type = Column(String(255), nullable=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classrecord_1_1_record_a106e6a69f42032efb2cf37ebde2b76a0}\label{classrecord_1_1_record_a106e6a69f42032efb2cf37ebde2b76a0}} 
+\index{Record@{Record}!paymentType@{paymentType}}
+\index{paymentType@{paymentType}!Record@{Record}}
+\doxysubsubsection{\texorpdfstring{paymentType}{paymentType}}
+{\footnotesize\ttfamily payment\+Type}
+
+\mbox{\Hypertarget{classrecord_1_1_record_a05f4db0d3aa9dc5c00fbe530bfd8fb7c}\label{classrecord_1_1_record_a05f4db0d3aa9dc5c00fbe530bfd8fb7c}} 
+\index{Record@{Record}!place@{place}}
+\index{place@{place}!Record@{Record}}
+\doxysubsubsection{\texorpdfstring{place}{place}}
+{\footnotesize\ttfamily place = Column(String(255), nullable=True, default=\textquotesingle{}\textquotesingle{})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classrecord_1_1_record_afcc7a4b78ecd8fa7e713f8cfa0f51017}\label{classrecord_1_1_record_afcc7a4b78ecd8fa7e713f8cfa0f51017}} 
+\index{Record@{Record}!value@{value}}
+\index{value@{value}!Record@{Record}}
+\doxysubsubsection{\texorpdfstring{value}{value}}
+{\footnotesize\ttfamily value = Column(Float, nullable=False)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Gorka/\+Documents/\+Git\+Hub/\+BSPQ22-\/\+E2/budgetee-\/server/src/database/\mbox{\hyperlink{record_8py}{record.\+py}}\end{DoxyCompactItemize}

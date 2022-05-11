@@ -2,6 +2,10 @@ from src.config import app_secret_key
 import jwt
 
 def decode_request_jwt(request):
+    """! This function creates the tokens for the users.
+    
+    
+    """
     cookie_token: str = request.cookies.get('jwt_token')
     header_token: str = request.headers.get('Authorization')
 

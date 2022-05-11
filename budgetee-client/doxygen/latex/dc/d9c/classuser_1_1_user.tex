@@ -1,0 +1,167 @@
+\hypertarget{classuser_1_1_user}{}\doxysection{User Class Reference}
+\label{classuser_1_1_user}\index{User@{User}}
+Inheritance diagram for User\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{dc/d9c/classuser_1_1_user}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{classuser_1_1_user_afd37016a8ca9609bdfa3bd8e229c5c9e}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, \mbox{\hyperlink{classuser_1_1_user_a0adcbe0e0e6f64a29b1d205ede9632c1}{username}}, \mbox{\hyperlink{classuser_1_1_user_ab74e6bf80237ddc4109968cedc58c151}{name}}, \mbox{\hyperlink{classuser_1_1_user_acba0eb96d8dc53394f4bc448317402ed}{email}}, \mbox{\hyperlink{classuser_1_1_user_a9dbb300e28bc21c8dab41b01883918eb}{password}}, \mbox{\hyperlink{classuser_1_1_user_a5ffc2e31ebc2a447858f4e7f3fecf847}{birth\+\_\+date}})
+\item 
+def \mbox{\hyperlink{classuser_1_1_user_a9a47563093dfc5ba12274b66e368920c}{\+\_\+\+\_\+repr\+\_\+\+\_\+}} (self)
+\item 
+def \mbox{\hyperlink{classuser_1_1_user_a55dca0afa9f8205575d7e5ea2a6c10cb}{as\+\_\+dict}} (self)
+\item 
+def \mbox{\hyperlink{classuser_1_1_user_a564562f082521e37c7029e239abb56c6}{save}} (self)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{classuser_1_1_user_a1315f87aa23b9e2160c8eae915f94557}{all}} ()
+\item 
+def \mbox{\hyperlink{classuser_1_1_user_abf1cecfc922f88aa7845ca1af9c1ad96}{delete\+\_\+one}} (user\+\_\+id)
+\item 
+bool \mbox{\hyperlink{classuser_1_1_user_a851081cdd7a9b00f7c413cbbbf8c0f53}{email\+\_\+exists}} (user\+\_\+email)
+\item 
+bool \mbox{\hyperlink{classuser_1_1_user_a2d67463e1872e5226936492d1f83dca5}{exists}} (user\+\_\+id)
+\item 
+\mbox{\hyperlink{classuser_1_1_user}{User}} \mbox{\hyperlink{classuser_1_1_user_a2ffb06361d4afea808675813425c753f}{get}} (user\+\_\+id)
+\item 
+\mbox{\hyperlink{classuser_1_1_user}{User}} \mbox{\hyperlink{classuser_1_1_user_a1b76c43c6b68905771763d163fe2ecb3}{get\+\_\+by\+\_\+email}} (user\+\_\+email)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classuser_1_1_user_a5ffc2e31ebc2a447858f4e7f3fecf847}{birth\+\_\+date}} = Column(Date, nullable=False)
+\item 
+\mbox{\hyperlink{classuser_1_1_user_ae8be402bf0742e2b554b4dc630ff5dc5}{budgets}} = relationship(\textquotesingle{}Budget\textquotesingle{}, backref=backref(\textquotesingle{}user.\+id\textquotesingle{}))
+\item 
+\mbox{\hyperlink{classuser_1_1_user_acba0eb96d8dc53394f4bc448317402ed}{email}} = Column(String(255), unique=True, nullable=False)
+\item 
+\mbox{\hyperlink{classuser_1_1_user_acf2488b95c97e0378c9bf49de3b50f28}{id}} = Column(UUID(as\+\_\+uuid=True), primary\+\_\+key=True, default=uuid.\+uuid4)
+\item 
+\mbox{\hyperlink{classuser_1_1_user_ab74e6bf80237ddc4109968cedc58c151}{name}} = Column(String(255), nullable=False)
+\item 
+\mbox{\hyperlink{classuser_1_1_user_a9dbb300e28bc21c8dab41b01883918eb}{password}} = Column(String(255), nullable=False)
+\item 
+\mbox{\hyperlink{classuser_1_1_user_a0adcbe0e0e6f64a29b1d205ede9632c1}{username}} = Column(String(255), nullable=False)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classuser_1_1_user_afd37016a8ca9609bdfa3bd8e229c5c9e}\label{classuser_1_1_user_afd37016a8ca9609bdfa3bd8e229c5c9e}} 
+\index{User@{User}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!User@{User}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily def \+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{username,  }\item[{}]{name,  }\item[{}]{email,  }\item[{}]{password,  }\item[{}]{birth\+\_\+date }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classuser_1_1_user_a9a47563093dfc5ba12274b66e368920c}\label{classuser_1_1_user_a9a47563093dfc5ba12274b66e368920c}} 
+\index{User@{User}!\_\_repr\_\_@{\_\_repr\_\_}}
+\index{\_\_repr\_\_@{\_\_repr\_\_}!User@{User}}
+\doxysubsubsection{\texorpdfstring{\_\_repr\_\_()}{\_\_repr\_\_()}}
+{\footnotesize\ttfamily def \+\_\+\+\_\+repr\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classuser_1_1_user_a1315f87aa23b9e2160c8eae915f94557}\label{classuser_1_1_user_a1315f87aa23b9e2160c8eae915f94557}} 
+\index{User@{User}!all@{all}}
+\index{all@{all}!User@{User}}
+\doxysubsubsection{\texorpdfstring{all()}{all()}}
+{\footnotesize\ttfamily def all (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classuser_1_1_user_a55dca0afa9f8205575d7e5ea2a6c10cb}\label{classuser_1_1_user_a55dca0afa9f8205575d7e5ea2a6c10cb}} 
+\index{User@{User}!as\_dict@{as\_dict}}
+\index{as\_dict@{as\_dict}!User@{User}}
+\doxysubsubsection{\texorpdfstring{as\_dict()}{as\_dict()}}
+{\footnotesize\ttfamily def as\+\_\+dict (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classuser_1_1_user_abf1cecfc922f88aa7845ca1af9c1ad96}\label{classuser_1_1_user_abf1cecfc922f88aa7845ca1af9c1ad96}} 
+\index{User@{User}!delete\_one@{delete\_one}}
+\index{delete\_one@{delete\_one}!User@{User}}
+\doxysubsubsection{\texorpdfstring{delete\_one()}{delete\_one()}}
+{\footnotesize\ttfamily def delete\+\_\+one (\begin{DoxyParamCaption}\item[{}]{user\+\_\+id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classuser_1_1_user_a851081cdd7a9b00f7c413cbbbf8c0f53}\label{classuser_1_1_user_a851081cdd7a9b00f7c413cbbbf8c0f53}} 
+\index{User@{User}!email\_exists@{email\_exists}}
+\index{email\_exists@{email\_exists}!User@{User}}
+\doxysubsubsection{\texorpdfstring{email\_exists()}{email\_exists()}}
+{\footnotesize\ttfamily  bool email\+\_\+exists (\begin{DoxyParamCaption}\item[{}]{user\+\_\+email }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classuser_1_1_user_a2d67463e1872e5226936492d1f83dca5}\label{classuser_1_1_user_a2d67463e1872e5226936492d1f83dca5}} 
+\index{User@{User}!exists@{exists}}
+\index{exists@{exists}!User@{User}}
+\doxysubsubsection{\texorpdfstring{exists()}{exists()}}
+{\footnotesize\ttfamily  bool exists (\begin{DoxyParamCaption}\item[{}]{user\+\_\+id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classuser_1_1_user_a2ffb06361d4afea808675813425c753f}\label{classuser_1_1_user_a2ffb06361d4afea808675813425c753f}} 
+\index{User@{User}!get@{get}}
+\index{get@{get}!User@{User}}
+\doxysubsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily  \mbox{\hyperlink{classuser_1_1_user}{User}} get (\begin{DoxyParamCaption}\item[{}]{user\+\_\+id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classuser_1_1_user_a1b76c43c6b68905771763d163fe2ecb3}\label{classuser_1_1_user_a1b76c43c6b68905771763d163fe2ecb3}} 
+\index{User@{User}!get\_by\_email@{get\_by\_email}}
+\index{get\_by\_email@{get\_by\_email}!User@{User}}
+\doxysubsubsection{\texorpdfstring{get\_by\_email()}{get\_by\_email()}}
+{\footnotesize\ttfamily  \mbox{\hyperlink{classuser_1_1_user}{User}} get\+\_\+by\+\_\+email (\begin{DoxyParamCaption}\item[{}]{user\+\_\+email }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classuser_1_1_user_a564562f082521e37c7029e239abb56c6}\label{classuser_1_1_user_a564562f082521e37c7029e239abb56c6}} 
+\index{User@{User}!save@{save}}
+\index{save@{save}!User@{User}}
+\doxysubsubsection{\texorpdfstring{save()}{save()}}
+{\footnotesize\ttfamily def save (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classuser_1_1_user_a5ffc2e31ebc2a447858f4e7f3fecf847}\label{classuser_1_1_user_a5ffc2e31ebc2a447858f4e7f3fecf847}} 
+\index{User@{User}!birth\_date@{birth\_date}}
+\index{birth\_date@{birth\_date}!User@{User}}
+\doxysubsubsection{\texorpdfstring{birth\_date}{birth\_date}}
+{\footnotesize\ttfamily birth\+\_\+date = Column(Date, nullable=False)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classuser_1_1_user_ae8be402bf0742e2b554b4dc630ff5dc5}\label{classuser_1_1_user_ae8be402bf0742e2b554b4dc630ff5dc5}} 
+\index{User@{User}!budgets@{budgets}}
+\index{budgets@{budgets}!User@{User}}
+\doxysubsubsection{\texorpdfstring{budgets}{budgets}}
+{\footnotesize\ttfamily budgets = relationship(\textquotesingle{}Budget\textquotesingle{}, backref=backref(\textquotesingle{}user.\+id\textquotesingle{}))\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classuser_1_1_user_acba0eb96d8dc53394f4bc448317402ed}\label{classuser_1_1_user_acba0eb96d8dc53394f4bc448317402ed}} 
+\index{User@{User}!email@{email}}
+\index{email@{email}!User@{User}}
+\doxysubsubsection{\texorpdfstring{email}{email}}
+{\footnotesize\ttfamily email = Column(String(255), unique=True, nullable=False)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classuser_1_1_user_acf2488b95c97e0378c9bf49de3b50f28}\label{classuser_1_1_user_acf2488b95c97e0378c9bf49de3b50f28}} 
+\index{User@{User}!id@{id}}
+\index{id@{id}!User@{User}}
+\doxysubsubsection{\texorpdfstring{id}{id}}
+{\footnotesize\ttfamily id = Column(UUID(as\+\_\+uuid=True), primary\+\_\+key=True, default=uuid.\+uuid4)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classuser_1_1_user_ab74e6bf80237ddc4109968cedc58c151}\label{classuser_1_1_user_ab74e6bf80237ddc4109968cedc58c151}} 
+\index{User@{User}!name@{name}}
+\index{name@{name}!User@{User}}
+\doxysubsubsection{\texorpdfstring{name}{name}}
+{\footnotesize\ttfamily name = Column(String(255), nullable=False)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classuser_1_1_user_a9dbb300e28bc21c8dab41b01883918eb}\label{classuser_1_1_user_a9dbb300e28bc21c8dab41b01883918eb}} 
+\index{User@{User}!password@{password}}
+\index{password@{password}!User@{User}}
+\doxysubsubsection{\texorpdfstring{password}{password}}
+{\footnotesize\ttfamily password = Column(String(255), nullable=False)\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classuser_1_1_user_a0adcbe0e0e6f64a29b1d205ede9632c1}\label{classuser_1_1_user_a0adcbe0e0e6f64a29b1d205ede9632c1}} 
+\index{User@{User}!username@{username}}
+\index{username@{username}!User@{User}}
+\doxysubsubsection{\texorpdfstring{username}{username}}
+{\footnotesize\ttfamily username = Column(String(255), nullable=False)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Gorka/\+Documents/\+Git\+Hub/\+BSPQ22-\/\+E2/budgetee-\/server/src/database/\mbox{\hyperlink{user_8py}{user.\+py}}\end{DoxyCompactItemize}

@@ -1,3 +1,8 @@
+"""@package docstring
+Documentation for this module Budget.
+ 
+More details.
+"""
 from __future__ import annotations
 from sqlalchemy import Column, Date, Float, String, ForeignKey
 from sqlalchemy.dialects.postgresql import UUID
@@ -20,7 +25,8 @@ class Budget(Base): #Sprint1
     records = relationship('Record', backref=backref('budget')) #Sprint 2
 
 
-    def __init__(self,  name, description, start_date, end_date, initial_budget, user_id):       
+    def __init__(self,  name, description, start_date, end_date, initial_budget, user_id):
+        """! The constructor for the budget class."""       
         self.name = name
         self.description = description
         self.start_date = start_date
@@ -32,11 +38,19 @@ class Budget(Base): #Sprint1
         return f'<Budget {self.name!r}>'
     
     def save(self):
+        """! Documentation for the save function.
+        
+        This function will save the database state.
+        """
         if not self.id:
             db_session.add(self)
         db_session.commit()
     
     def as_dict(self):
+        """!Documentation for the as_dict function.
+        
+        This function will print the budget with a format.
+        """
         budget = {camelize(b.name): getattr(self, b.name) for b in self.__table__.columns}
         budget['id'] = str(budget['id'])
         budget['userId'] = str(budget['userId'])
@@ -46,22 +60,46 @@ class Budget(Base): #Sprint1
     
     @staticmethod
     def all():
+        """! Documentation for the all function.
+        @return This fuction will return all the budgets.
+        
+        """
         return Budget.query.all()
-
+    
     @staticmethod
     def get(budget_id) -> Budget:
+        """! Documentation for the get function.
+        @param[in] budget_id The id we need to search in the database
+        @return This fuction will return the budget.
+        
+        """
         return Budget.query.get(budget_id)
 
     @staticmethod
     def get_by_user(user_id) -> List[Budget]:
+        """! Documentation for the get_by_user function.
+        @param[in] user_id The id we need to search in the database
+        @return This fuction will return a list of budgets that had been created by a user. 
+        
+        """
         return Budget.query.filter_by(user_id = user_id)  
     
     @staticmethod
     def delete_one(budget_id):
+        """Documentation for the delete_one function.
+        @param[in] budget_id The id we need to search in the database
+ 
+        This fuction will delete the budget.
+        """
         to_delete = Budget.query.get(budget_id)
         db_session.delete(to_delete)
         db_session.commit()
   
     @staticmethod
     def exists(budget_id) -> bool:
+        """Documentation for the exists function.
+        @param[in] budget_id The id we need to search in the database
+        @return This fuction returns a boolean if the budget exists or not.
+
+        """
         return Budget.query.filter_by(id=budget_id).first() is not None
