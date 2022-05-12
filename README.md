@@ -10,6 +10,16 @@ This project will be a client server web service which will make the client able
 # What this project is about.
 The project is about budgets that any user can create, and eventually, update, to finally visualizate some general statistics. These budgets can be customized as desired, with the records, that are created to introduce either the expenses or incomes in each budget.
 
+# Running the application
+You can run the whole application (frontend client, API and database included) using Docker with Docker Compose. To do this, move to the project root and run:
+```shell
+docker-compose up -d
+```
+To turn the system off, you can run:
+```shell
+docker-compose down -v
+```
+
 # Authors
 Daniel Lauzurica _daniel.lauzurica_ <br>
 Gaizka Ibarzabal _gaizka.ibarzabal_ <br>

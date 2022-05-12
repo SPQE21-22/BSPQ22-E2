@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  web:
+    container_name: budgetee-web
+    build: ./budgetee-client
+    volumes:
+      - './:/app'
+      - '/app/node_modules'
+    ports:
+      - 3000:3000
+    stdin_open: true
+    environment:
+      - REACT_APP_API_URL=http://localhost:5000
+    command: npm start
+
+  api:
+    container_name: budgetee-api
+    build: ./budgetee-server
+    command: ./entrypoint.sh
+    volumes:
+      - ./:/app/
+    ports:
+      - 5000:5000
+    environment:
+      - APP_SECRET=mysecret
+      - DATABASE_URL=postgresql://postgres:postgres@database:5432/postgres
+    depends_on:
+      - database
+  
+  database:
+    image: postgres:13-alpine
+    container_name: budgetee-database
+    volumes:
+      - './postgres_data:/var/lib/postgresql/data'
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+
+volumes:
+  postgres_data:
