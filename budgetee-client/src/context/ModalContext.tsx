@@ -11,6 +11,7 @@ type ModalState = {
   newRecordOpen: boolean;
   editBudgetOpen: boolean;
   editRecordOpen: boolean;
+  editUserOpen: boolean;
 };
 
 const baseModalState: ModalState = {
@@ -20,6 +21,7 @@ const baseModalState: ModalState = {
   newRecordOpen: false,
   editBudgetOpen: false,
   editRecordOpen: false,
+  editUserOpen: false,
 };
 
 export enum ActionType {
@@ -30,6 +32,7 @@ export enum ActionType {
   SHOW_NEW_RECORD,
   SHOW_EDIT_BUDGET,
   SHOW_EDIT_RECORD,
+  SHOW_EDIT_USER,
 };
 
 type ContextValue = {
@@ -55,6 +58,8 @@ const modalReducer = (state: ModalState, action: ActionType): ModalState => {
       return { ...baseModalState, editBudgetOpen: true };
     case ActionType.SHOW_EDIT_RECORD:
       return { ...baseModalState, editRecordOpen: true };
+    case ActionType.SHOW_EDIT_USER:
+      return { ...baseModalState, editUserOpen: true };
     default:
       return state;
   }

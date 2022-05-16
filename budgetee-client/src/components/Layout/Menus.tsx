@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import {
   BellIcon,
   CheckCircleIcon,
@@ -168,6 +167,7 @@ export const NotificationMenu = () => {
 }
 
 export const UserMenu = () => {
+  const { dispatch } = useModals();
   const { setUser } = useUser();
 
   const logoutHandler = async () => {
@@ -193,16 +193,17 @@ export const UserMenu = () => {
           <div className="px-1 py-1">
             <Menu.Item>
               {({ active }) => (
-                <Link to="/profile"
+                <button
                   className={`${active ? 'bg-gray-200' : 'text-gray-900'
                     } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                  onClick={() => dispatch(ActionType.SHOW_EDIT_USER)}
                 >
                   <UserIcon
                     className="w-6 h-6 mr-3"
                     aria-hidden="true"
                   />
                   Profile
-                </Link>
+                </button>
               )}
             </Menu.Item>
           </div>

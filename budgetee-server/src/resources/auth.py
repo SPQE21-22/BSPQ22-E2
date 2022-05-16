@@ -77,7 +77,7 @@ class Register(Resource): #Sprint 2
         }, app_secret_key, algorithm="HS256");
         
         response = make_response(new_user.as_dict(), 201)
-        response.set_cookie('jwt_token', token)
+        response.set_cookie('jwt_token', token, samesite='None', secure=True, httponly=True)
 
         return response
 
@@ -89,5 +89,5 @@ class Logout(Resource):
     def post(self):
         """! logs out the user from the system """
         response = make_response({'result': 'logged out'}, 202)
-        response.delete_cookie('jwt_token')
+        response.delete_cookie('jwt_token', samesite='None', secure=True, httponly=True)
         return response

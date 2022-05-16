@@ -11,6 +11,7 @@ import logo from '../../assets/logo.png';
 import { MobileCreateMenu, NewMenu, NotificationMenu, UserMenu } from './Menus';
 import { CreateBudgetModal } from '../../features/common';
 import { CreateRecordModal } from '../../features/common/components/CreateRecordModal';
+import { EditUserModal } from '../../features/common/components/EditUserModal';
 
 type NavigationItem = {
   name: string;
@@ -132,6 +133,7 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
       <CreateBudgetModal />
       <CreateRecordModal />
       <MobileBottombar />
+      <EditUserModal />
       <Topbar />
       <main className='flex-1 relative overflow-y-auto focus:outline-none max-w-7xl mx-auto sm:px-6 sm:py-2 md:px-8'>
         {children}
