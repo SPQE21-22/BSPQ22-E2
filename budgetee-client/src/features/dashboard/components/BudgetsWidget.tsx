@@ -17,12 +17,18 @@ type BudgetProps = {
 }
 
 const BudgetItem = ({ budget, setSelected }: BudgetProps) => {
+  const { data } = useData();
   const { dispatch } = useModals();
 
   const toggleEditBudget = () => {
     setSelected();
     dispatch(ActionType.SHOW_EDIT_BUDGET);
   };
+
+  // TODO use useMemo here?
+  const currentBudget = data.records
+    .filter(record => record.budgetId === budget.id)
+    .reduce((prev, recordNew) => prev + recordNew.value, budget.initialBudget);
 
   return (
     <div className='relative group overflow-hidden cursor-pointer' onClick={toggleEditBudget}>
@@ -33,9 +39,8 @@ const BudgetItem = ({ budget, setSelected }: BudgetProps) => {
       </div>
       <div className='p-2 my-0.5 flex flex-col transition-all'>
         <span className='font-semibold'>{budget.name}</span>
-        {/* TODO calculate total balances */}
-        <div className='text-sm font-medium text-green-500'>
-          €{budget.initialBudget}
+        <div className={`text-sm font-medium ${currentBudget > 0 ? 'text-green-500' : 'text-red-500'}`}>
+          €{currentBudget}
           <span className='text-xs ml-1 text-gray-600'>left out of ${budget.initialBudget}</span>
         </div>
         <div className='flex items-center justify-between w-full text-xs'>
