@@ -10,12 +10,15 @@ import { createRecord } from '../api/createRecord';
 import { ActionType, useModals } from '../../../context/ModalContext';
 import { useData } from '../../../context/DataContext';
 import { CategoryListField } from './CategoryListField';
+import { RequestLoadStates } from '../../../types';
+import { Spinner } from '../../../components/Elements/Spinner';
 
 type FormProps = {
   closeModal: () => void;
+  setRequestState: (state: RequestLoadStates) => void;
 };
 
-// TODO export to external file
+
 export type RecordFormData = {
   name: string;
   category: Category;
@@ -27,8 +30,8 @@ export type RecordFormData = {
   budgetId: string;
 };
 
-// TODO style datepicker
-const CreateRecordForm = ({ closeModal }: FormProps) => {
+
+const CreateRecordForm = ({ closeModal, setRequestState }: FormProps) => {
   const { data, dispatch } = useData();
 
   const initialFormData: RecordFormData = {
@@ -85,6 +88,7 @@ const CreateRecordForm = ({ closeModal }: FormProps) => {
 
   const handleSubmit = (event: React.FormEvent): void => {
     event.preventDefault();
+    setRequestState('loading');
 
     createRecord({ ...formState, category: formState.category.name })
       .then(result => {
@@ -93,10 +97,12 @@ const CreateRecordForm = ({ closeModal }: FormProps) => {
           payload: result
         });
         closeModal();
+        setTimeout(() => setRequestState('unloaded'), 1000);
         // TODO notify creation, etc
       })
       .catch(err => {
         console.log(err);
+        setRequestState('failure');
         // TODO notify error
       });
   };
@@ -177,18 +183,44 @@ const CreateRecordForm = ({ closeModal }: FormProps) => {
 };
 
 export const CreateRecordModal = () => {
+  const [requestState, setRequestState] = React.useState<RequestLoadStates>('unloaded');
   const { modalState, dispatch } = useModals();
 
   const closeModal = () => dispatch(ActionType.CLOSE_ALL);
 
+  const getContent = () => {
+    switch (requestState) {
+      case 'unloaded':
+        return <CreateRecordForm closeModal={closeModal} setRequestState={setRequestState} />
+      case 'loading':
+        return (
+          <div className='flex items-center justify-center my-36'>
+            <Spinner size='lg' />
+          </div>
+        );
+      case 'failure':
+        return (
+          <div className='flex flex-col items-center justify-center my-24'>
+            <div className='mb-6 p-4 bg-red-100 rounded-full'>
+              <ExclamationCircleIcon className='h-16 w-16 text-rose-400' />
+            </div>
+            <h3 className='font-medium text-xl max-w-md text-center'>There was an error creating your record. Please try again later!</h3>
+          </div>
+        );
+    };
+  };
+
   return (
     <ModalBase
       isOpen={modalState.newRecordOpen}
-      closeModal={closeModal}
+      closeModal={() => {
+        closeModal();
+        setTimeout(() => setRequestState('unloaded'), 1000);
+      }}
       title='Create record'
       className='w-full lg:max-w-2xl'
     >
-      <CreateRecordForm closeModal={closeModal} />
+      {getContent()}
     </ModalBase>
   );
 };

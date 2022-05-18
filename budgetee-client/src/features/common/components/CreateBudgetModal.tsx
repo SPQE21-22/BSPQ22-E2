@@ -1,15 +1,20 @@
 import React from 'react';
+import { ExclamationCircleIcon } from '@heroicons/react/outline';
 
-import { ModalBase } from '../../../components/Overlay/ModalBase';
 import { InputField } from '../../../components/Form'
+import { ModalBase } from '../../../components/Overlay/ModalBase';
+import { Spinner } from '../../../components/Elements/Spinner';
 import { Button } from '../../../components/Elements/Button';
-import { createBudget } from '../api/createBudget';
+
+import { RequestLoadStates } from '../../../types';
 import { ActionType, useModals } from '../../../context/ModalContext';
 import { useData } from '../../../context/DataContext';
 import { useUser } from '../../../context/UserContext';
+import { createBudget } from '../api/createBudget';
 
 type FormProps = {
   closeModal: () => void;
+  setRequestState: (state: RequestLoadStates) => void;
 };
 
 // TODO export to external file
@@ -29,8 +34,8 @@ const initialFormData: BudgetFormData = {
   initialBudget: 0,
 };
 
-// TODO style datepicker
-const CreateBudgetForm = ({ closeModal }: FormProps) => {
+
+const CreateBudgetForm = ({ closeModal, setRequestState }: FormProps) => {
   const [formState, setFormState] = React.useState<BudgetFormData>(initialFormData);
   const { dispatch } = useData();
   const { user } = useUser();
@@ -49,7 +54,8 @@ const CreateBudgetForm = ({ closeModal }: FormProps) => {
 
   const handleSubmit = (event: React.FormEvent): void => {
     event.preventDefault();
-    
+    setRequestState('loading');
+
     createBudget({ ...formState, userId: user?.id ?? '' })
       .then(result => {
         dispatch({
@@ -57,10 +63,12 @@ const CreateBudgetForm = ({ closeModal }: FormProps) => {
           payload: result
         });
         closeModal();
+        setTimeout(() => setRequestState('unloaded'), 1000);
         // TODO notify creation, etc
       })
       .catch(err => {
         console.log(err);
+        setRequestState('failure');
         // TODO notify error
       });
   };
@@ -81,7 +89,7 @@ const CreateBudgetForm = ({ closeModal }: FormProps) => {
         value={formState.description}
         onChange={handleInputChange}
         className='mb-4'
-        />
+      />
       <InputField
         label='Start date'
         type='date'
@@ -114,13 +122,43 @@ const CreateBudgetForm = ({ closeModal }: FormProps) => {
 };
 
 export const CreateBudgetModal = () => {
+  const [requestState, setRequestState] = React.useState<RequestLoadStates>('unloaded');
   const { modalState, dispatch } = useModals();
 
   const closeModal = () => dispatch(ActionType.CLOSE_ALL);
 
+  const getContent = () => {
+    switch (requestState) {
+      case 'unloaded':
+        return <CreateBudgetForm closeModal={closeModal} setRequestState={setRequestState} />;
+      case 'loading':
+        return (
+          <div className='flex items-center justify-center my-48'>
+            <Spinner size='lg' />
+          </div>
+        );
+      case 'failure':
+        return (
+          <div className='flex flex-col items-center justify-center my-36'>
+            <div className='mb-6 p-4 bg-red-100 rounded-full'>
+              <ExclamationCircleIcon className='h-16 w-16 text-rose-400' />
+            </div>
+            <h3 className='font-medium text-xl'>There was an error creating your budget.</h3>
+          </div>
+        );
+    };
+  };
+
   return (
-    <ModalBase isOpen={modalState.newBudgetOpen} closeModal={closeModal} title='Create budget'>
-      <CreateBudgetForm closeModal={closeModal} />
+    <ModalBase
+      isOpen={modalState.newBudgetOpen}
+      closeModal={() => {
+        closeModal();
+        setTimeout(() => setRequestState('unloaded'), 1000);
+      }}
+      title='Create budget'
+    >
+      {getContent()}
     </ModalBase>
   );
 };

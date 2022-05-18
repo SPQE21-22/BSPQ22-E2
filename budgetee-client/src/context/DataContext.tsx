@@ -71,10 +71,10 @@ const dataReducer = (state: DataState, action: Action): DataState => {
         budgets: budgets.map(budget => payload.id === budget.id ? payload : budget),
       };
     case 'removeBudget':
-      // TODO cascade delete of records
       return {
         ...state,
         budgets: budgets.filter(budget => budget.id !== payload),
+        records: records.filter(record => record.budgetId !== payload),
       };
     case 'createRecord':
       return {
