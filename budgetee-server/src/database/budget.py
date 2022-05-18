@@ -20,7 +20,7 @@ class Budget(Base): #Sprint1
     initial_budget = Column(Float, nullable=False, default=0)
 
     user_id = Column(UUID(as_uuid=True), ForeignKey('user.id', ondelete='CASCADE'), nullable=False) #Sprint 2    
-    records = relationship('Record', backref=backref('budget')) #Sprint 2
+    records = relationship('Record', backref=backref('budget'), cascade='all, delete') #Sprint 2
 
 
     def __init__(self,  name, description, start_date, end_date, initial_budget, user_id):

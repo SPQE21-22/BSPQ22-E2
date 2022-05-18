@@ -10,7 +10,7 @@ import uuid
 
 class Label(Base): #Sprint 2 
     """! @Class Label"""
-    __tablename__ = 'Label'
+    __tablename__ = 'label'
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     name = Column(String(255), nullable=False)
     user_id = Column(UUID(as_uuid=True), ForeignKey('user.id', ondelete='CASCADE'), nullable=False) 
