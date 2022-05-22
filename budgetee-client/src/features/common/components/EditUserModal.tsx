@@ -158,7 +158,7 @@ export const EditUserModal = () => {
       case 'loading':
         return (
           <div className='flex items-center justify-center my-48'>
-            <Spinner size='xl' />;
+            <Spinner size='xl' />
           </div>
         )
       case 'confirm':

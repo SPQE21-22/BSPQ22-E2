@@ -18,7 +18,7 @@ class User(Base): #Sprint 1
     password = Column(String(255), nullable=False)
     birth_date = Column(Date, nullable=False)
     
-    budgets = relationship('Budget', backref=backref('user.id'))
+    budgets = relationship('Budget', backref=backref('user.id'), cascade='all, delete')
 
 
     def __init__(self, username, name, email, password, birth_date):
