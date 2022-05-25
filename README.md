@@ -20,6 +20,9 @@ To turn the system off, you can run:
 docker-compose down -v
 ```
 
+# Github pages
+Access to the documentation on the following link: https://spqe21-22.github.io/BSPQ22-E2/
+
 # Authors
 Daniel Lauzurica _daniel.lauzurica_ <br>
 Gaizka Ibarzabal _gaizka.ibarzabal_ <br>
